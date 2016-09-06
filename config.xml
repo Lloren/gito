@@ -2,26 +2,39 @@
 				xmlns:gap		= "http://phonegap.com/ns/1.0"
 				xmlns:android	= "http://schemas.android.com/apk/res/android"
 				id					= ""
-				version			= "1.0.1">
-	<name></name>
+				version			= "1.0.0">
+	<name>Mooky</name>
 	<description>
 	</description>
-	<author email="support@2dio.com" href="http://2dio.com">
-		2Dio, Inc.
+	<author email="support@mooky.com" href="http://mooky.com">
+		Mooky, Inc.
 	</author>
 	<content src="index.html" />
+
 	<access origin="*" />
+	<allow-intent href="http://*/*" />
+	<allow-intent href="https://*/*" />
+	<allow-intent href="tel:*" launch-external="true" />
+	<allow-intent href="sms:*" launch-external="true" />
+	<allow-intent href="mailto:*" launch-external="true" />
+	<allow-intent href="geo:*" launch-external="true" />
+	<allow-intent href="market:*" launch-external="true" />
+	<allow-intent href="itms:*" launch-external="true" />
+	<allow-intent href="itms-apps:*" launch-external="true" />
 
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
 	<gap:platform name="winphone" />
 
-	<preference name="phonegap-version" value="3.6.3" />
+	<preference name="phonegap-version" value="cli-6.3.0" />
+	<preference name="android-build-tool" value="gradle" />
 
 	<!-- Android SDK Version -->
-	<preference name="android-minSdkVersion" value="16" />
+	<!-- Drawerings 1.2.0 changed from Android support version 16 to 19 -->
+	<preference name="android-minSdkVersion" value="19" />
 	<!-- iOS Version -->
-	<preference name="deployment-target" value="6.1" />
+	<!-- Drawerings 1.2.0 changed from iOS support version 6.1 to 7.1 -->
+	<preference name="deployment-target" value="7.1" />
 
 	<preference name="orientation" value="portrait" />
 	<gap:config-file platform="ios" parent="UISupportedInterfaceOrientations" mode="replace">
@@ -53,6 +66,7 @@
 	<preference name="SplashScreenDelay" value="10000" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
+	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="com.adobe.plugins.gaplugin" version="2.4.0" />
 	<gap:plugin name="org.apache.cordova.statusbar" />
 	<gap:plugin name="org.apache.cordova.device" version="0.2.12" />

@@ -321,7 +321,6 @@ function coded_location(pos, start, trigger){
 	if (!pos){
 		return;
 	} else if (start){
-		alert('start start');
 		start_location = pos;
 		if (markers.start){
 			markers.start.setPosition(start_location);
@@ -345,9 +344,7 @@ function coded_location(pos, start, trigger){
 				geo_location("#from_loc", start_location);
 			}
 		}
-		alert('start set');
 	} else {
-		alert('stop start');
 		stop_location = pos;
 		if (markers.stop){
 			markers.stop.setPosition(stop_location);
@@ -371,7 +368,6 @@ function coded_location(pos, start, trigger){
 				geo_location("#to_loc", stop_location);
 			}
 		}
-		alert('stop set');
 	}
 	if (start_location && stop_location){
 		run_services();
@@ -459,11 +455,8 @@ function load_map(){
 	from_autocomplete = new google.maps.places.Autocomplete(document.getElementById("from_loc"));
 	from_autocomplete.bindTo("bounds", map);
 	from_autocomplete.addListener("place_changed", function() {
-		alert('new place');
 		var place = from_autocomplete.getPlace();
-		alert('do coded1');
 		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
-		alert('do coded2');
 		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
 		$("#from_loc").val(place.formatted_address).next().show();
 	});
@@ -471,7 +464,6 @@ function load_map(){
 	to_autocomplete = new google.maps.places.Autocomplete(document.getElementById("to_loc"));
 	to_autocomplete.bindTo("bounds", map);
 	to_autocomplete.addListener("place_changed", function() {
-		alert('new place2');
 		var place = to_autocomplete.getPlace();
 		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
@@ -601,11 +593,9 @@ $(function (){
 		setTimeout(function() {
 			var container = document.getElementsByClassName("pac-container");
 			container[0].addEventListener("touchend", function(e) {
-				alert('ios touch catch');
 				e.stopImmediatePropagation();
 			});
 			container[1].addEventListener("touchend", function(e) {
-				alert('ios touch catch2');
 				e.stopImmediatePropagation();
 			});
 		}, 500);
