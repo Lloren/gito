@@ -394,7 +394,7 @@ function run_services(){
 				open_modal({title: "error", content:"You need to enter a from and to location."});
 			}
 			run_handel = false;
-			hideKeyboard();
+			hide_keyboard();
 		}, 1);
 	}
 }
@@ -471,7 +471,19 @@ function load_map(){
 	});
 }
 
+function open_menu(){
+	$("#menu").addClass("open");
+	$("#menu-overlay").addClass("enabled");
+}
+
+function close_menu(){
+	$("#menu").removeClass("open");
+	$("#menu-overlay").removeClass("enabled");
+}
+
 $(function (){
+	if (!dev)
+		$(".dev").hide();
 	if (!has_internet){
 		$("body").html("This app requires internet to function.");
 		return;
@@ -521,7 +533,6 @@ $(function (){
 		get_origin_geo(coded_location);
 		$("#results_tab").removeClass("hidden");
 	}).on("focus", function (){
-		get_origin_geo(coded_location);
 		$("#results_tab").addClass("hidden");
 	});
 	$("#to_loc").on("keyup", function (e){
@@ -589,6 +600,16 @@ $(function (){
 		$("#"+$(e.currentTarget).data("back")).show();
 	}, true);
 
+	click_event("#menubutton", function (e){
+		open_menu();
+	});
+
+	click_event("#menu-overlay", function (e){
+		close_menu();
+	});
+
+
+
 	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
 		setTimeout(function() {
 			var container = document.getElementsByClassName("pac-container");
@@ -600,4 +621,12 @@ $(function (){
 			});
 		}, 500);
 	}
+
+
+
+
+
+	click_event("#clear_cache", function (e){
+		localStorage.clear();
+	});
 });

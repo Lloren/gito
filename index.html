@@ -9,7 +9,7 @@
 	<meta name="author" content="" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *">
 
 	<link rel="stylesheet" type="text/css" href="css/font-awesome-4.6.3.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -42,6 +42,19 @@
 	<a id="mbutton2">Cancel</a>
 </div>
 
+<div id="menu-overlay"></div>
+<div id="menu">
+	<ul>
+		<li>Mooky</li>
+		<li>Settings</li>
+		<li>About Us</li>
+	</ul>
+	<ul class="dev">
+		<li>Dev</li>
+		<li id="clear_cache">Clear cache</li>
+	</ul>
+</div>
+
 <div id="templates" style="display: none;">
 	<div data-key="result">
 		<div class="result{{transit_info? transit_info}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##">
@@ -68,18 +81,11 @@
 	</div>
 </div>
 
-<div id="navbutton" style="color: black">
-	<img src="images/icons/menu%20clear.PNG" style="margin-top: 3px; left: -3px; width: 40px; position: relative;" />
-	<!--<i class="fa fa-bars"></i>-->
-</div>
-
-<div id="nav-overlay"></div>
-<div id="nav">
-	<ul>
-		<li>Title</li>
-		<li><a href="#">Settings</a></li>
-		<li><a href="#">About Us</a></li>
-	</ul>
+<div id="header">
+	<div id="menubutton" style="color: black">
+		<img src="images/icons/menu%20clear.PNG" style="margin-top: 3px; left: -3px; width: 40px; position: relative;" />
+		<!--<i class="fa fa-bars"></i>-->
+	</div>
 </div>
 
 <div class="page" style="display: block;">
@@ -103,7 +109,7 @@
 </div>
 
 <div id="map" class="page">
-	<div id="header" style="position: absolute; top: 0; background: white; width: 100%; height: 170px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
+	<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 170px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
 		<div style="height: 40px; text-align: center; margin:2px;">
 			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
 		</div>

@@ -50,7 +50,7 @@ function click_event(limiter, callback, target){
 	}
 }
 
-function hideKeyboard() {
+function hide_keyboard() {
 	//this set timeout needed for case when hideKeyborad
 	//is called inside of 'onfocus' event handler
 	setTimeout(function() {

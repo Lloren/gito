@@ -37,17 +37,16 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 #modal.loading p, #modal.loading a {display:none !important;}
 
 
-#nav-overlay {position:absolute; pointer-events:none; opacity:0; background-color:#222; width:100%; height:100%; -webkit-transition: opacity 200ms ease-out, background-color 200ms ease-out; -webkit-transform: translate3d(0, 0, 0); -webkit-backface-visibility: hidden; -webkit-perspective: 1000; z-index:99;}
-#nav-overlay.enabled {pointer-events:auto; opacity:0.7;}
+#menu-overlay {position:absolute; pointer-events:none; opacity:0; background-color:#222; width:100%; height:100%; -webkit-transition: opacity 200ms ease-out, background-color 200ms ease-out; -webkit-transform: translate3d(0, 0, 0); -webkit-backface-visibility: hidden; -webkit-perspective: 1000; z-index:99;}
+#menu-overlay.enabled {pointer-events:auto; opacity:0.7;}
 
-#navbutton {position:absolute; top:0; left:0; z-index:100; width:50px; height:50px; line-height:50px; font-size:30px; text-align:center; color:#FFF;}
+#menubutton {position:absolute; top:0; left:0; z-index:100; width:50px; height:50px; line-height:50px; font-size:30px; text-align:center; color:#FFF;}
 
-#nav {position:fixed; z-index:100; top:0; right:0; width:275px; background-color:#EFEFEF; overflow:auto; -webkit-transition: opacity 200ms ease-out; -webkit-backface-visibility: hidden; -webkit-perspective: 1000; opacity:0; pointer-events:none;}
-#nav.open {opacity:1; pointer-events:all;}
-#nav ul {list-style:none; margin:0; padding:0;}
-#nav ul li {line-height:45px; font-size:18px; border-bottom:solid 1px #E7E7E7;}
-#nav ul li:first-child {color:#444; text-align:center; line-height:35px;}
-#nav ul li a {color:#444; background-color:#FFF; text-decoration:none; padding:0 15px; display:block;}
+#menu {position:fixed; z-index:1000; top:0; left:0; width:275px; background-color:#EFEFEF; overflow:auto; -webkit-transition: opacity 200ms ease-out; -webkit-backface-visibility: hidden; -webkit-perspective: 1000; opacity:0; pointer-events:none; transform: translate3d(-100%, 0, 0); transition: 0.5s}
+#menu.open {transform: translate3d(0, 0, 0); opacity:1; pointer-events:all;}
+#menu ul {list-style:none; margin:0; padding:0;}
+#menu ul li {color:#444; background-color:#FFF; padding:0 15px; line-height:45px; font-size:18px; border-bottom:solid 1px #E7E7E7;}
+#menu ul li:first-child {background-color:#EFEFEF; text-align:center; line-height:35px;}
 
 
 .page{
