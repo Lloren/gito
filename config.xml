@@ -22,7 +22,6 @@
 	<allow-intent href="itms:*" launch-external="true" />
 	<allow-intent href="itms-apps:*" launch-external="true" />
 
-
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
 	<gap:platform name="winphone" />

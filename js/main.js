@@ -330,7 +330,7 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url: "//maps.google.com/mapfiles/ms/icons/green.png"
+					url: "images/green.png"
 				}
 			});
 			markers.start.addListener("dragend", function (event){
@@ -354,7 +354,7 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url:"//maps.google.com/mapfiles/ms/icons/blue.png"
+					url:"images/blue.png"
 				}
 			});
 			markers.stop.addListener("dragend", function(event){
