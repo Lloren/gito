@@ -85,7 +85,7 @@ function service_google(call_num, start, stop){
 		for (var i=0;i<response.routes.length;i++){
 			var route = response.routes[i];
 			var msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
-			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: "N/A", time: "N/A"};
+			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ?", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
 			obj.time_sec = Math.ceil(msec/1000);
@@ -115,7 +115,7 @@ function service_google(call_num, start, stop){
 				var path = new google.maps.Polyline({
 					path:route.overview_path,
 					geodesic:true,
-					strokeColor:'#555555',
+					strokeColor:"#555555",
 					strokeOpacity:1.0,
 					strokeWeight:3,
 					map:map
