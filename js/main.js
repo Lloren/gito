@@ -132,13 +132,15 @@ function service_google(call_num, start, stop){
 }
 
 function service_uber(call_num, start, stop){
-	$.getJSON("/ajax/uber.php", {start_latitude: start.lat, start_longitude: start.lng, end_latitude: stop.lat, end_longitude: stop.lng, server_token: "RyPsVZOnqU4IGpw_F_R1TOPNKbxC8tMgsPPT15lb"}, function (data){
+	$.getJSON(base_url+"/ajax/uber.php", {start_latitude: start.lat, start_longitude: start.lng, end_latitude: stop.lat, end_longitude: stop.lng, server_token: "RyPsVZOnqU4IGpw_F_R1TOPNKbxC8tMgsPPT15lb"}, function (data){
 		if (results_call > call_num)
 			return;
 		var results = [];
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
 			var obj = {icon: '<img src="images/uber_icon.png">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			if (price.surge_multiplier > 1)
+				obj.show_searge = true;
 			if (price.estimate[0] == "$"){
 				var pdata = price.estimate.substr(1);
 				if (pdata.indexOf("-") >= 0){
@@ -189,11 +191,13 @@ function process_lyft(){
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
 			var obj = {icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A"};
-			if (est.estimated_cost_cents_min == est.estimated_cost_cents_min){
+			if (price.primetime_percentage.substr(0, price.primetime_percentage.length-1) > 1)
+				obj.show_searge = true;
+			if (est.estimated_cost_cents_min == est.estimated_cost_cents_max){
 				obj.price = est.estimated_cost_cents_min/100;
 			} else {
-				obj.price_min = est.estimated_cost_cents_min/100;
-				obj.price_max = est.estimated_cost_cents_max/100;
+				obj.price_min = Math.floor(est.estimated_cost_cents_min/100);
+				obj.price_max = Math.ceil(est.estimated_cost_cents_max/100);
 			}
 			results.push(obj);
 		}
@@ -309,6 +313,8 @@ function geo_location(id, geo){
 	geocoder.geocode({location: geo}, function (results, status){
 		if (status == "OK"){
 			localStorage.setItem("location:"+results[0].formatted_address, JSON.stringify(geo));
+
+			console.log(id, results);
 			$(id).val(results[0].formatted_address);
 		}
 	});
@@ -456,6 +462,7 @@ function load_map(){
 	from_autocomplete.bindTo("bounds", map);
 	from_autocomplete.addListener("place_changed", function() {
 		var place = from_autocomplete.getPlace();
+		console.log("new place (from)", place);
 		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
 		$("#from_loc").val(place.formatted_address).next().show();
