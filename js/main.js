@@ -498,6 +498,7 @@ $(function (){
 	
 	navigator.geolocation.getCurrentPosition(function (pos){
 		var loc = pos.coords;
+		console.log("geopos", loc);
 		my_loc = new google.maps.LatLng(loc.latitude, loc.longitude);
 		load_map();
 		var marker = new google.maps.Marker({
@@ -515,6 +516,7 @@ $(function (){
 	}, function (error){
 		$(".my_location").hide();
 		$.getJSON("http://freegeoip.net/json/", function (data){
+			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
 			load_map();
 		});
