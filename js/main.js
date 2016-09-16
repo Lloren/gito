@@ -20,7 +20,7 @@ function get_origin_geo(callback){
 	var ret = $("#from_loc").val();
 	if (ret == "My Location" && my_loc){
 		$("#from_loc").next().show();
-		callback(my_loc, true);
+		callback(my_loc, true, false);
 	} else if (ret != ""){
 		$("#from_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
