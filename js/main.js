@@ -20,7 +20,7 @@ function get_origin_geo(callback){
 	var ret = $("#from_loc").val();
 	if (ret == "My Location" && my_loc){
 		$("#from_loc").next().show();
-		callback(my_loc, true, false);
+		callback({lat: my_loc.lat(), lng: my_loc.lng()}, true);
 	} else if (ret != ""){
 		$("#from_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
@@ -65,9 +65,6 @@ function get_destination_geo(callback){
 	}
 }
 
-function transit_google(start, stop){
-}
-
 function service_google(call_num, start, stop){
 	DirectionsService.route({origin: start, destination: stop, travelMode:"TRANSIT", provideRouteAlternatives: true}, function (response, status){
 		if (results_call > call_num)
@@ -82,6 +79,7 @@ function service_google(call_num, start, stop){
 		}
 		markers.google_routs = [];
 		transit_holder = [];
+		var bounds = new google.maps.LatLngBounds();
 		for (var i=0;i<response.routes.length;i++){
 			var route = response.routes[i];
 			var msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
@@ -98,18 +96,18 @@ function service_google(call_num, start, stop){
 				map: map
 			});
 			markers.google_routs.push(path);
-			var bounds = new google.maps.LatLngBounds();
 			route.overview_path.forEach(function(e) {
 				bounds.extend(e);
 			});
-			map.fitBounds(bounds);
 			obj.route_id = markers.google_routs.length;
 			obj.transit_info = transit_holder.length;
 			transit_holder.push(route.legs[0]);
 			results.push(obj);
 		}
+		map.fitBounds(bounds);
 		returned_results(results, "Transit");
 		DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
+			var bounds = new google.maps.LatLngBounds();
 			for (var i=0;i<response.routes.length;i++){
 				var route = response.routes[i];
 				var path = new google.maps.Polyline({
@@ -121,12 +119,12 @@ function service_google(call_num, start, stop){
 					map:map
 				});
 				markers.google_routs.push(path);
-				var bounds = new google.maps.LatLngBounds();
 				route.overview_path.forEach(function(e){
 					bounds.extend(e);
 				});
-				map.fitBounds(bounds);
+				break;
 			}
+			map.fitBounds(bounds);
 		});
 	});
 }
@@ -140,7 +138,7 @@ function service_uber(call_num, start, stop){
 			var price = data[i];
 			var obj = {icon: '<img src="images/uber_icon.png">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			if (price.surge_multiplier > 1)
-				obj.show_searge = true;
+				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
 				var pdata = price.estimate.substr(1);
 				if (pdata.indexOf("-") >= 0){
@@ -190,9 +188,10 @@ function process_lyft(){
 		var results = [];
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
-			var obj = {icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A"};
-			if (price.primetime_percentage.substr(0, price.primetime_percentage.length-1) > 1)
-				obj.show_searge = true;
+			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
+			var obj = {icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			if (surge_multi > 1)
+				obj.show_surge = true;
 			if (est.estimated_cost_cents_min == est.estimated_cost_cents_max){
 				obj.price = est.estimated_cost_cents_min/100;
 			} else {
@@ -429,7 +428,7 @@ function point2LatLng(point, map) {
 function load_map(){
 
 	var options = {
-		zoom: 12,
+		zoom: 13,
 		disableDefaultUI: true
 	};
 	if (my_loc){
