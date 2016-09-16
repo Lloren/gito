@@ -514,6 +514,7 @@ $(function (){
 		});
 		markers.my_loc = marker;
 		$("#from_loc").val("My Location");
+		get_origin_geo(coded_location);
 	}, function (error){
 		$(".my_location").hide();
 		$.getJSON("http://freegeoip.net/json/", function (data){
