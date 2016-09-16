@@ -498,8 +498,9 @@ $(function (){
 	
 	navigator.geolocation.getCurrentPosition(function (pos){
 		var loc = pos.coords;
-		console.log("geopos", loc);
+		console.log("geopos", loc.latitude, loc.longitude);
 		my_loc = new google.maps.LatLng(loc.latitude, loc.longitude);
+		markers.my_loc = true;
 		load_map();
 		var marker = new google.maps.Marker({
 			position: my_loc,
@@ -511,7 +512,7 @@ $(function (){
 				anchor: new google.maps.Point(17, 17)
 			}
 		});
-		markers.my_loc.push(marker);
+		markers.my_loc = marker;
 		$("#from_loc").val("My Location");
 	}, function (error){
 		$(".my_location").hide();
