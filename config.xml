@@ -66,7 +66,7 @@
 	<preference name="SplashScreenDelay" value="10000" />
 	<preference name="AutoHideSplashScreen" value="false" />-->
 
-	<gap:plugin name="fi.avaus.cordova.geolocation" source="pgb" />
+	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-splashscreen" source="npm" />-->
