@@ -17,8 +17,8 @@ var transit_holder = [];
 var results_call = 0;
 
 function get_origin_geo(callback){
-	var ret = $("#from_loc").val();
-	if (ret == "My Location" && my_loc){
+	var ret = $("#from_loc").val().toLowerCase();
+	if (ret == "my location" && my_loc){
 		$("#from_loc").next().show();
 		callback({lat: my_loc.lat(), lng: my_loc.lng()}, true);
 	} else if (ret != ""){
@@ -43,7 +43,7 @@ function get_origin_geo(callback){
 }
 
 function get_destination_geo(callback){
-	var ret = $("#to_loc").val();
+	var ret = $("#to_loc").val().toLowerCase();
 	if (ret != ""){
 		$("#to_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
@@ -192,11 +192,16 @@ function process_lyft(){
 			var obj = {icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
 			if (surge_multi > 1)
 				obj.show_surge = true;
-			if (est.estimated_cost_cents_min == est.estimated_cost_cents_max){
-				obj.price = est.estimated_cost_cents_min/100;
+			if (est.estimated_cost_cents_max > 0){
+				if (est.estimated_cost_cents_min == est.estimated_cost_cents_max){
+					obj.price = est.estimated_cost_cents_min/100;
+				} else {
+					obj.price_min = Math.floor(est.estimated_cost_cents_min/100);
+					obj.price_max = Math.ceil(est.estimated_cost_cents_max/100);
+				}
 			} else {
-				obj.price_min = Math.floor(est.estimated_cost_cents_min/100);
-				obj.price_max = Math.ceil(est.estimated_cost_cents_max/100);
+				obj.price = " ?";
+				obj.price_min = 999999;
 			}
 			results.push(obj);
 		}
@@ -464,7 +469,10 @@ function load_map(){
 		console.log("new place (from)", place);
 		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
-		$("#from_loc").val(place.formatted_address).next().show();
+		var addr = place.formatted_address;
+		if (place.address_components[0].types != "street_number")
+			addr = place.name;
+		$("#from_loc").val(addr).next().show();
 	});
 
 	to_autocomplete = new google.maps.places.Autocomplete(document.getElementById("to_loc"));
@@ -473,7 +481,10 @@ function load_map(){
 		var place = to_autocomplete.getPlace();
 		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
-		$("#to_loc").val(place.formatted_address).next().show();
+		var addr = place.formatted_address;
+		if (place.address_components[0].types != "street_number")
+			addr = place.name;
+		$("#to_loc").val(addr).next().show();
 	});
 }
 
