@@ -70,7 +70,7 @@ function service_google(call_num, start, stop){
 		if (results_call > call_num)
 			return;
 		//console.log(JSON.stringify(response));
-		//console.log(status, response);
+		console.log(status, response);
 		var results = [];
 		if (markers.google_routs){
 			for (var i=0;i<markers.google_routs.length;i++){
@@ -389,6 +389,7 @@ function run_services(){
 	if (!run_handel){
 		run_handel = setTimeout(function (){
 			if (start_location && stop_location){
+				$("#search_animation").show();
 				++results_call;
 				bounds = new google.maps.LatLngBounds();
 				bounds.extend(new google.maps.LatLng(start_location));
@@ -603,7 +604,10 @@ $(function (){
 		for (var i=0;i<transit_holder[info_id].steps.length;i++){
 			var step = transit_holder[info_id].steps[i];
 			if (step.transit){
-				var action = "Take "+step.transit.line.vehicle.name+" "+step.transit.line.short_name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
+				var name = step.transit.line.short_name;
+				if (step.transit.line.vehicle.name == "Train")
+					name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
+				var action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
 			} else {
 				var action = step.instructions;
 			}
