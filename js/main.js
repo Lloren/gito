@@ -5,6 +5,7 @@ var geocoder;
 var bounds;
 var markers = {};
 var my_loc = false;
+var full_bounds = false;
 
 var DirectionsService = new google.maps.DirectionsService();
 var from_autocomplete;
@@ -15,6 +16,7 @@ var run_handel = false;
 var transit_holder = [];
 
 var results_call = 0;
+var results_to_return = 4;
 
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
@@ -125,6 +127,7 @@ function service_google(call_num, start, stop){
 				break;
 			}
 			map.fitBounds(bounds);
+			full_bounds = bounds;
 		});
 	});
 }
@@ -254,6 +257,10 @@ function service_lyft(call_num, start, stop){
 }
 
 function returned_results(results, over_name){
+	--results_to_return;
+	if (results_to_return <= 0){
+		minify_rout();
+	}
 	if (results){
 		if (results.length > 1){
 			results[0].sub_results = format_results(results);
@@ -397,6 +404,7 @@ function run_services(){
 				map.fitBounds(bounds);
 				map.panToBounds(bounds);
 				$("#results").html("");
+				results_to_return = 4;
 				service_google(results_call, start_location, stop_location);
 				service_uber(results_call, start_location, stop_location);
 				service_tff(results_call, start_location, stop_location);
@@ -429,6 +437,24 @@ function point2LatLng(point, map) {
 	var scale = Math.pow(2, map.getZoom());
 	var worldPoint = new google.maps.Point(point.x / scale + bottomLeft.x, point.y / scale + topRight.y);
 	return map.getProjection().fromPointToLatLng(worldPoint);
+}
+
+function minify_rout(pow){
+	pow = pow || 1;
+	var lat1 = map.getBounds().getNorthEast().lat();
+	var lat2 = map.getBounds().getSouthWest().lat();
+	var lat3 = lat2 - (lat1 - lat2)*pow;
+	var bounds = map.getBounds();
+	bounds.extend(new google.maps.LatLng({lat: lat3, lng: map.getBounds().getNorthEast().lng()}));
+	map.fitBounds(bounds);
+	/*setTimeout(function (){
+		map.setZoom(map.getZoom()+1);
+	}, 1);*/
+}
+
+function full_rout(){
+	if (full_bounds)
+		map.fitBounds(full_bounds);
 }
 
 function load_map(){
@@ -580,6 +606,11 @@ $(function (){
 	});
 
 	click_event("#results_tab_handle", function (){
+		if ($("#results_tab").hasClass("hidden")){
+			minify_rout();
+		} else {
+			full_rout();
+		}
 		$("#results_tab").toggleClass("hidden");
 	});
 

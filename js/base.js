@@ -463,5 +463,6 @@ function onunload(){
 
 $(function () {
 	Origami.fastclick(document.body);
-	on_ready();
+	if (typeof window.cordova == "undefined")
+		on_ready();
 });
