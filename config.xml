@@ -3,7 +3,7 @@
 			xmlns:android	= "http://schemas.android.com/apk/res/android"
 			id				= "com.mooky.app"
 			version			= "1.0.0">
-	<name>Mooky</name>
+	<name>Mooky Dev</name>
 	<description>
 	</description>
 	<author email="support@mooky.com" href="http://mooky.com">

@@ -23,6 +23,14 @@
 		var admob_code = "";
 		var admob_code_droid = "";
 		var fb_app_id = false;
+
+		window.onerror = function(message, url, lineNumber) {
+			if (dev)
+				alert(message+"\r\n"+url+"\r\n"+lineNumber);
+			else
+				$.get("http://www.2dio.com/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
+			return true;
+		};
 	</script>
 	<!--<script src="cordova.js"></script>-->
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key=AIzaSyAmU39uI5FDOZs8beBgV4v-1Zm1Udlp1eE"></script>
