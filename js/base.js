@@ -386,12 +386,10 @@ function on_ready(){
 			templates[$(data).data("key")] = $(data).html();
 		});
 		$("#templates").remove();
-		alert(device);
+		alert(ret_dump(device));
 		if (typeof device != 'undefined'){
 			navigator.splashscreen.show();
 			thePlatform = device.platform.toLowerCase();
-
-			storage_location = cordova.file.dataDirectory;
 
 			localStorage = window.localStorage;
 
