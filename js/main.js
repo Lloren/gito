@@ -6,6 +6,7 @@ var bounds;
 var markers = {};
 var my_loc = false;
 var full_bounds = false;
+var user_moved_map = false;
 
 var DirectionsService = new google.maps.DirectionsService();
 var from_autocomplete;
@@ -85,7 +86,7 @@ function service_google(call_num, start, stop){
 		for (var i=0;i<response.routes.length;i++){
 			var route = response.routes[i];
 			var msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
-			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ?", time: "N/A"};
+			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ---", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
 			obj.time_sec = Math.ceil(msec/1000);
@@ -203,7 +204,7 @@ function process_lyft(){
 					obj.price_max = Math.ceil(est.estimated_cost_cents_max/100);
 				}
 			} else {
-				obj.price = " ?";
+				obj.price = " ---";
 				obj.price_min = 999999;
 			}
 			results.push(obj);
@@ -525,7 +526,7 @@ function close_menu(){
 	$("#menu-overlay").removeClass("enabled");
 }
 
-$(function (){
+function startup(){
 	if (!dev)
 		$(".dev").hide();
 	if (!has_internet){
@@ -685,4 +686,4 @@ $(function (){
 	click_event("#clear_cache", function (e){
 		localStorage.clear();
 	});
-});
+};

@@ -378,60 +378,66 @@ function admanager() {
 }
 
 function on_ready(){
-	thePlatform = "";
-	$("#templates>div").each(function (i, data){
-		templates[$(data).data("key")] = $(data).html();
-	});
-	$("#templates").remove();
-	if (typeof device != 'undefined'){
-		navigator.splashscreen.show();
-		thePlatform = device.platform.toLowerCase();
+	console.log("pre_ready");
+	setTimeout(function (){
+		console.log("ready_run");
+		thePlatform = "";
+		$("#templates>div").each(function (i, data){
+			templates[$(data).data("key")] = $(data).html();
+		});
+		$("#templates").remove();
+		if (typeof device != 'undefined'){
+			navigator.splashscreen.show();
+			thePlatform = device.platform.toLowerCase();
 
-		storage_location = cordova.file.dataDirectory;
+			storage_location = cordova.file.dataDirectory;
 
-		localStorage = window.localStorage;
+			localStorage = window.localStorage;
 
-		gaPlugin = window.plugins.gaPlugin;
+			gaPlugin = window.plugins.gaPlugin;
 
-		gaPlugin.init(false, false, dev?"":ga_code, 10);
-		track("Load", "load");
+			gaPlugin.init(false, false, dev?"":ga_code, 10);
+			track("Load", "load");
 
-		has_internet = navigator.connection.type != Connection.NONE;
+			has_internet = navigator.connection.type != Connection.NONE;
 
-		if(ads){
-			ad_manager = new admanager();
-			ad_manager.init();
-		}
+			if(ads){
+				ad_manager = new admanager();
+				ad_manager.init();
+			}
 
-		start_splash_remove();
+			start_splash_remove();
 
-		document.body.className = "v"+device.version.substr(0, 1)+" version"+device.version.replace(/\./g, "_");
+			document.body.className = "v"+device.version.substr(0, 1)+" version"+device.version.replace(/\./g, "_");
 
-		uuid = device.uuid;
-
-		//if (fb_app_id)
-		//	FB.init({appId: fb_app_id, nativeInterface: CDV.FB, useCachedDialogs: false});
-	} else {
-		thePlatform = "non-gap";
-		has_internet = true;
-		if (fb_app_id){
-			$("body").prepend('<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId='+fb_app_id+'&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script>');
-		}
-	}
-	if (thePlatform == "android"){
-		document.body.id = "android";
-	} else if (thePlatform == "wince"){
-		document.body.id = "win";
-	} else if (thePlatform == "non-gap"){
-		document.body.id = "non-gap";
-	} else if (thePlatform == "ios"){
-		document.body.id = "ios";
-		uuid = window.localStorage.getItem("set_uuid");
-		if (uuid === null){
 			uuid = device.uuid;
-			window.localStorage.setItem("set_uuid", uuid);
+
+			//if (fb_app_id)
+			//	FB.init({appId: fb_app_id, nativeInterface: CDV.FB, useCachedDialogs: false});
+		} else {
+			thePlatform = "non-gap";
+			has_internet = true;
+			if (fb_app_id){
+				$("body").prepend('<div id="fb-root"></div><script>(function(d, s, id) {var js, fjs = d.getElementsByTagName(s)[0];if (d.getElementById(id)) return;js = d.createElement(s); js.id = id;js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId='+fb_app_id+'&version=v2.0";fjs.parentNode.insertBefore(js, fjs);}(document, "script", "facebook-jssdk"));</script>');
+			}
 		}
-	}
+		if (thePlatform == "android"){
+			document.body.id = "android";
+		} else if (thePlatform == "wince"){
+			document.body.id = "win";
+		} else if (thePlatform == "non-gap"){
+			document.body.id = "non-gap";
+		} else if (thePlatform == "ios"){
+			document.body.id = "ios";
+			uuid = window.localStorage.getItem("set_uuid");
+			if (uuid === null){
+				uuid = device.uuid;
+				window.localStorage.setItem("set_uuid", uuid);
+			}
+		}
+		if (typeof startup === "function")
+			startup();
+	}, 1);
 }
 
 function online_check(){
