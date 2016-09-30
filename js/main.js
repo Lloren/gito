@@ -514,6 +514,8 @@ function load_map(){
 			addr = place.name;
 		$("#to_loc").val(addr).next().show();
 	});
+	
+	start_splash_remove();
 }
 
 function open_menu(){

@@ -151,10 +151,17 @@ function open_modal(options){
 	$("#disable-overlay").addClass("enabled modal");
 }
 
-function open_modala(text){
+function open_modala(text, dismiss){
+	dismiss = dismiss || false;
 	$("#modal h1").html(text);
-	$("#modal").addClass("loading").show();
-	$("#disable-overlay").addClass("enabled modal");
+	$("#modal").addClass("loading").css('display', 'table');
+	$("#disable-overlay").off().addClass("enabled modal");
+	if (dismiss){
+		$("#disable-overlay").on("touchend", function(e){
+			$("#modal").hide();
+			$("#disable-overlay").removeClass("enabled modal");
+		});
+	}
 }
 
 function close_modala(){
@@ -377,17 +384,22 @@ function admanager() {
 	};
 }
 
+var started = false;
 function on_ready(){
-	console.log("pre_ready");
+	console.log("on_ready");
 	setTimeout(function (){
-		console.log("ready_run");
+		console.log("on_ready2");
+		if (started){
+			console.log("double start catch");
+			return;
+		}
+		started = true;
 		thePlatform = "";
 		$("#templates>div").each(function (i, data){
 			templates[$(data).data("key")] = $(data).html();
 		});
 		$("#templates").remove();
-		alert(ret_dump(device));
-		if (typeof device != 'undefined'){
+		if (typeof device != "undefined"){
 			navigator.splashscreen.show();
 			thePlatform = device.platform.toLowerCase();
 
@@ -407,7 +419,8 @@ function on_ready(){
 
 			start_splash_remove();
 
-			document.body.className = "v"+device.version.substr(0, 1)+" version"+device.version.replace(/\./g, "_");
+			var ver = device.version.split('.');
+			document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
 
 			uuid = device.uuid;
 
@@ -456,7 +469,6 @@ function onLoad(){
 	document.addEventListener("offline", function (){
 		has_internet = navigator.connection.type != Connection.NONE;
 	}, false);
-	start_splash_remove();
 }
 
 function onunload(){

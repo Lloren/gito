@@ -60,7 +60,8 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 
 .clearer{
 	position: absolute;
-	top: 17px;
+	padding: 10px;
+	top: 7px;
 	right: 10px;
 	font-size: 20px;
 	display: none;
