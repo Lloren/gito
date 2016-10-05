@@ -6,7 +6,6 @@ var has_internet = false;
 var uuid = "comp";
 var ad_manager = false;
 var thePlatform = "";
-var localStorage;
 var templates = {};
 
 var last_touch = {x: 0, y:0, trigger:""};
@@ -182,7 +181,7 @@ function track(catigory, action, label, value){
 var splash_checks = 2;
 function start_splash_remove(){
 	--splash_checks;
-	if (splash_checks <= 0){
+	if (splash_checks <= 0 && navigator.splashscreen){
 		setTimeout(function () { navigator.splashscreen.hide(); }, 100);
 	}
 }
@@ -402,8 +401,6 @@ function on_ready(){
 		if (typeof device != "undefined"){
 			navigator.splashscreen.show();
 			thePlatform = device.platform.toLowerCase();
-
-			localStorage = window.localStorage;
 
 			gaPlugin = window.plugins.gaPlugin;
 

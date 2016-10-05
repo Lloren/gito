@@ -459,6 +459,7 @@ function full_rout(){
 }
 
 function load_map(){
+	console.log("load_map");
 
 	var options = {
 		zoom: 13,
@@ -489,6 +490,8 @@ function load_map(){
 
 	$(".page").hide();
 	$("#map").show();
+	
+	start_splash_remove();
 
 	from_autocomplete = new google.maps.places.Autocomplete(document.getElementById("from_loc"));
 	from_autocomplete.bindTo("bounds", map);
@@ -514,8 +517,8 @@ function load_map(){
 			addr = place.name;
 		$("#to_loc").val(addr).next().show();
 	});
-	
-	start_splash_remove();
+
+	console.log("finish load_map");
 }
 
 function open_menu(){
@@ -561,7 +564,7 @@ function startup(){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
 			load_map();
-		});
+		}, function (err){console.log(err)});
 		console.log(error);
 	});
 
