@@ -169,12 +169,12 @@ function close_modala(){
 }
 
 function track(catigory, action, label, value){
-	if (gaPlugin){
+	if (GA){
 		catigory = catigory || "Hit";
 		action = action || catigory;
 		label = label || action;
 		value = value || 1;
-		gaPlugin.trackEvent(false, false, catigory, action, label, value);
+		GA.trackEvent(catigory, action, label, value);
 	}
 }
 
@@ -402,9 +402,7 @@ function on_ready(){
 			navigator.splashscreen.show();
 			thePlatform = device.platform.toLowerCase();
 
-			gaPlugin = window.plugins.gaPlugin;
-
-			gaPlugin.init(false, false, dev?"":ga_code, 10);
+			GA.startTrackerWithId(dev?"":ga_code);
 			track("Load", "load");
 
 			has_internet = navigator.connection.type != Connection.NONE;
