@@ -73,7 +73,7 @@ function service_google(call_num, start, stop){
 		if (results_call > call_num)
 			return;
 		//console.log(JSON.stringify(response));
-		console.log(status, response);
+		console.log("google route results", status, response);
 		var results = [];
 		if (markers.google_routs){
 			for (var i=0;i<markers.google_routs.length;i++){
@@ -87,7 +87,8 @@ function service_google(call_num, start, stop){
 			var route = response.routes[i];
 			var msec = 0;
 			if (route.legs[0].departure_time)
-				msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
+				continue;
+			msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
 			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ---", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
@@ -328,7 +329,7 @@ function geo_location(id, geo){
 		if (status == "OK"){
 			localStorage.setItem("location:"+results[0].formatted_address, JSON.stringify(geo));
 
-			console.log(id, results);
+			console.log("geo results", id, results);
 			$(id).val(results[0].formatted_address);
 		}
 	});
@@ -337,7 +338,7 @@ function geo_location(id, geo){
 var start_location = false;
 var stop_location = false;
 function coded_location(pos, start, trigger){
-	console.log(pos, start, trigger);
+	console.log("coded location", pos, start, trigger);
 	if (!pos){
 		return;
 	} else if (start){
@@ -507,8 +508,6 @@ function load_map(){
 			if (place.address_components[0].types != "street_number")
 				addr = place.name;
 			$("#from_loc").val(addr).next().show();
-		} else {
-			open_modal({title: "Error", content: "Place not found."});
 		}
 	});
 
@@ -516,6 +515,7 @@ function load_map(){
 	to_autocomplete.bindTo("bounds", map);
 	to_autocomplete.addListener("place_changed", function() {
 		var place = to_autocomplete.getPlace();
+		console.log("new place (to)", place);
 		if (place.geometry){
 			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
@@ -523,8 +523,6 @@ function load_map(){
 			if (place.address_components[0].types != "street_number")
 				addr = place.name;
 			$("#to_loc").val(addr).next().show();
-		} else {
-			open_modal({title: "Error", content: "Place not found."});
 		}
 	});
 
@@ -574,8 +572,8 @@ function startup(){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
 			load_map();
-		}, function (err){console.log(err)});
-		console.log(error);
+		}, function (err){console.log("call error", err)});
+		console.log("geo error", error);
 	});
 
 	click_event(".do_lookup", function (){
@@ -645,7 +643,7 @@ function startup(){
 
 	click_event(".transit_info", function (e){
 		var info_id = $(e.currentTarget).data("transit_info_id");
-		console.log(transit_holder[info_id]);
+		console.log("trasit info", transit_holder[info_id]);
 
 		var steps_html = [];
 		for (var i=0;i<transit_holder[info_id].steps.length;i++){
@@ -701,4 +699,4 @@ function startup(){
 	click_event("#clear_cache", function (e){
 		localStorage.clear();
 	});
-};
+}

@@ -29,8 +29,7 @@
 		window.onerror = function(message, url, lineNumber) {
 			if (dev)
 				alert(message+"\r\n"+url+"\r\n"+lineNumber);
-			else
-				$.get("http://www.2dio.com/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
+			$.get("http://www.2dio.com/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
 			return true;
 		};
 	</script>
