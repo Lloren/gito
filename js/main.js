@@ -85,7 +85,9 @@ function service_google(call_num, start, stop){
 		var bounds = new google.maps.LatLngBounds();
 		for (var i=0;i<response.routes.length;i++){
 			var route = response.routes[i];
-			var msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
+			var msec = 0;
+			if (route.legs[0].departure_time)
+				msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
 			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ---", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
@@ -498,24 +500,32 @@ function load_map(){
 	from_autocomplete.addListener("place_changed", function() {
 		var place = from_autocomplete.getPlace();
 		console.log("new place (from)", place);
-		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
-		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
-		var addr = place.formatted_address;
-		if (place.address_components[0].types != "street_number")
-			addr = place.name;
-		$("#from_loc").val(addr).next().show();
+		if (place.geometry){
+			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
+			var addr = place.formatted_address;
+			if (place.address_components[0].types != "street_number")
+				addr = place.name;
+			$("#from_loc").val(addr).next().show();
+		} else {
+			open_modal({title: "Error", content: "Place not found."});
+		}
 	});
 
 	to_autocomplete = new google.maps.places.Autocomplete(document.getElementById("to_loc"));
 	to_autocomplete.bindTo("bounds", map);
 	to_autocomplete.addListener("place_changed", function() {
 		var place = to_autocomplete.getPlace();
-		localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
-		coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
-		var addr = place.formatted_address;
-		if (place.address_components[0].types != "street_number")
-			addr = place.name;
-		$("#to_loc").val(addr).next().show();
+		if (place.geometry){
+			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
+			var addr = place.formatted_address;
+			if (place.address_components[0].types != "street_number")
+				addr = place.name;
+			$("#to_loc").val(addr).next().show();
+		} else {
+			open_modal({title: "Error", content: "Place not found."});
+		}
 	});
 
 	console.log("finish load_map");
