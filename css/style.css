@@ -13,6 +13,10 @@ body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0;
 	color:grey;
 }
 
+.gmnoprint {
+	opacity: 1 !important;
+}
+
 .clear {clear:both;}
 
 input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; -webkit-user-select:initial;*/}

@@ -86,10 +86,10 @@ function service_google(call_num, start, stop){
 		for (var i=0;i<response.routes.length;i++){
 			var route = response.routes[i];
 			var msec = 0;
-			if (route.legs[0].departure_time)
+			if (typeof route.legs[0].departure_time == "undefined")
 				continue;
 			msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
-			var obj = {icon: '<i class="fa fa-bus" aria-hidden="true" style="color:grey"></i>', name: "Transit", price: " ---", time: "N/A"};
+			var obj = {icon: '<img src="images/icons2/CUSTOM%20BUS%20ICON.v2.svg">', name: "Transit", price: " ---", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
 			obj.time_sec = Math.ceil(msec/1000);
@@ -175,7 +175,7 @@ function service_tff(call_num, start, stop){
 			if (results_call > call_num)
 				return;
 			if (data.status == "OK"){
-				returned_results([{icon: '<i class="fa fa-taxi" aria-hidden="true"></i>', name: "Taxi", price: data.total_fare}]);
+				returned_results([{icon: '<img src="images/icons2/CUSTOM%20TAXI%20ICON.v2.svg">', name: "Taxi", price: data.total_fare}]);
 			}
 		}
 	});
@@ -351,7 +351,10 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url: "images/green.png"
+					url: "images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg",
+					size: new google.maps.Size(10, 10),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(5, 5)
 				}
 			});
 			markers.start.addListener("dragend", function (event){
@@ -375,7 +378,10 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url:"images/blue.png"
+					url:"images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg",
+					size: new google.maps.Size(10, 10),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(5, 5)
 				}
 			});
 			markers.stop.addListener("dragend", function(event){
