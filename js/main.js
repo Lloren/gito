@@ -19,6 +19,10 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
+var user_settings = {
+	sort: "time"
+};
+
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
 	if (ret == "my location" && my_loc){
@@ -304,7 +308,8 @@ function format_results(results){
 }
 
 function sort_results(){
-	var sorter = $(".sort.selected").data("type");
+	console.log("sorting");
+	var sorter = user_settings.sort;
 
 	$(".sub_results").each(function (){
 		var t = $(this);
@@ -318,7 +323,7 @@ function sort_results(){
 		t.siblings(".time").html(top.children(".time").html());
 	});
 
-	var result = $("#results > .result").sort(function (a, b){
+	var result = $("#results > .result, .result_group").sort(function (a, b){
 		return $(a).data(sorter) - $(b).data(sorter);
 	});
 	$("#results").append(result);
@@ -449,7 +454,8 @@ function point2LatLng(point, map) {
 	return map.getProjection().fromPointToLatLng(worldPoint);
 }
 
-function minify_rout(pow){
+function minify_rout(pow){//turned off, remove if determined to not use
+	return;
 	pow = pow || 1;
 	var lat1 = map.getBounds().getNorthEast().lat();
 	var lat2 = map.getBounds().getSouthWest().lat();
@@ -462,7 +468,8 @@ function minify_rout(pow){
 	}, 1);*/
 }
 
-function full_rout(){
+function full_rout(){//turned off, remove if determined to not use
+	return;
 	if (full_bounds)
 		map.fitBounds(full_bounds);
 }
@@ -634,17 +641,11 @@ function startup(){
 		$("#results_tab").toggleClass("hidden");
 	});
 
-	click_event(".sort", function (e){
-		$(".sort").removeClass("selected");
-		$(e.currentTarget).addClass("selected");
-		sort_results();
-	});
-
 	click_event(".result_expander .expander", function (e){
-		$(e.currentTarget).parent().removeClass("result_expander").addClass("result_contractor").find(".sub_results").slideDown(200);
+		$(e.currentTarget).parent().removeClass("result_expander").addClass("result_contractor").next(".sub_results").slideDown(200);
 	}, true);
 	click_event(".result_contractor .expander", function (e){
-		$(e.currentTarget).parent().removeClass("result_contractor").addClass("result_expander").find(".sub_results").slideUp(200);
+		$(e.currentTarget).parent().removeClass("result_contractor").addClass("result_expander").next(".sub_results").slideUp(200);
 	}, true);
 
 	click_event(".transit_info", function (e){
@@ -671,6 +672,24 @@ function startup(){
 		$("#transit_info").show();
 	}, true);
 
+	click_event(".settings_toggle", function (e){
+		$(e.currentTarget).toggleClass("open");
+		if ($(e.currentTarget).hasClass("open")){
+			$("#map_settings").removeClass("hidden");
+		} else {
+			$("#map_settings").addClass("hidden");
+		}
+	});
+
+	click_event(".toggler", function (e){
+		$(e.currentTarget).toggleClass("open");
+		if ($(e.currentTarget).hasClass("open")){
+			$(e.currentTarget).next(".options").slideDown(200);
+		} else {
+			$(e.currentTarget).next(".options").slideUp(200);
+		}
+	});
+
 	click_event(".back", function (e){
 		$(".page").hide();
 		$("#"+$(e.currentTarget).data("back")).show();
@@ -684,6 +703,29 @@ function startup(){
 		close_menu();
 	});
 
+	
+	
+	$(".selection_container").each(function (){
+		var key = $(this).data("key");
+		var opt = $(this).find("[data-key='"+user_settings[key]+"']");
+		$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+		opt.hide();
+	});
+	click_event(".option", function (e){
+		var opt = $(e.currentTarget);
+		if (opt.hasClass("selected"))
+			return;
+		var cont = opt.parents(".selection_container");
+		cont.find(".option.selected").html(opt.html());
+		cont.find(".option").show();
+		user_settings[cont.data("key")] = opt.data("key");
+		opt.hide();
+		cont.find(".toggler").removeClass("open");
+		cont.find(".options").slideUp(200);
+		if (jQuery.isFunction(window[cont.data("trigger")]))
+			window[cont.data("trigger")]();
+	});
+	
 
 
 	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {

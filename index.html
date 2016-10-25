@@ -9,7 +9,7 @@
 	<meta name="author" content="" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *">
+	<meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; media-src *; img-src * data: 'unsafe-inline'">
 
 	<link rel="stylesheet" type="text/css" href="css/font-awesome-4.6.3.min.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -73,11 +73,13 @@
 		</div>
 	</div>
 	<div data-key="overload_result">
-		<div class="result result_expander">
-			<div class="icon expander">> ##icon##</div>
-			<div class="name expander">##name##</div>
-			<div class="price expander">##price##</div>
-			<div class="time expander">##time##</div>
+		<div class="result_group">
+			<div class="result result_expander">
+				<div class="icon expander"><img class="img_toggle" src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg"> ##icon##</div>
+				<div class="name expander">##name##</div>
+				<div class="price expander">##price##</div>
+				<div class="time expander">##time##</div>
+			</div>
 			<div class="sub_results">##sub_results##</div>
 		</div>
 	</div>
@@ -117,9 +119,12 @@
 </div>
 
 <div id="map" class="page">
-	<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 170px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
+	<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 140px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
 		<div style="height: 40px; text-align: center; margin:2px;">
 			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+		</div>
+		<div class="settings_toggle" style="position: absolute; right:5px; top:2px;">
+			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px;">
 		</div>
 		<div>
 			<div style="position: relative;">
@@ -138,27 +143,36 @@
 				<i class="fa fa-times clearer to_clear"></i>
 			</div>
 		</div>
-		<div id="sorts" style="clear: both;">
-			<!--<div class="sort">
-				<span>Filter by</span><br />
-				Modality
-			</div>-->
-			<div class="sort selected" data-type="price">
-				<span>sort by</span><br />
-				Price
-			</div>
-			<div class="sort" data-type="time">
-				<span>sort by</span><br />
-				Time
+		<div id="map_settings" class="hidden">
+			<h2>Map/Search Settings</h2>
+			<div class="selection_container" data-key="sort" data-trigger="sort_results">
+				<div class="toggler">
+					<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
+					<div class="option selected">
+
+					</div>
+				</div>
+				<div class="options">
+					<div class="option" data-key="price">
+						<div>Sort by</div>
+						Price
+					</div>
+					<div class="option" data-key="time">
+						<div>Sort by</div>
+						Time
+					</div>
+				</div>
 			</div>
 		</div>
 		<div style="position: relative; width: 100%;">
 			<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 		</div>
 	</div>
-	<div id="map-canvas" style="top :170px; height: calc(100% - 150px); width: 100%;"></div>
+	<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
 	<div id="results_tab">
-		<div id="results_tab_handle">Results</div>
+		<div id="results_tab_handle">
+			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />
+		</div>
 		<div id="results">
 
 		</div>

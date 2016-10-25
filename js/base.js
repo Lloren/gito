@@ -383,6 +383,28 @@ function admanager() {
 	};
 }
 
+function device_info(){
+	var dev = {};
+	if (typeof device != "undefined"){
+		dev.model = device.model;
+		dev.platform = device.platform;
+		dev.version = device.version;
+	} else {
+		dev.model = "comp";
+		dev.platform = "unknown";
+		dev.version = navigator.userAgent;
+	}
+	return dev;
+}
+
+function app_info(){
+	if (!AppVersion){
+		AppVersion.version = "0.0.0";
+		AppVersion.build = "1";
+	}
+	return {name: app, version: AppVersion.version, build: AppVersion.build, phone_id: uuid, device: device_info()};
+}
+
 var started = false;
 function on_ready(){
 	console.log("on_ready");

@@ -76,32 +76,45 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	transform: translate3d(0, 0, 0);
 	position: absolute;
 	bottom: 0;
-	background: rgba(255, 255, 255, 0.8);
 	width: 100%;
 }
 #results_tab.hidden{
-	transform: translate3d(0, 100%, 0);
+	transform: translate3d(calc(100% - 35px), 0, 0);
 }
 #results_tab_handle{
 	position: absolute;
-	top: -28px;
-	background: white;
-	padding: 5px;
+	top: -38px;
+	right: 0px;
+}
+.hidden #results_tab_handle{
+	left: 0px;
+}
+.hidden #results_tab_handle img{
+	transform: rotate(-90deg);
+}
+#results_tab_handle img{
+	width: 35px;
+	transition: 200ms;
 }
 
 #results{
 	max-height: 300px;
-	overflow: auto;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .result{
+	position: relative;
+	height: 25px;
 	overflow: hidden;
 	background: white;
 	margin-bottom: 5px;
-	width: 98%;
+	padding-left: 30px;
+	width: 100%;
 	margin-left: 1%;
-	border-left: 2px solid #ff8806;
-	border-bottom: 1px solid #ffd4a5;
+	border: 1px solid #ff8806;
+	border-bottom-left-radius: 20px;
+	border-top-left-radius: 20px;
 }
 .result > div{
 	display: inline-block;
@@ -109,9 +122,14 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	overflow: hidden;
 	padding: 0 2px;
 }
-.result .sub_results{
+.sub_results{
 	width: 100%;
 	display: none;
+}
+.sub_results .result, #results > .result {
+	 margin-left: 28px;
+	 padding-left: 6px;
+	 width: calc(100% - 23px)
 }
 
 .icon i {
@@ -128,6 +146,69 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	vertical-align: middle;
 }
 
+.result img.img_toggle{
+	width: 25px;
+	position: absolute;
+	left: -1px;
+	top: -1px;
+	transition: 200ms;
+}
+
+.result.result_expander img.img_toggle{
+	transform: rotate(-90deg);
+}
+
+
+.settings_toggle img{
+	transition: 200ms;
+}
+.settings_toggle.open img{
+	transform: rotate(-90deg);
+}
+#map_settings{
+	position: fixed;
+	z-index: 100;
+	transition: 200ms;
+	transform: translate3d(0, 0, 0);
+	top: 44px;
+	bottom: 0;
+	width: 100%;
+	background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);
+}
+#map_settings.hidden{
+	transform: translate3d(100%, 0, 0);
+}
+
+.selection_container{
+
+}
+.toggler{
+
+}
+.toggler img{
+	width: 40px;
+	transition: 200ms;
+	transform: rotate(-90deg);
+	float: left;
+}
+.toggler.open img{
+	width: 40px;
+	transition: 200ms;
+	transform: rotate(0deg);
+}
+.options{
+	display: none;
+	padding-left: 40px;
+}
+.option{
+	font-size: 1.4em;
+}
+.option.selected{
+	color: white;
+}
+.option div{
+	font-size: 0.8em;
+}
 
 .sort{
 	display: inline-block;
