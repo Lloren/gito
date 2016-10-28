@@ -63,14 +63,11 @@ function hide_keyboard() {
 		document.body.appendChild(field);
 		//adding onfocus event handler for out temp field
 		field.onfocus = function(){
-			//this timeout of 200ms is nessasary for Android 2.3.x
+			field.setAttribute('style', 'display:none;');
 			setTimeout(function() {
-				field.setAttribute('style', 'display:none;');
-				setTimeout(function() {
-					document.body.removeChild(field);
-					document.body.focus();
-				}, 14);
-			}, 200);
+				document.body.removeChild(field);
+				document.body.focus();
+			}, 14);
 		};
 		//focusing it
 		field.focus();

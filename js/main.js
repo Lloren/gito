@@ -20,7 +20,7 @@ var results_call = 0;
 var results_to_return = 4;
 
 var user_settings = {
-	sort: "time"
+	sort: "price"
 };
 
 function get_origin_geo(callback){
@@ -114,7 +114,10 @@ function service_google(call_num, start, stop){
 			transit_holder.push(route.legs[0]);
 			results.push(obj);
 		}
-		map.fitBounds(bounds);
+		map.panTo(bounds.getCenter());
+		google.maps.event.addListenerOnce(map, 'idle', function() {
+			map.fitBounds(bounds);
+		});
 		returned_results(results, "Transit");
 		DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
 			var bounds = new google.maps.LatLngBounds();
@@ -134,14 +137,17 @@ function service_google(call_num, start, stop){
 				});
 				break;
 			}
-			map.fitBounds(bounds);
+			map.panTo(bounds.getCenter());
+			google.maps.event.addListenerOnce(map, 'idle', function() {
+				map.fitBounds(bounds);
+			});
 			full_bounds = bounds;
 		});
 	});
 }
 
 function service_uber(call_num, start, stop){
-	$.getJSON(base_url+"/ajax/uber.php", {start_latitude: start.lat, start_longitude: start.lng, end_latitude: stop.lat, end_longitude: stop.lng, server_token: "RyPsVZOnqU4IGpw_F_R1TOPNKbxC8tMgsPPT15lb"}, function (data){
+	$.getJSON(base_url+"/ajax/uber.php", {start_latitude: start.lat, start_longitude: start.lng, end_latitude: stop.lat, end_longitude: stop.lng}, function (data){
 		if (results_call > call_num)
 			return;
 		var results = [];
@@ -163,12 +169,15 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
+			obj.link = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
 	});
 }
 
+//https://api.taxifarefinder.com/businesses?key=<TFF API KEY>&entity_handle=Boston
+//https://api.taxifarefinder.com/entity?key=<TFF API KEY>&location=42.356261,-71.065334
 function service_tff(call_num, start, stop){
 	$.ajax({
 		dataType: "jsonp",
@@ -189,7 +198,7 @@ var lyft_token = false;
 var lyft_eta_data = false;
 var lyft_cost_data = false;
 
-function process_lyft(){
+function process_lyft(call_data){
 	if (lyft_eta_data && lyft_cost_data){
 		var etas = {};
 		for (var i=0;i<lyft_eta_data.eta_estimates.length;i++){
@@ -214,6 +223,7 @@ function process_lyft(){
 				obj.price = " ---";
 				obj.price_min = 999999;
 			}
+			obj.link = "lyft://ridetype?id="+est.ride_type+"&pickup[latitude]="+call_data.start_lat+"&pickup[longitude]="+call_data.start_lng+"&destination[latitude]="+call_data.end_lat+"&destination[longitude]="+call_data.end_lng;
 			results.push(obj);
 		}
 		returned_results(results, "Lyft");
@@ -224,16 +234,17 @@ function service_lyft(call_num, start, stop){
 	if (lyft_token){
 		lyft_cost_data = false;
 		lyft_eta_data = false;
+		var  call_data = {start_lat: start.lat, start_lng: start.lng, end_lat: stop.lat, end_lng: stop.lng};
 		$.ajax({
 			url: "https://api.lyft.com/v1/cost",
-			data: {start_lat: start.lat, start_lng: start.lng, end_lat: stop.lat, end_lng: stop.lng},
+			data: call_data,
 			beforeSend: function (xhr) {
 				xhr.setRequestHeader ("Authorization", "bearer "+lyft_token);
 			}, success: function (data){
 				if (results_call > call_num)
 					return;
 				lyft_cost_data = data;
-				process_lyft();
+				process_lyft(call_data);
 			}
 		});
 		$.ajax({
@@ -245,7 +256,7 @@ function service_lyft(call_num, start, stop){
 				if (results_call > call_num)
 					return;
 				lyft_eta_data = data;
-				process_lyft();
+				process_lyft(call_data);
 			}
 		});
 	} else {
@@ -293,7 +304,7 @@ function format_results(results){
 		}
 		if (result.price_min){
 			if (!result.price){
-				result.price = "$"+result.price_min + "-" + result.price_max;
+				result.price = "$"+result.price_min + " - " + result.price_max;
 			}
 		} else {
 			result.price_min = result.price;
@@ -318,12 +329,14 @@ function sort_results(){
 		});
 		t.append(result);
 		var top = t.children(".result").first();
-		t.parent().data(sorter, top.data(sorter));
-		t.siblings(".price").html(top.children(".price").html());
-		t.siblings(".time").html(top.children(".time").html());
+		var par = t.parent();
+		par.data(sorter, top.data(sorter));
+		var main_res = par.children(".result");
+		main_res.find(".price").html(top.children(".price").html());
+		main_res.find(".time").html(top.children(".time").html());
 	});
 
-	var result = $("#results > .result, .result_group").sort(function (a, b){
+	var result = $("#results > .result, #results > .result_group").sort(function (a, b){
 		return $(a).data(sorter) - $(b).data(sorter);
 	});
 	$("#results").append(result);
@@ -356,7 +369,7 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url: "images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg",
+					url:"images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -383,7 +396,7 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url:"images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg",
+					url: "images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -412,12 +425,15 @@ function run_services(){
 		run_handel = setTimeout(function (){
 			if (start_location && stop_location){
 				$("#search_animation").show();
+				$("#results_tab_handle").show();
 				++results_call;
 				bounds = new google.maps.LatLngBounds();
 				bounds.extend(new google.maps.LatLng(start_location));
 				bounds.extend(new google.maps.LatLng(stop_location));
-				map.fitBounds(bounds);
-				map.panToBounds(bounds);
+				map.panTo(bounds.getCenter());
+				google.maps.event.addListenerOnce(map, 'idle', function() {
+					map.fitBounds(bounds);
+				});
 				$("#results").html("");
 				results_to_return = 4;
 				service_google(results_call, start_location, stop_location);
@@ -655,15 +671,23 @@ function startup(){
 		var steps_html = [];
 		for (var i=0;i<transit_holder[info_id].steps.length;i++){
 			var step = transit_holder[info_id].steps[i];
+			var icon = "";
+			var action = "";
 			if (step.transit){
 				var name = step.transit.line.short_name;
-				if (step.transit.line.vehicle.name == "Train")
+				icon = "images/icons2/CUSTOM%20BUS%20ICON.v2.svg";
+				if (step.transit.line.vehicle.name == "Train"){
 					name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
-				var action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
+					icon = "images/icons2/CUSTOM%20LIGHTRAIL%20ICON.v2.svg";
+				} else if (step.transit.line.vehicle.type == "TRAM"){
+					icon = "images/icons2/CUSTOM%20LIGHTRAIL%20ICON.v2.svg";
+				}
+				action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
 			} else {
-				var action = step.instructions;
+				icon = "images/icons2/CUSTOM%20WALKING%20MAN.v2.svg";
+				action = step.instructions;
 			}
-			steps_html.push(template("transit_step", {"num": i+1, "action": action}));
+			steps_html.push(template("transit_step", {"num": i+1, "action": action, "icon": icon}));
 		}
 
 		$("#transit_steps").html(steps_html.join(""));
@@ -702,6 +726,15 @@ function startup(){
 	click_event("#menu-overlay", function (e){
 		close_menu();
 	});
+
+	click_event(".confirm_link", function (e){
+		var result = $(e.currentTarget);
+		open_modal({title: "External App", content:"Do you want to open the app for a "+result.find(".name").html()+" now?", button2: true, callback: function (btn){
+			if (btn == "Ok"){
+				window.open(result.data("link"), '_blank');
+			}
+		}});
+	}, true);
 
 	
 	

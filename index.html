@@ -65,7 +65,7 @@
 
 <div id="templates" style="display: none;">
 	<div data-key="result">
-		<div class="result{{transit_info? transit_info}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##">
+		<div class="result{{transit_info? transit_info}}{{link? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{link? data-link="##link##"}}>
 			<div class="icon">##icon##</div>
 			<div class="name">##name##</div>
 			<div class="price">##price##{{show_surge:<img src="images/icons2/CUSTOM%20SURGE%20ICON.v2.svg">}}</div>
@@ -86,7 +86,9 @@
 	<div data-key="transit_step">
 		<div class="transit_step">
 			<div class="num">##num##)</div>
+			<img src="##icon##" style="height: 30px;">
 			<div class="action">##action##</div>
+			<div class="clear"></div>
 		</div>
 	</div>
 </div>
@@ -109,7 +111,7 @@
 		</div>
 	</div>
 	<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
-		<i class="fa fa-arrow-circle-left" aria-hidden="true"></i>
+		<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px; transform: rotate(90deg)">
 	</div>
 	<div style="top:45px; height:calc(100% - 45px); width:100%; overflow: auto; position: absolute; background: white;">
 		<div id="transit_steps">
@@ -129,15 +131,15 @@
 		<div>
 			<div style="position: relative;">
 				<div style="width: 40px; display: inline-block; position: relative;">
-					<img src="images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg" style="width: 30px;">
-					<i class="fa fa-crosshairs my_location" style="position: absolute; left: 5px; font-size: 25px; bottom: 0;"></i>
+					<img src="images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg" style="width: 30px;">
+					<i class="fa fa-crosshairs my_location" style="position: absolute; left: 4px; font-size: 25px; top: 4px; text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;"></i>
 				</div>
 				<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); color: black; font-size: 20px;" placeholder="Origin" />
 				<i class="fa fa-times clearer from_clear"></i>
 			</div>
 			<div style="position: relative;">
 				<div style="width: 40px; display: inline-block;">
-					<img src="images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg" style="width: 30px;">
+					<img src="images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg" style="width: 30px;">
 				</div>
 				<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); font-size: 20px;" placeholder="Destination" />
 				<i class="fa fa-times clearer to_clear"></i>
@@ -170,7 +172,7 @@
 	</div>
 	<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
 	<div id="results_tab">
-		<div id="results_tab_handle">
+		<div id="results_tab_handle" style="display: none;">
 			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />
 		</div>
 		<div id="results">
