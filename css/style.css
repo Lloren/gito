@@ -8,7 +8,7 @@
 
 * {box-sizing:border-box; -webkit-box-sizing:border-box; font-family: "lucida grande", tahoma, verdana, arial, sans-serif;/*user-select:none; -webkit-user-select:none;*/}
 html {text-size-adjust:100%; -webkit-text-size-adjust:100%;}
-body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%; background: #333333}
+body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%; background: #e8390e; position: absolute;}
 *::-webkit-input-placeholder {
 	color: #888888;
 }
@@ -119,7 +119,6 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	position: relative;
 	height: 25px;
 	overflow: hidden;
-	background: white;
 	margin-bottom: 5px;
 	padding-left: 30px;
 	width: 100%;
@@ -127,6 +126,7 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	border: 1px solid #ff8806;
 	border-bottom-left-radius: 20px;
 	border-top-left-radius: 20px;
+	background: #fff;
 }
 .result_group > .result {
 	 background: #fff8ef;
@@ -156,6 +156,10 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	width: 25px;
 }
 
+.result .time{
+	width: 70px;
+}
+
 .result .icon img{
 	height: 18px;
 	vertical-align: middle;
@@ -182,11 +186,12 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 }
 #map_settings{
 	position: fixed;
-	z-index: 100;
+	z-index: 10;
 	transition: 200ms;
 	transform: translate3d(0, 0, 0);
-	top: 44px;
+	top: 0;
 	bottom: 0;
+	padding-top: 44px;
 	width: 100%;
 	background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);
 }

@@ -59,7 +59,7 @@
 	<preference name="EnableViewportScale" value="true"/>
 
 	<preference name="StatusBarOverlaysWebView" value="true" />
-	<preference name="StatusBarBackgroundColor" value="#000000" />
+	<preference name="StatusBarBackgroundColor" value="#e8390e" />
 	<preference name="StatusBarStyle" value="lightcontent" />
 
 	<preference name="SplashScreen" value="splash" />

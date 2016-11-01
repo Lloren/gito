@@ -100,10 +100,11 @@ function service_google(call_num, start, stop){
 			var path = new google.maps.Polyline({
 				path: route.overview_path,
 				geodesic: true,
-				strokeColor: '#999999',
-				strokeOpacity: 0.8,
-				strokeWeight: 2,
-				map: map
+				strokeColor: '#3366CC',
+				strokeOpacity: 0.6,
+				strokeWeight: 5,
+				map: map,
+				zIndex:2
 			});
 			markers.google_routs.push(path);
 			route.overview_path.forEach(function(e) {
@@ -126,10 +127,11 @@ function service_google(call_num, start, stop){
 				var path = new google.maps.Polyline({
 					path:route.overview_path,
 					geodesic:true,
-					strokeColor:"#555555",
+					strokeColor:"#777777",
 					strokeOpacity:1.0,
-					strokeWeight:3,
-					map:map
+					strokeWeight:8,
+					map:map,
+					zIndex:1
 				});
 				markers.google_routs.push(path);
 				route.overview_path.forEach(function(e){
@@ -355,7 +357,7 @@ function geo_location(id, geo){
 
 var start_location = false;
 var stop_location = false;
-function coded_location(pos, start, trigger){
+function coded_location(pos, start, trigger){//TODO: add debug on all call location
 	console.log("coded location", pos, start, trigger);
 	if (!pos){
 		return;
@@ -423,6 +425,7 @@ function run_services(){
 	console.log("run_services", run_handel);
 	if (!run_handel){
 		run_handel = setTimeout(function (){
+			console.log("runing_services", start_location && stop_location);
 			if (start_location && stop_location){
 				$("#search_animation").show();
 				$("#results_tab_handle").show();
