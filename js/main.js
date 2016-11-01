@@ -555,6 +555,18 @@ function load_map(){
 		}
 	});
 
+	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+		setTimeout(function() {
+			var container = document.getElementsByClassName("pac-container");
+			container[0].addEventListener("touchend", function(e) {
+				e.stopImmediatePropagation();
+			});
+			container[1].addEventListener("touchend", function(e) {
+				e.stopImmediatePropagation();
+			});
+		}, 100);
+	}
+
 	console.log("finish load_map");
 }
 
@@ -758,24 +770,6 @@ function startup(){
 		if (jQuery.isFunction(window[cont.data("trigger")]))
 			window[cont.data("trigger")]();
 	});
-	
-
-
-	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
-		setTimeout(function() {
-			var container = document.getElementsByClassName("pac-container");
-			container[0].addEventListener("touchend", function(e) {
-				e.stopImmediatePropagation();
-			});
-			container[1].addEventListener("touchend", function(e) {
-				e.stopImmediatePropagation();
-			});
-		}, 500);
-	}
-
-
-
-
 
 	click_event("#clear_cache", function (e){
 		localStorage.clear();

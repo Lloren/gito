@@ -437,6 +437,8 @@ function on_ready(){
 			document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
 
 			uuid = device.uuid;
+			
+			cordova.plugins.Keyboard.disableScroll(true);
 
 			//if (fb_app_id)
 			//	FB.init({appId: fb_app_id, nativeInterface: CDV.FB, useCachedDialogs: false});

@@ -70,7 +70,6 @@
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
-	<gap:plugin name="cordova-plugin-canvas2image" source="npm" />
 	<gap:plugin name="cordova-plugin-ga" source="npm" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
@@ -92,7 +91,7 @@
 
 	<!-- Keyboard setting for Android -->
 	<gap:config-file platform="android" parent="/manifest/application">
-			<activity android:windowSoftInputMode="adjustPan" />
+		<activity android:windowSoftInputMode="adjustPan" />
 	</gap:config-file>
 
 	<!-- Default Icon/Splash -->

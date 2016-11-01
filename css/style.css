@@ -8,7 +8,7 @@
 
 * {box-sizing:border-box; -webkit-box-sizing:border-box; font-family: "lucida grande", tahoma, verdana, arial, sans-serif;/*user-select:none; -webkit-user-select:none;*/}
 html {text-size-adjust:100%; -webkit-text-size-adjust:100%;}
-body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%}
+body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%; background: #333333}
 *::-webkit-input-placeholder {
 	color: #888888;
 }
@@ -263,7 +263,7 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 
 
 /* iOS only */
-body#ios {padding-top:20px;}
+body#ios {padding-top:20px; height:calc(100% - 20px);}
 
 /* Android only */
 
