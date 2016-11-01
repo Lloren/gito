@@ -453,6 +453,7 @@ function run_services(){
 }
 
 function get_services(){
+	console.log("get_services");
 	get_origin_geo(coded_location);
 	get_destination_geo(coded_location);
 }
@@ -515,9 +516,11 @@ function load_map(){
 
 	map.addListener("click", function (event){
 		if (!markers.start){
+			console.log("click no start marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, true, true);
 			$("#from_loc").next().show();
 		} else if (!markers.stop){
+			console.log("click no stop marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, false, true);
 			$("#to_loc").next().show();
 		}
@@ -609,6 +612,7 @@ function startup(){
 		});
 		markers.my_loc = marker;
 		$("#from_loc").val("My Location");
+		console.log("Current location");
 		get_origin_geo(coded_location);
 	}, function (error){
 		$(".my_location").hide();
@@ -627,15 +631,18 @@ function startup(){
 	
 	click_event(".my_location", function (){
 		$("#from_loc").val("My Location");
+		console.log("My location click");
 		get_origin_geo(coded_location);
 	}, true);
 
 	$("#from_loc").on("keyup", function (e){
 		if (e.keyCode == 13 || e.keyCode == 9){
+			console.log("enter key from");
 			get_origin_geo(coded_location);
 			$("#to_loc").focus();
 		}
 	}).on("blur", function (){
+		console.log("blur from");
 		get_origin_geo(coded_location);
 		$("#results_tab").removeClass("hidden");
 	}).on("focus", function (){
@@ -643,10 +650,12 @@ function startup(){
 	});
 	$("#to_loc").on("keyup", function (e){
 		if (e.keyCode == 13 || e.keyCode == 9){
+			console.log("enter key to");
 			get_destination_geo(coded_location);
 			$(this).blur();
 		}
 	}).on("blur", function (){
+		console.log("plur to");
 		get_destination_geo(coded_location);
 		$("#results_tab").removeClass("hidden");
 	}).on("focus", function (){
@@ -655,11 +664,13 @@ function startup(){
 
 	click_event(".from_clear", function (){
 		$("#from_loc").val("");
+		console.log("from clear");
 		get_origin_geo(coded_location);
 	});
 
 	click_event(".to_clear", function (){
 		$("#to_loc").val("");
+		console.log("to clear");
 		get_destination_geo(coded_location);
 	});
 
