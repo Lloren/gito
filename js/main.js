@@ -19,9 +19,19 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
-var user_settings = {
-	sort: "price"
-};
+function Settings(){
+	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price"}');
+
+	this.set = function (key, val){
+		this.data[key] = val;
+		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
+	};
+
+	this.get = function (key){
+		return this.data[key];
+	};
+}
+window.settings = new Settings();
 
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
@@ -32,6 +42,7 @@ function get_origin_geo(callback){
 		$("#from_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
 		if (cache){
+			console.log("Cache hit: location:"+ret);
 			callback(JSON.parse(cache), true);
 			return;
 		}
@@ -55,6 +66,7 @@ function get_destination_geo(callback){
 		$("#to_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
 		if (cache){
+			console.log("Cache hit: location:"+ret);
 			callback(JSON.parse(cache));
 			return;
 		}
@@ -322,7 +334,7 @@ function format_results(results){
 
 function sort_results(){
 	console.log("sorting");
-	var sorter = user_settings.sort;
+	var sorter = settings.get("sort");
 
 	$(".sub_results").each(function (){
 		var t = $(this);
@@ -357,7 +369,7 @@ function geo_location(id, geo){
 
 var start_location = false;
 var stop_location = false;
-function coded_location(pos, start, trigger){//TODO: add debug on all call location
+function coded_location(pos, start, trigger){
 	console.log("coded location", pos, start, trigger);
 	if (!pos){
 		return;
@@ -562,14 +574,17 @@ function load_map(){
 	});
 
 	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
-		setTimeout(function() {
+		var ios_places_catch_handel = setInterval(function() {
 			var container = document.getElementsByClassName("pac-container");
-			container[0].addEventListener("touchend", function(e) {
-				e.stopImmediatePropagation();
-			});
-			container[1].addEventListener("touchend", function(e) {
-				e.stopImmediatePropagation();
-			});
+			if (container[1]){
+				container[0].addEventListener("touchend", function(e) {
+					e.stopImmediatePropagation();
+				});
+				container[1].addEventListener("touchend", function(e) {
+					e.stopImmediatePropagation();
+				});
+				clearInterval(ios_places_catch_handel);
+			}
 		}, 100);
 	}
 
@@ -586,31 +601,27 @@ function close_menu(){
 	$("#menu-overlay").removeClass("enabled");
 }
 
-function startup(){
-	if (!dev)
-		$(".dev").hide();
-	if (!has_internet){
-		$("body").html("This app requires internet to function.");
-		return;
-	}
-	
+function get_geo_location(do_load){
+	var do_load = do_load;
 	navigator.geolocation.getCurrentPosition(function (pos){
 		var loc = pos.coords;
 		console.log("geopos", loc.latitude, loc.longitude);
 		my_loc = new google.maps.LatLng(loc.latitude, loc.longitude);
-		markers.my_loc = true;
-		load_map();
-		var marker = new google.maps.Marker({
-			position: my_loc,
-			map: map,
-			icon: {
-				url: "images/person.png",
-				size: new google.maps.Size(35, 35),
-				origin: new google.maps.Point(0,0),
-				anchor: new google.maps.Point(17, 17)
-			}
-		});
-		markers.my_loc = marker;
+		if (do_load){
+			markers.my_loc = true;
+			load_map();
+			var marker = new google.maps.Marker({
+				position: my_loc,
+				map: map,
+				icon: {
+					url: "images/person.png",
+					size: new google.maps.Size(35, 35),
+					origin: new google.maps.Point(0,0),
+					anchor: new google.maps.Point(17, 17)
+				}
+			});
+			markers.my_loc = marker;
+		}
 		$("#from_loc").val("My Location");
 		console.log("Current location");
 		get_origin_geo(coded_location);
@@ -619,10 +630,22 @@ function startup(){
 		$.getJSON("http://freegeoip.net/json/", function (data){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
-			load_map();
+			if (do_load)
+				load_map();
 		}, function (err){console.log("call error", err)});
 		console.log("geo error", error);
 	});
+}
+
+function startup(){
+	if (!dev)
+		$(".dev").hide();
+	if (!has_internet){
+		$("body").html("This app requires internet to function.");
+		return;
+	}
+	
+	get_geo_location(true);
 
 	click_event(".do_lookup", function (){
 		get_services();
@@ -630,6 +653,7 @@ function startup(){
 	});
 	
 	click_event(".my_location", function (){
+		get_geo_location();
 		$("#from_loc").val("My Location");
 		console.log("My location click");
 		get_origin_geo(coded_location);
@@ -766,7 +790,7 @@ function startup(){
 	
 	$(".selection_container").each(function (){
 		var key = $(this).data("key");
-		var opt = $(this).find("[data-key='"+user_settings[key]+"']");
+		var opt = $(this).find("[data-key='"+settings.get(key)+"']");
 		$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
 		opt.hide();
 	});
@@ -777,7 +801,7 @@ function startup(){
 		var cont = opt.parents(".selection_container");
 		cont.find(".option.selected").html(opt.html());
 		cont.find(".option").show();
-		user_settings[cont.data("key")] = opt.data("key");
+		settings.set(cont.data("key"), opt.data("key"));
 		opt.hide();
 		cont.find(".toggler").removeClass("open");
 		cont.find(".options").slideUp(200);

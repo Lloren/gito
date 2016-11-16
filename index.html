@@ -41,144 +41,147 @@
 </head>
 <body onload="onLoad()" onunload="onunload()">
 
+<div id="cont">
 
-<div id="modal-overlay"></div>
-<div id="modal">
-	<h1></h1>
-	<p></p>
-	<a id="mbutton1">Ok</a>
-	<a id="mbutton2">Cancel</a>
-</div>
-
-<div id="menu-overlay"></div>
-<div id="menu">
-	<ul>
-		<li>Mooky</li>
-		<li>Settings</li>
-		<li>About Us</li>
-	</ul>
-	<ul class="dev">
-		<li>Dev</li>
-		<li id="clear_cache">Clear cache</li>
-	</ul>
-</div>
-
-<div id="templates" style="display: none;">
-	<div data-key="result">
-		<div class="result{{transit_info? transit_info}}{{link? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{link? data-link="##link##"}}>
-			<div class="icon">##icon##</div>
-			<div class="name">##name##</div>
-			<div class="price">##price##{{show_surge:<img src="images/icons2/CUSTOM%20SURGE%20ICON.v2.svg">}}</div>
-			<div class="time">##time##</div>
-		</div>
+	<div id="modal-overlay"></div>
+	<div id="modal">
+		<h1></h1>
+		<p></p>
+		<a id="mbutton1">Ok</a>
+		<a id="mbutton2">Cancel</a>
 	</div>
-	<div data-key="overload_result">
-		<div class="result_group">
-			<div class="result result_expander">
-				<div class="icon expander"><img class="img_toggle" src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg"> ##icon##</div>
-				<div class="name expander">##name##</div>
-				<div class="price expander">##price##</div>
-				<div class="time expander">##time##</div>
+
+	<div id="menu-overlay"></div>
+	<div id="menu">
+		<ul>
+			<li>Mooky</li>
+			<li>Settings</li>
+			<li>About Us</li>
+		</ul>
+		<ul class="dev">
+			<li>Dev</li>
+			<li id="clear_cache">Clear cache</li>
+		</ul>
+	</div>
+
+	<div id="templates" style="display: none;">
+		<div data-key="result">
+			<div class="result{{transit_info? transit_info}}{{link? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{link? data-link="##link##"}}>
+				<div class="icon">##icon##</div>
+				<div class="name">##name##</div>
+				<div class="price">##price##{{show_surge:<img src="images/icons2/CUSTOM%20SURGE%20ICON.v2.svg">}}</div>
+				<div class="time">##time##</div>
 			</div>
-			<div class="sub_results">##sub_results##</div>
 		</div>
-	</div>
-	<div data-key="transit_step">
-		<div class="transit_step">
-			<div class="num">##num##)</div>
-			<img src="##icon##" style="height: 30px;">
-			<div class="action">##action##</div>
-			<div class="clear"></div>
-		</div>
-	</div>
-</div>
-
-<div id="header">
-	<div id="menubutton" style="color: black;">
-		<img src="images/icons2/CUSTOM%20MAIN%20MENU%20ICON.v4.svg" style="margin-top: 3px; left: -3px; width: 40px; z-index: 20;" />
-		<!--<i class="fa fa-bars"></i>-->
-	</div>
-</div>
-
-<div class="page" style="display: block;">
-	Getting location...
-</div>
-
-<div id="transit_info" class="page">
-	<div id="transit_header" style="position: absolute; top: 0; background: white; width: 100%; height: 45px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
-		<div style="height: 40px; text-align: center; margin:2px;">
-			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
-		</div>
-	</div>
-	<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
-		<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px; transform: rotate(90deg)">
-	</div>
-	<div style="top:45px; height:calc(100% - 45px); width:100%; overflow: auto; position: absolute; background: white;">
-		<div id="transit_steps">
-
-		</div>
-	</div>
-</div>
-
-<div id="map" class="page">
-	<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 140px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
-		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
-			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
-		</div>
-		<div class="settings_toggle" style="position: absolute; right:5px; top:2px; z-index: 20;">
-			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px;">
-		</div>
-		<div>
-			<div style="position: relative;">
-				<div style="width: 40px; display: inline-block; position: relative;">
-					<img src="images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg" style="width: 30px;">
-					<i class="fa fa-crosshairs my_location" style="position: absolute; left: 4px; font-size: 25px; top: 4px; text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;"></i>
+		<div data-key="overload_result">
+			<div class="result_group">
+				<div class="result result_expander">
+					<div class="icon expander"><img class="img_toggle" src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg"> ##icon##</div>
+					<div class="name expander">##name##</div>
+					<div class="price expander">##price##</div>
+					<div class="time expander">##time##</div>
 				</div>
-				<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); color: black; font-size: 20px;" placeholder="Origin" />
-				<i class="fa fa-times clearer from_clear"></i>
-			</div>
-			<div style="position: relative;">
-				<div style="width: 40px; display: inline-block;">
-					<img src="images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg" style="width: 30px;">
-				</div>
-				<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); font-size: 20px;" placeholder="Destination" />
-				<i class="fa fa-times clearer to_clear"></i>
+				<div class="sub_results">##sub_results##</div>
 			</div>
 		</div>
-		<div id="map_settings" class="hidden">
-			<h2>Map/Search Settings</h2>
-			<div class="selection_container" data-key="sort" data-trigger="sort_results">
-				<div class="toggler">
-					<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
-					<div class="option selected">
+		<div data-key="transit_step">
+			<div class="transit_step">
+				<div class="num">##num##)</div>
+				<img src="##icon##" style="height: 30px;">
+				<div class="action">##action##</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
 
+	<div id="header">
+		<div id="menubutton" style="color: black;">
+			<img src="images/icons2/CUSTOM%20MAIN%20MENU%20ICON.v4.svg" style="margin-top: 3px; left: -3px; width: 40px; z-index: 20;" />
+			<!--<i class="fa fa-bars"></i>-->
+		</div>
+	</div>
+
+	<div class="page" style="display: block;">
+		Getting location...
+	</div>
+
+	<div id="transit_info" class="page">
+		<div id="transit_header" style="position: absolute; top: 0; background: white; width: 100%; height: 45px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
+			<div style="height: 40px; text-align: center; margin:2px;">
+				<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			</div>
+		</div>
+		<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px; transform: rotate(90deg)">
+		</div>
+		<div style="top:45px; height:calc(100% - 45px); width:100%; overflow: auto; position: absolute; background: white;">
+			<div id="transit_steps">
+
+			</div>
+		</div>
+	</div>
+
+	<div id="map" class="page">
+		<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 140px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
+			<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+				<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			</div>
+			<div class="settings_toggle" style="position: absolute; right:5px; top:2px; z-index: 20;">
+				<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px;">
+			</div>
+			<div>
+				<div style="position: relative;">
+					<div style="width: 40px; display: inline-block; position: relative;">
+						<img src="images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg" style="width: 30px;">
+						<i class="fa fa-crosshairs my_location" style="position: absolute; left: 4px; font-size: 25px; top: 4px; text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;"></i>
+					</div>
+					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); color: black; font-size: 20px;" placeholder="Origin" />
+					<i class="fa fa-times clearer from_clear"></i>
+				</div>
+				<div style="position: relative;">
+					<div style="width: 40px; display: inline-block;">
+						<img src="images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg" style="width: 30px;">
+					</div>
+					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 50px); font-size: 20px;" placeholder="Destination" />
+					<i class="fa fa-times clearer to_clear"></i>
+				</div>
+			</div>
+			<div id="map_settings" class="hidden">
+				<h2>Map/Search Settings</h2>
+				<div class="selection_container" data-key="sort" data-trigger="sort_results">
+					<div class="toggler">
+						<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
+						<div class="option selected">
+
+						</div>
+					</div>
+					<div class="options">
+						<div class="option" data-key="price">
+							<div>Sort by</div>
+							Price
+						</div>
+						<div class="option" data-key="time">
+							<div>Sort by</div>
+							Time
+						</div>
 					</div>
 				</div>
-				<div class="options">
-					<div class="option" data-key="price">
-						<div>Sort by</div>
-						Price
-					</div>
-					<div class="option" data-key="time">
-						<div>Sort by</div>
-						Time
-					</div>
-				</div>
+			</div>
+			<div style="position: relative; width: 100%;">
+				<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 			</div>
 		</div>
-		<div style="position: relative; width: 100%;">
-			<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
-		</div>
-	</div>
-	<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
-	<div id="results_tab">
-		<div id="results_tab_handle" style="display: none;">
-			<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />
-		</div>
-		<div id="results">
+		<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
+		<div id="results_tab">
+			<div id="results_tab_handle" style="display: none;">
+				<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />
+			</div>
+			<div id="results">
 
+			</div>
 		</div>
 	</div>
+
 </div>
 
 </body>
