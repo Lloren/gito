@@ -11,6 +11,8 @@ var user_moved_map = false;
 var DirectionsService = new google.maps.DirectionsService();
 var from_autocomplete;
 var to_autocomplete;
+var from_blur_handel = false;
+var to_blur_handel = false;
 
 var run_handel = false;
 
@@ -437,7 +439,7 @@ function run_services(){
 	console.log("run_services", run_handel);
 	if (!run_handel){
 		run_handel = setTimeout(function (){
-			console.log("runing_services", start_location && stop_location);
+			console.log("runing_services", start_location, stop_location);
 			if (start_location && stop_location){
 				$("#search_animation").show();
 				$("#results_tab_handle").show();
@@ -549,6 +551,8 @@ function load_map(){
 		var place = from_autocomplete.getPlace();
 		console.log("new place (from)", place);
 		if (place.geometry){
+			if (from_bure_handel)
+				clearTimeout(from_bure_handel);
 			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
 			var addr = place.formatted_address;
@@ -564,6 +568,8 @@ function load_map(){
 		var place = to_autocomplete.getPlace();
 		console.log("new place (to)", place);
 		if (place.geometry){
+			if (from_blur_handel)
+				clearTimeout(to_blur_handel);
 			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
 			var addr = place.formatted_address;
@@ -666,9 +672,11 @@ function startup(){
 			$("#to_loc").focus();
 		}
 	}).on("blur", function (){
-		console.log("blur from");
-		get_origin_geo(coded_location);
-		$("#results_tab").removeClass("hidden");
+		from_blur_handel = setTimeout(function (){
+			console.log("blur from");
+			get_origin_geo(coded_location);
+			$("#results_tab").removeClass("hidden");
+		});
 	}).on("focus", function (){
 		$("#results_tab").addClass("hidden");
 	});
@@ -679,9 +687,11 @@ function startup(){
 			$(this).blur();
 		}
 	}).on("blur", function (){
-		console.log("plur to");
-		get_destination_geo(coded_location);
-		$("#results_tab").removeClass("hidden");
+		to_blur_handel = setTimeout(function (){
+			console.log("plur to");
+			get_destination_geo(coded_location);
+			$("#results_tab").removeClass("hidden");
+		}, 100);
 	}).on("focus", function (){
 		$("#results_tab").addClass("hidden");
 	});
@@ -811,5 +821,6 @@ function startup(){
 
 	click_event("#clear_cache", function (e){
 		localStorage.clear();
+		alert("cache cleared");
 	});
 }
