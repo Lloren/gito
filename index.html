@@ -66,7 +66,7 @@
 
 	<div id="templates" style="display: none;">
 		<div data-key="result">
-			<div class="result{{transit_info? transit_info}}{{link? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{link? data-link="##link##"}}>
+			<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}>
 				<div class="icon">##icon##</div>
 				<div class="name">##name##</div>
 				<div class="price">##price##{{show_surge:<img src="images/icons2/CUSTOM%20SURGE%20ICON.v2.svg">}}</div>

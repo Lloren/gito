@@ -11,9 +11,12 @@
 	</author>
 	<content src="index.html" />
 
+	<allow-navigation href="*" />
 	<access origin="*" />
 	<allow-intent href="http://*/*" />
 	<allow-intent href="https://*/*" />
+	<allow-intent href="lyft:*" launch-external="true" />
+	<allow-intent href="uber:*" launch-external="true" />
 	<allow-intent href="tel:*" launch-external="true" />
 	<allow-intent href="sms:*" launch-external="true" />
 	<allow-intent href="mailto:*" launch-external="true" />

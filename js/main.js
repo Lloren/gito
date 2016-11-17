@@ -185,7 +185,7 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
-			obj.link = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
+			obj.ulink = "https://m.uber.com/ul?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
@@ -239,7 +239,7 @@ function process_lyft(call_data){
 				obj.price = " ---";
 				obj.price_min = 999999;
 			}
-			obj.link = "lyft://ridetype?id="+est.ride_type+"&pickup[latitude]="+call_data.start_lat+"&pickup[longitude]="+call_data.start_lng+"&destination[latitude]="+call_data.end_lat+"&destination[longitude]="+call_data.end_lng;
+			obj.dlink = "lyft://ridetype?id="+est.ride_type+"&pickup[latitude]="+call_data.start_lat+"&pickup[longitude]="+call_data.start_lng+"&destination[latitude]="+call_data.end_lat+"&destination[longitude]="+call_data.end_lng;
 			results.push(obj);
 		}
 		returned_results(results, "Lyft");
@@ -791,7 +791,22 @@ function startup(){
 		var result = $(e.currentTarget);
 		open_modal({title: "External App", content:"Do you want to open the app for a "+result.find(".name").html()+" now?", button2: true, callback: function (btn){
 			if (btn == "Ok"){
-				window.open(result.data("link"), '_blank');
+				if (result.data("dlink")){
+					if (thePlatform == "android"){
+						window.plugins.webintent.startActivity({
+								action: window.plugins.webintent.ACTION_VIEW,
+								url: result.data("dlink")},
+							function() {},
+							function() {
+								result.data("dlink");
+							}
+						);
+					} else {
+						window.open(result.data("dlink"), '_blank');
+					}
+				} else if (result.data("ulink")){
+					window.open(result.data("ulink"), '_blank');
+				}
 			}
 		}});
 	}, true);
