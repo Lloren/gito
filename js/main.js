@@ -21,7 +21,7 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
-var backup_links = {"lyft": {"android": "https://play.google.com/store/apps/details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}};
+var backup_links = {"lyft": {"android": "https://play.google.com/store/apps/details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "https://play.google.com/store/apps/details?id=com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
 function Settings(){
 	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price"}');
@@ -187,7 +187,7 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
-			obj.ulink = "https://m.uber.com/ul?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
+			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
@@ -800,15 +800,15 @@ function startup(){
 								url: result.data("dlink")},
 							function() {},
 							function() {
-								var pre = results.data("dlink").substr(0, 4);
+								var pre = result.data("dlink").substr(0, 4);
 								window.open(backup_links[pre]["android"], "_blank");
 							}
 						);
 					} else {
-						window.open(result.data("dlink"), '_blank');
+						window.open(result.data("dlink"), "_blank");
 					}
 				} else if (result.data("ulink")){
-					window.open(result.data("ulink"), '_blank');
+					window.open(result.data("ulink"), "_blank");
 				}
 			}
 		}});
