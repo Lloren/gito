@@ -21,6 +21,8 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
+var backup_links = {"lyft": {"android": "https://play.google.com/store/apps/details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}};
+
 function Settings(){
 	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price"}');
 
@@ -798,7 +800,8 @@ function startup(){
 								url: result.data("dlink")},
 							function() {},
 							function() {
-								result.data("dlink");
+								var pre = results.data("dlink").substr(0, 4);
+								window.open(backup_links[pre]["android"], "_blank");
 							}
 						);
 					} else {
