@@ -187,7 +187,7 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
-			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
+			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&pickup[nickname]="+encodeURI($("#from_loc"))+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&dropoff[nickname]="+encodeURI($("#to_loc"))+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
@@ -553,8 +553,8 @@ function load_map(){
 		var place = from_autocomplete.getPlace();
 		console.log("new place (from)", place);
 		if (place.geometry){
-			if (from_bure_handel)
-				clearTimeout(from_bure_handel);
+			if (from_blur_handel)
+				clearTimeout(from_blur_handel);
 			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
 			var addr = place.formatted_address;
