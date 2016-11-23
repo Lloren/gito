@@ -66,10 +66,11 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 .clearer{
 	position: absolute;
 	padding: 10px;
-	top: 7px;
+	top: 2px;
 	right: 10px;
 	font-size: 20px;
 	display: none;
+	text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;
 }
 
 
@@ -137,6 +138,7 @@ input, select {-webkit-appearance:none; border-radius:0; /*user-select:initial; 
 	width: calc((100% - 100px) / 2 - 8px);
 	overflow: hidden;
 	padding: 0 2px;
+	vertical-align: top;
 }
 .sub_results{
 	width: 100%;
