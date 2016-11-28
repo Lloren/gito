@@ -45,6 +45,14 @@
 			<string>UIInterfaceOrientationPortrait</string>
 		</array>
 	</gap:config-file>
+	<gap:platform name="ios">
+		<config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+			<array>
+				<string>uber</string>
+				<string>lyft</string>
+			</array>
+		</config-file>
+	</gap:platform>
 
 	<preference name="fullscreen" value="false" />
 
@@ -80,6 +88,8 @@
 	<gap:plugin name="cordova-plugin-network-information" source="npm" />
 	<gap:plugin name="cordova-plugin-appversion" source="npm" />
 	<gap:plugin name="cordova-plugin-webintent2" source="npm" />
+	<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />
+	<!--<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />-->
 	<gap:plugin name="cordova-plugin-apprate" source="npm" />
 
 	<feature name="http://api.phonegap.com/1.0/network" />

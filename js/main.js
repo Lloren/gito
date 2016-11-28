@@ -795,6 +795,8 @@ function startup(){
 			if (btn == "Ok"){
 				if (result.data("dlink")){
 					if (thePlatform == "android"){
+						open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
+						/*
 						window.plugins.webintent.startActivity({
 								action: window.plugins.webintent.ACTION_VIEW,
 								url: result.data("dlink")},
@@ -803,7 +805,7 @@ function startup(){
 								var pre = result.data("dlink").substr(0, 4);
 								window.open(backup_links[pre]["android"], "_blank");
 							}
-						);
+						);*/
 					} else {
 						window.open(result.data("dlink"), "_blank");
 					}
@@ -840,5 +842,28 @@ function startup(){
 	click_event("#clear_cache", function (e){
 		localStorage.clear();
 		alert("cache cleared");
+	});
+
+	document.addEventListener("backbutton", function (){
+		var backs = $(".back:visible");
+		if (backs.length > 0){
+			backs.first().trigger("click_event");
+		} else if ($(".settings_toggle").hasClass("open")){
+			$(".settings_toggle").trigger("click_event");
+		} else if ($("#menu-overlay:visible")){
+			$("#menu-overlay").trigger("click_event");
+		}
+	}, false);
+}
+
+function open_intent(intent, fallback){
+	var intent = intent;
+	var fallback = fallback;
+	CanOpen(intent, function(isInstalled) {
+		if(isInstalled) {
+			window.open(intent, "_blank");
+		} else {
+			window.open(fallback, "_blank");
+		}
 	});
 }

@@ -32,8 +32,8 @@ function click_event(limiter, callback, target){
 		$(target).on("touchstart", limiter, function (e){
 			set_touch(e, limiter);
 		});
-		$(target).on("touchend", limiter, function (e){
-			if (!good_touch(e, limiter))
+		$(target).on("touchend click_event", limiter, function (e){
+			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
 			callback(e);
 		});
@@ -41,8 +41,8 @@ function click_event(limiter, callback, target){
 		$(limiter).on("touchstart", function (e){
 			set_touch(e, limiter);
 		});
-		$(limiter).on("touchend", function (e){
-			if (!good_touch(e, limiter))
+		$(limiter).on("touchend click_event", function (e){
+			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
 			callback(e);
 		});
