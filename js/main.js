@@ -21,7 +21,8 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
-var backup_links = {"lyft": {"android": "https://play.google.com/store/apps/details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "https://play.google.com/store/apps/details?id=com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
+//"https://play.google.com/store/apps/details?id=me.lyft.android";
+var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
 function Settings(){
 	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price"}');
@@ -861,9 +862,13 @@ function open_intent(intent, fallback){
 	var fallback = fallback;
 	CanOpen(intent, function(isInstalled) {
 		if(isInstalled) {
-			window.open(intent, "_blank");
+			window.location = intent;
 		} else {
-			window.open(fallback, "_blank");
+			if (fallback.substr(0, 4) == "http"){
+				window.open(fallback, "_blank");
+			} else {
+				window.location = fallback;
+			}
 		}
 	});
 }

@@ -89,7 +89,7 @@
 	<gap:plugin name="cordova-plugin-appversion" source="npm" />
 	<gap:plugin name="cordova-plugin-webintent2" source="npm" />
 	<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />
-	<!--<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />-->
+	<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />
 	<gap:plugin name="cordova-plugin-apprate" source="npm" />
 
 	<feature name="http://api.phonegap.com/1.0/network" />
