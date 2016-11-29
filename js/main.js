@@ -795,21 +795,7 @@ function startup(){
 		open_modal({title: "External App", content:"Do you want to open the app for a "+result.find(".name").html()+" now?", button2: true, callback: function (btn){
 			if (btn == "Ok"){
 				if (result.data("dlink")){
-					if (thePlatform == "android"){
-						open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
-						/*
-						window.plugins.webintent.startActivity({
-								action: window.plugins.webintent.ACTION_VIEW,
-								url: result.data("dlink")},
-							function() {},
-							function() {
-								var pre = result.data("dlink").substr(0, 4);
-								window.open(backup_links[pre]["android"], "_blank");
-							}
-						);*/
-					} else {
-						window.open(result.data("dlink"), "_blank");
-					}
+					open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
 				} else if (result.data("ulink")){
 					window.open(result.data("ulink"), "_blank");
 				}
