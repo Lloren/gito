@@ -25,7 +25,7 @@ var results_to_return = 4;
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
 function Settings(){
-	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price"}');
+	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true}');
 
 	this.set = function (key, val){
 		this.data[key] = val;
@@ -94,7 +94,7 @@ function service_google(call_num, start, stop){
 		if (results_call > call_num)
 			return;
 		//console.log(JSON.stringify(response));
-		console.log("google route results", status, response);
+		console.log("google transit route results", status, response);
 		var results = [];
 		if (markers.google_routs){
 			for (var i=0;i<markers.google_routs.length;i++){
@@ -110,7 +110,7 @@ function service_google(call_num, start, stop){
 			if (typeof route.legs[0].departure_time == "undefined")
 				continue;
 			msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
-			var obj = {icon: '<img src="images/icons2/CUSTOM%20BUS%20ICON.v2.svg">', name: "Transit", price: " ---", time: "N/A"};
+			var obj = {icon: '<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">', name: "Transit", price: " ---", time: "N/A"};
 			if (route.fare && route.fare.value)
 				obj.price = route.fare.value;
 			obj.time_sec = Math.ceil(msec/1000);
@@ -138,23 +138,30 @@ function service_google(call_num, start, stop){
 		});
 		returned_results(results, "Transit");
 		DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
+			console.log("google driving route results", status, response);
 			var bounds = new google.maps.LatLngBounds();
-			for (var i=0;i<response.routes.length;i++){
-				var route = response.routes[i];
-				var path = new google.maps.Polyline({
-					path:route.overview_path,
-					geodesic:true,
-					strokeColor:"#777777",
-					strokeOpacity:1.0,
-					strokeWeight:8,
-					map:map,
-					zIndex:1
-				});
-				markers.google_routs.push(path);
-				route.overview_path.forEach(function(e){
-					bounds.extend(e);
-				});
-				break;
+			if (status == "OK"){
+				for (var i=0;i<response.routes.length;i++){
+					var route = response.routes[i];
+					var path = new google.maps.Polyline({
+						path:route.overview_path,
+						geodesic:true,
+						strokeColor:"#777777",
+						strokeOpacity:1.0,
+						strokeWeight:8,
+						map:map,
+						zIndex:1
+					});
+					markers.google_routs.push(path);
+					route.overview_path.forEach(function(e){
+						bounds.extend(e);
+					});
+					break;
+				}
+			} else {
+				bounds.extend(start);
+				bounds.extend(stop);
+				open_modal({title: "error", content:"No driving rout between locations."});
 			}
 			map.panTo(bounds.getCenter());
 			google.maps.event.addListenerOnce(map, 'idle', function() {
@@ -172,7 +179,7 @@ function service_uber(call_num, start, stop){
 		var results = [];
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
-			var obj = {icon: '<img src="images/uber_icon.png">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var obj = {app: "Uber", icon: '<img src="images/uber_icon.png">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			if (price.surge_multiplier > 1)
 				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
@@ -207,7 +214,7 @@ function service_tff(call_num, start, stop){
 			if (results_call > call_num)
 				return;
 			if (data.status == "OK"){
-				returned_results([{icon: '<img src="images/icons2/CUSTOM%20TAXI%20ICON.v2.svg">', name: "Taxi", price: data.total_fare}]);
+				returned_results([{icon: '<img src="images/icons3/CUSTOM%20TAXI%20ICON.RO.v6.svg">', name: "Taxi", price: data.total_fare}]);
 			}
 		}
 	});
@@ -228,7 +235,7 @@ function process_lyft(call_data){
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			var obj = {app: "Lyft", icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
 			if (surge_multi > 1)
 				obj.show_surge = true;
 			if (est.estimated_cost_cents_max > 0){
@@ -388,7 +395,7 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url:"images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg",
+					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -415,7 +422,7 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url: "images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg",
+					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -720,6 +727,10 @@ function startup(){
 		$("#results_tab").toggleClass("hidden");
 	});
 
+	click_event("#settings_tab_handle", function (){
+		$("#settings_tab").toggleClass("hidden");
+	});
+
 	click_event(".result_expander .expander", function (e){
 		$(e.currentTarget).parent().removeClass("result_expander").addClass("result_contractor").next(".sub_results").slideDown(200);
 	}, true);
@@ -738,16 +749,16 @@ function startup(){
 			var action = "";
 			if (step.transit){
 				var name = step.transit.line.short_name;
-				icon = "images/icons2/CUSTOM%20BUS%20ICON.v2.svg";
+				icon = "images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg";
 				if (step.transit.line.vehicle.name == "Train"){
 					name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
-					icon = "images/icons2/CUSTOM%20LIGHTRAIL%20ICON.v2.svg";
+					icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
 				} else if (step.transit.line.vehicle.type == "TRAM"){
-					icon = "images/icons2/CUSTOM%20LIGHTRAIL%20ICON.v2.svg";
+					icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
 				}
 				action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
 			} else {
-				icon = "images/icons2/CUSTOM%20WALKING%20MAN.v2.svg";
+				icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
 				action = step.instructions;
 			}
 			steps_html.push(template("transit_step", {"num": i+1, "action": action, "icon": icon}));
@@ -790,35 +801,65 @@ function startup(){
 		close_menu();
 	});
 
+	function open_external(result){
+		if (result.data("dlink")){
+			open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
+		} else if (result.data("ulink")){
+			window.open(result.data("ulink"), "_blank");
+		}
+	}
+
 	click_event(".confirm_link", function (e){
 		var result = $(e.currentTarget);
-		open_modal({title: "External App", content:"Do you want to open the app for a "+result.find(".name").html()+" now?", button2: true, callback: function (btn){
-			if (btn == "Ok"){
-				if (result.data("dlink")){
-					open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
-				} else if (result.data("ulink")){
-					window.open(result.data("ulink"), "_blank");
+		if (settings.get("show_external_conf")){
+			var name = result.find(".name").html();
+			var add = "";
+			if (["a", "e", "i", "o", "u"].indexOf(name.charAt(0).toLowerCase()) != -1)
+				add = "n";
+			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app")+" app for a"+add+" "+name+" now? <br /><br /><input type='checkbox' id='dont_show_external_conf'>  Do not show me this message again.", button2: true, callback: function (btn){
+				if ($("#dont_show_external_conf").prop("checked")){
+					settings.set("show_external_conf", false);
+					update_settings();
 				}
-			}
-		}});
+				if (btn == "Ok"){
+					open_external(result);
+				}
+			}});
+		} else {
+			open_external(result);
+		}
 	}, true);
 
+	function update_settings(){
+		$(".selection_container").each(function (){
+			var key = $(this).data("key");
+			var opt = $(this).find("[data-key='"+settings.get(key)+"']");
+			$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+			opt.hide();
+		});
+		$(".settings_container").each(function (){
+			var key = $(this).data("key");
+			var opt = $(this).find("[data-key='"+settings.get(key)+"']");
+			if (opt.data("icon")){
+				$(this).find(".settings_icon").attr("src", opt.data("icon"));
+			}
+			$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+			opt.hide();
+		});
+	}
+	update_settings();
 	
-	
-	$(".selection_container").each(function (){
-		var key = $(this).data("key");
-		var opt = $(this).find("[data-key='"+settings.get(key)+"']");
-		$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
-		opt.hide();
-	});
 	click_event(".option", function (e){
 		var opt = $(e.currentTarget);
 		if (opt.hasClass("selected"))
 			return;
-		var cont = opt.parents(".selection_container");
+		var cont = opt.parents(".selection_container, .settings_container");
 		cont.find(".option.selected").html(opt.html());
 		cont.find(".option").show();
 		settings.set(cont.data("key"), opt.data("key"));
+		if (opt.data("icon")){
+			cont.find(".settings_icon").attr("src", opt.data("icon"));
+		}
 		opt.hide();
 		cont.find(".toggler").removeClass("open");
 		cont.find(".options").slideUp(200);
@@ -841,12 +882,24 @@ function startup(){
 			$("#menu-overlay").trigger("click_event");
 		}
 	}, false);
+	
+	var device = device_info();
+	$(".version").html(device.version);
+	if (typeof AppVersion != "undefined"){
+		$(".build").html(AppVersion.build);
+	}
 }
 
 function open_intent(intent, fallback){
 	var intent = intent;
 	var fallback = fallback;
+	if (typeof CanOpen == "undefined"){//browser fallback
+		console.log("intent", intent, fallback);
+		alert("intent "+intent+", "+fallback);
+		return;
+	}
 	CanOpen(intent, function(isInstalled) {
+		console.log("intent", intent, fallback, isInstalled);
 		if(isInstalled) {
 			window.location = intent;
 		} else {

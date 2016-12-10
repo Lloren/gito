@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var gaPlugin = false;
 var storage_location = "";
@@ -51,19 +51,19 @@ function click_event(limiter, callback, target){
 
 function hide_keyboard() {
 	//this set timeout needed for case when hideKeyborad
-	//is called inside of 'onfocus' event handler
+	//is called inside of "onfocus" event handler
 	setTimeout(function() {
 		$(":focus").blur();
 		//creating temp field
-		var field = document.createElement('input');
-		field.setAttribute('type', 'text');
+		var field = document.createElement("input");
+		field.setAttribute("type", "text");
 		//hiding temp field from peoples eyes
 		//-webkit-user-modify is nessesary for Android 4.x
-		field.setAttribute('style', 'position:absolute; top: 0px; opacity: 0; -webkit-user-modify: read-write-plaintext-only; left:0px;');
+		field.setAttribute("style", "position:absolute; top: 0px; opacity: 0; -webkit-user-modify: read-write-plaintext-only; left:0px;");
 		document.body.appendChild(field);
 		//adding onfocus event handler for out temp field
 		field.onfocus = function(){
-			field.setAttribute('style', 'display:none;');
+			field.setAttribute("style", "display:none;");
 			setTimeout(function() {
 				document.body.removeChild(field);
 				document.body.focus();
@@ -111,10 +111,10 @@ function argdump(){
 function template(key, data){
 	var dat = templates[key];
 	for(var key in data){
-		dat = dat.replace(new RegExp("##"+key+"##", 'g'), data[key]);
-		dat = dat.replace(new RegExp("{{"+key+"\\?([^}]*)}}", 'gm'), "$1");
+		dat = dat.replace(new RegExp("##"+key+"##", "g"), data[key]);
+		dat = dat.replace(new RegExp("{{"+key+"\\?([^}]*)}}", "gm"), "$1");
 	}
-	dat = dat.replace(new RegExp("{{[^}]*}}", 'gm'), "");
+	dat = dat.replace(new RegExp("{{[^}]*}}", "gm"), "");
 	return dat;
 }
 
@@ -139,30 +139,30 @@ function open_modal(options){
 	}
 	$("#modal a").off().on("touchend", function (e){
 		$("#modal").hide();
-		$("#disable-overlay").removeClass("enabled modal");
+		$("#modal-overlay").removeClass("enabled");
 		if (options.callback)
 			options.callback($(this).html());
 	});
 	$("#modal").show();
-	$("#disable-overlay").addClass("enabled modal");
+	$("#modal-overlay").addClass("enabled");
 }
 
 function open_modala(text, dismiss){
 	dismiss = dismiss || false;
 	$("#modal h1").html(text);
-	$("#modal").addClass("loading").css('display', 'table');
-	$("#disable-overlay").off().addClass("enabled modal");
+	$("#modal").addClass("loading").css("display", "table");
+	$("#modal-overlay").off().addClass("enabled");
 	if (dismiss){
 		$("#disable-overlay").on("touchend", function(e){
 			$("#modal").hide();
-			$("#disable-overlay").removeClass("enabled modal");
+			$("#modal-overlay").removeClass("enabled");
 		});
 	}
 }
 
 function close_modala(){
 	$("#modal").hide().removeClass("loading");
-	$("#disable-overlay").removeClass("enabled modal");
+	$("#modal-overlay").removeClass("enabled");
 }
 
 function track(catigory, action, label, value){
@@ -197,9 +197,9 @@ function iads(){
 		if (!this.loaded){
 			this.loaded = true;
 			window.plugins.iAd.createBannerView({
-				'bannerAtTop': false,
-				'overlap': false,
-				'offsetTopBar': false
+				"bannerAtTop": false,
+				"overlap": false,
+				"offsetTopBar": false
 			}, function(){
 				scope.dshow();
 			}, function(){
@@ -234,7 +234,7 @@ function iads(){
 			window.plugins.iAd.showAd(true);
 			this.active = true;
 			setTimeout(function (){
-				$(window).trigger('resize');
+				$(window).trigger("resize");
 			}, 1000);
 		}
 	};
@@ -264,18 +264,18 @@ function admob(){
 				code = admob_code_droid;
 			AdMob.createBanner({
 				adId: code,
-				adSize: 'SMART_BANNER',
+				adSize: "SMART_BANNER",
 				position: AdMob.AD_POSITION.BOTTOM_CENTER,
 				autoShow: false,
 				isTesting: dev,
-				adExtras: {color_bg: '333333'}
+				adExtras: {color_bg: "333333"}
 			});
 
-			document.addEventListener('onAdFailLoad', function(data) {
+			document.addEventListener("onAdFailLoad", function(data) {
 				scope.failed_at = new Date().getTime();
 				ad_manager.ad_fail("AdMob");
 			});
-			document.addEventListener('onAdLoaded', function(data){
+			document.addEventListener("onAdLoaded", function(data){
 				if (!ad_manager.hide_others("AdMob")){
 					scope.hide();
 				}
@@ -299,7 +299,7 @@ function admob(){
 			this.active = true;
 			AdMob.showBanner(AdMob.AD_POSITION.BOTTOM_CENTER);
 			setTimeout(function (){
-				$(window).trigger('resize');
+				$(window).trigger("resize");
 			}, 1000);
 		}
 	};
@@ -432,7 +432,7 @@ function on_ready(){
 
 			start_splash_remove();
 
-			var ver = device.version.split('.');
+			var ver = device.version.split(".");
 			document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
 
 			uuid = device.uuid;
@@ -494,6 +494,8 @@ function onunload(){
 }
 
 $(function () {
+	if (!dev)
+		$(".dev").remove();
 	Origami.fastclick(document.body);
 	if (typeof window.cordova == "undefined")
 		on_ready();

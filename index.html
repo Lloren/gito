@@ -30,7 +30,7 @@
 			if (dev)
 				alert(message+"\r\n"+url+"\r\n"+lineNumber);
 			$.get("http://www.2dio.com/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
-			return true;
+			return false;
 		};
 	</script>
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key=AIzaSyAmU39uI5FDOZs8beBgV4v-1Zm1Udlp1eE"></script>
@@ -53,30 +53,36 @@
 
 	<div id="menu-overlay"></div>
 	<div id="menu">
+		<div style="height: 45px;">
+			<img src="images/icons3/MOOKY_LOGOTYPE.B.v1.svg" style="width: 150px; width: 150px; position: absolute; margin: auto; left: 0; right: 0; top: 5px;">
+		</div>
 		<ul>
-			<li>Mooky</li>
-			<li>Settings</li>
-			<li>About Us</li>
+			<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>
+			<li><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
+			<li><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
+			<li><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
+			<li><img src="images/icons3/CUSTOM%20ABOUT%20US%20ICON.W+RO.v1.svg"> About Us</li>
+			<li><img src="images/icons3/CUSTOM%20VERSION%20ICON.W+RO.v2.svg"> Version <span class="version"></span> <span class="build"></span></li>
 		</ul>
 		<ul class="dev">
-			<li>Dev</li>
+			<li style="background: black;">Dev</li>
 			<li id="clear_cache">Clear cache</li>
 		</ul>
 	</div>
 
 	<div id="templates" style="display: none;">
 		<div data-key="result">
-			<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}>
+			<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}} app="##app##">
 				<div class="icon">##icon##</div>
 				<div class="name">##name##</div>
-				<div class="price">##price##{{show_surge:<img src="images/icons2/CUSTOM%20SURGE%20ICON.v2.svg">}}</div>
+				<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
 				<div class="time">##time##</div>
 			</div>
 		</div>
 		<div data-key="overload_result">
 			<div class="result_group">
 				<div class="result result_expander">
-					<div class="icon expander"><img class="img_toggle" src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg"> ##icon##</div>
+					<div class="icon expander"><img class="img_toggle" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg"> ##icon##</div>
 					<div class="name expander">##name##</div>
 					<div class="price expander">##price##</div>
 					<div class="time expander">##time##</div>
@@ -96,7 +102,7 @@
 
 	<div id="header">
 		<div id="menubutton" style="color: black;">
-			<img src="images/icons2/CUSTOM%20MAIN%20MENU%20ICON.v4.svg" style="margin-top: 3px; left: -3px; width: 40px; z-index: 20;" />
+			<img src="images/icons3/CUSTOM%20MAIN%20MENU%20ICON.NB.v7.svg" style="margin-top: 3px; left: -3px; width: 40px; z-index: 20;" />
 			<!--<i class="fa fa-bars"></i>-->
 		</div>
 	</div>
@@ -133,8 +139,7 @@
 				<div style="position: relative;">
 					<div style="width: 40px; display: inline-block; position: relative;">
 						<div style="width: 30px; margin: 5px auto 0px; position: relative;">
-							<img src="images/icons2/CUSTOM%20DESTINATION%20ICON.WB.v20.svg" style="width: 30px;">
-							<i class="fa fa-crosshairs my_location" style="position: absolute; left: 4px; font-size: 25px; top: 4px; text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;"></i>
+							<img src="images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg" style="width: 30px;">
 						</div>
 					</div>
 					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: black; font-size: 20px; position: relative; top: -5px;" placeholder="Origin" />
@@ -143,7 +148,7 @@
 				<div style="position: relative;">
 					<div style="width: 40px; display: inline-block;">
 						<div style="width: 30px; margin: 5px auto 0px; position: relative;">
-							<img src="images/icons2/CUSTOM%20ORIGIN%20ICON.BW.v8.svg" style="width: 30px;">
+							<img src="images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg" style="width: 30px;">
 						</div>
 					</div>
 					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); font-size: 20px; position: relative; top: -5px;" placeholder="Destination" />
@@ -170,12 +175,67 @@
 						</div>
 					</div>
 				</div>
+				<div class="selection_container" data-key="show_external_conf">
+					<div class="toggler">
+						<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
+						<div class="option selected">
+
+						</div>
+					</div>
+					<div class="options">
+						<div class="option" data-key="true">
+							Show external link confirmation
+						</div>
+						<div class="option" data-key="false">
+							Hide external link confirmation
+						</div>
+					</div>
+				</div>
 			</div>
 			<div style="position: relative; width: 100%;">
 				<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 			</div>
+			<div class="my_location" style="position: absolute; z-index: 2; top: 145px; left: 5px;">
+				<img src="images/icons3/GPS.RO.v10.svg" style="width: 30px;">
+			</div>
 		</div>
 		<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
+		<div id="settings_tab" class="hidden">
+			<div id="settings_tab_handle">
+				<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />
+			</div>
+			<div id="settings">
+				<div class="settings_container" data-key="sort" data-trigger="sort_results">
+					<div class="toggler">
+						<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<img class="settings_icon" src="">
+						Sort results by <span class="option selected"></span>
+					</div>
+					<div class="options">
+						<div class="option" data-key="price" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg">
+							Price
+						</div>
+						<div class="option" data-key="time" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg">
+							Time
+						</div>
+					</div>
+				</div>
+				<div class="settings_container" data-key="show_external_conf">
+					<div class="toggler">
+						<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<span class="option selected"></span>
+					</div>
+					<div class="options">
+						<div class="option" data-key="true">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20NOTIFICATION%20ICON.W+RO.v2.svg" > Show external link confirmation
+						</div>
+						<div class="option" data-key="false">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20NOTIFICATION%20ICON.W+RO.v2.svg" > Hide external link confirmation
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div id="results_tab">
 			<div id="results_tab_handle" style="display: none;">
 				<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.ORANGE.v3.svg" />

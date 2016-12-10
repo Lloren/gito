@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 2999.9999 3000.0001"
+   sodipodi:docname="CUSTOM DESTINATION ICON.WB.v21.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS\GPS.BW.v9.png"
+   inkscape:export-xdpi="20.001801"
+   inkscape:export-ydpi="20.001801">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.06842097"
+     inkscape:cx="1873.4572"
+     inkscape:cy="1554.7868"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     id="g4192"
+     transform="matrix(0.99999994,0,0,0.99998302,5.3405759e-5,0.02539019)">
+    <ellipse
+       ry="1330.1938"
+       rx="1330.1431"
+       cy="1500.0001"
+       cx="1500"
+       id="path4146"
+       style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:339.66333008;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <ellipse
+       ry="465.25986"
+       rx="465.24213"
+       cy="1500.0001"
+       cx="1500"
+       id="path4148"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:339.66333008;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+       r="1419.9385"
+       cy="1500.0001"
+       cx="1500"
+       id="path4146-6"
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:160.12315369;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

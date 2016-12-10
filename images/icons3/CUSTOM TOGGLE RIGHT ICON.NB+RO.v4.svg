@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="CUSTOM TOGGLE RIGHT ICON.NB+RO.v4.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM TOGGLE RIGHT ICON.NB.v4.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.2797037"
+     inkscape:cx="679.59862"
+     inkscape:cy="1575.4523"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4160"
+       originx="140.73122"
+       originy="-100.99352" />
+    <sodipodi:guide
+       position="1500.7313,1499.0064"
+       orientation="1,0"
+       id="guide4170" />
+  </sodipodi:namedview>
+  <circle
+     r="1435.8459"
+     cy="1500"
+     cx="1500"
+     id="path4163"
+     style="fill:#ffffff;fill-opacity:0;stroke:#ffffff;stroke-width:128.30799866;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0" />
+  <path
+     sodipodi:type="star"
+     style="fill:#e8390e;fill-opacity:1;stroke:#e8390e;stroke-width:150;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path4154"
+     sodipodi:sides="3"
+     sodipodi:cx="1500.1403"
+     sodipodi:cy="1500.429"
+     sodipodi:r1="931.03796"
+     sodipodi:r2="465.51895"
+     sodipodi:arg1="2.0943951"
+     sodipodi:arg2="3.1415927"
+     inkscape:flatsided="false"
+     inkscape:rounded="0"
+     inkscape:randomized="0"
+     d="m 1034.6213,2306.7315 0,-806.3026 0,-806.30247 698.2785,403.15127 698.2784,403.1513 -698.2785,403.1512 z"
+     inkscape:transform-center-x="-232.75956"
+     inkscape:transform-center-y="-0.00011688977" />
+</svg>

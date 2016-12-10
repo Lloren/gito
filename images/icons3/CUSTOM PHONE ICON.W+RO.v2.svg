@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="CUSTOM PHONE ICON.W+RO.v2.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM TOGGLE RIGHT ICON.W+RO.v4.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.19778038"
+     inkscape:cx="1336.3347"
+     inkscape:cy="1378.2894"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4160"
+       originx="140.73122"
+       originy="-100.99352" />
+    <sodipodi:guide
+       position="1500.7313,1499.0064"
+       orientation="1,0"
+       id="guide4170" />
+  </sodipodi:namedview>
+  <g
+     id="g4146">
+    <circle
+       transform="scale(-1,-1)"
+       style="fill:#ffffff;fill-opacity:1;stroke:#e8390e;stroke-width:128.30799866;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4163"
+       cx="-1500"
+       cy="-1500"
+       r="1435.8459" />
+    <path
+       id="path4138-7"
+       d="m 1989.3217,2378.511 c -10.1266,-1.1805 -44.6494,-5.0918 -76.7171,-8.6917 -157.0453,-17.6297 -322.9004,-68.5848 -481.4411,-147.912 C 956.32372,1984.3177 643.99193,1500.558 619.62717,964.94813 614.01272,841.52463 616.42345,835.92341 720.57955,730.38882 821.13889,628.49875 838.63624,618.73303 921.41933,618.29505 c 47.53377,-0.25171 60.15981,2.01499 90.54227,16.25342 43.1495,20.22122 95.3121,68.39219 116.592,107.6696 8.7067,16.07042 31.5256,86.87408 50.7087,157.34154 31.6883,116.40449 34.6716,132.68289 32.6192,177.98359 -3.1392,69.2809 -21.0202,105.3743 -85.4542,172.4904 l -50.7392,52.8509 14.198,44.2135 c 81.7473,254.5643 298.3184,473.2404 555.2238,560.6196 23.4091,7.962 46.9722,14.4763 52.3627,14.4763 5.3907,0 33.0341,-23.3542 61.43,-51.8986 62.5449,-62.8714 92.3991,-77.8335 163.1753,-81.7785 45.4723,-2.5344 59.5107,0.018 177.9835,32.3769 70.7399,19.3208 141.7663,42.1869 157.8368,50.8137 39.1894,21.0379 87.4146,73.2101 107.6369,116.4471 13.8479,29.6078 16.5181,43.7254 16.5456,87.4737 0.049,82.6454 -8.6173,98.7656 -106.4682,197.9733 -100.6406,102.0363 -114.8757,109.4163 -208.2695,107.9755 -32.785,-0.5057 -67.8945,-1.8854 -78.0212,-3.066 z"
+       style="fill:#e8390e;fill-opacity:1"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>

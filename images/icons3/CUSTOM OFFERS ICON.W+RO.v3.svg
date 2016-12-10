@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="CUSTOM OFFERS ICON.W+RO.v3.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\CUSTOM FERRY ICON.v1.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.13985185"
+     inkscape:cx="339.44645"
+     inkscape:cy="1236.8212"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     id="g4685"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
+     transform="matrix(16.862316,0,0,16.862316,-2139.477,631.50291)" />
+  <g
+     id="g4145">
+    <circle
+       style="fill:#ffffff;fill-opacity:1;stroke:#e8390e;stroke-width:128.3081665;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4163"
+       cx="1500"
+       cy="1500"
+       r="1435.8459" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4153"
+       d="m 977.14816,703.4406 c 163.71144,-43.86636 332.63514,53.66181 376.50164,217.37337 43.8664,163.71153 -53.6618,332.63513 -217.3734,376.50163 -163.71146,43.8665 -332.63519,-53.6617 -376.50158,-217.3734 -43.86638,-163.71147 53.6618,-332.6352 217.37334,-376.5016"
+       style="fill:none;fill-opacity:1;stroke:#e8390e;stroke-width:150;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       sodipodi:nodetypes="cc"
+       inkscape:connector-curvature="0"
+       id="path4139-7"
+       d="M 1961.495,693.9261 1030.7209,2306.0739"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#e8390e;stroke-width:150;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4141"
+       d="m 881.02701,1080.1947 c -45.4888,-16.1185 -97.76922,-65.2486 -121.88579,-114.54097 -16.26872,-33.25204 -20.66269,-53.23495 -20.57224,-93.55816 0.21655,-96.5457 43.63436,-167.09702 128.56303,-208.90729 45.77572,-22.53532 53.90136,-24.08658 108.94947,-20.79941 72.18412,4.31043 107.60812,20.81316 156.20992,72.77238 105.3426,112.61985 68.6462,293.29125 -72.9638,359.22945 -46.1534,21.4906 -126.63715,24.1105 -178.30059,5.804 z"
+       style="fill:#e8390e;fill-opacity:0;stroke:none;stroke-width:150;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path4153-9"
+       d="m 1855.9395,1702.6842 c 163.7115,-43.8664 332.6352,53.6618 376.5016,217.3735 43.8665,163.7115 -53.6618,332.6351 -217.3733,376.5016 -163.7115,43.8664 -332.6352,-53.6618 -376.5017,-217.3733 -43.8664,-163.7116 53.6618,-332.6352 217.3734,-376.5018"
+       style="fill:none;fill-opacity:1;stroke:#e8390e;stroke-width:150;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>
