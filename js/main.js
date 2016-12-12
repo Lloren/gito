@@ -22,7 +22,7 @@ var results_call = 0;
 var results_to_return = 4;
 
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
-var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
+var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
 function Settings(){
 	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true}');
@@ -803,7 +803,7 @@ function startup(){
 
 	function open_external(result){
 		if (result.data("dlink")){
-			open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)]["android"]);
+			open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)][thePlatform]);
 		} else if (result.data("ulink")){
 			window.open(result.data("ulink"), "_blank");
 		}
@@ -894,12 +894,23 @@ function open_intent(intent, fallback){
 		alert("intent "+intent+", "+fallback);
 		return;
 	}
-	startApp.set(intent).start(function (){
+	var data = false;
+	if (thePlatform == "android"){
+		var parts = fallback.split("=");
+		data = {
+			"action": "ACTION_VIEW",
+			"package": parts[1],
+			"uri": intent
+		}
+	} else if (thePlatform == "ios"){
+		data = intent;
+	}
+	startApp.set(data).start(function (){
 		console.log("successful intent");
-	}, function (){
-		console.log("intent fail");
+	}, function (err){
+		console.log("intent fail", err);
 		if (fallback.substr(0, 4) == "http"){
-			window.open(fallback, "_blank");
+			window.open(fallback, "_system");
 		} else {
 			window.location = fallback;
 		}
