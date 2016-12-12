@@ -24,7 +24,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 
 
 #modal-overlay {position:absolute; pointer-events:none; opacity:0; background-color:#222; width:100%; height:100%; -webkit-transition: opacity 200ms ease-out, background-color 200ms ease-out; -webkit-transform: translate3d(0, 0, 0); -webkit-backface-visibility: hidden; -webkit-perspective: 1000; z-index:999;}
-#modal-overlay.enabled {pointer-events:auto; opacity:0.7;}
+#modal-overlay.enabled {pointer-events:auto; opacity:0.9;}
 
 #modal {display:none; position:absolute; z-index:1000; margin:auto; width:250px; height:200px; text-align:center; top:0; right:0; bottom:0; left:0; color:#ff8806;}
 #modal .fa {position:absolute; right:5px; bottom:0; z-index:-1; font-size:9em; color:#ECECEC;}
@@ -66,7 +66,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 .clearer{
 	position: absolute;
 	padding: 10px;
-	top: 2px;
+	top: -2px;
 	right: 10px;
 	display: none;
 	font-size: 20px;
@@ -75,14 +75,17 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 
 
 #settings_tab{
+	transform: translate3d(100%, 0, 0);
+}
+#settings_tab.open{
 	transform: translate3d(0, 0, 0);
 	transition: 200ms;
 	position: absolute;
 	top: 200px;
 	width: 100%;
 }
-#settings_tab.hidden{
-	transform: translate3d(100%, 0, 0);
+#settings_tab.open.hidden{
+	transform: translate3d(calc(100% - 50px), 0, 0);
 }
 #settings_tab_handle{
 	position: absolute;
@@ -91,7 +94,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	transition: 200ms;
 }
 .hidden #settings_tab_handle{
-	right: calc(100% + 5px);
+	right: calc(100% - 45px);
 }
 .hidden #settings_tab_handle img{
 	transform: rotate(-90deg);
@@ -115,7 +118,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	font-size: 1em;
 }
 #settings_tab .options{
-	padding-left: 25px;
+	padding-left: 20px;
 }
 #settings_tab .options .option{
 	padding-left:5px;
@@ -137,6 +140,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	transform: rotate(0deg);
 	margin-top:1px;
 	float: left;
+	margin-right: 5px;
 }
 #settings{
 	max-height: 135px;
@@ -262,6 +266,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 }
 
 
+/*TODO: merge with "settings" values*/
 .settings_toggle img{
 	transition: 200ms;
 }

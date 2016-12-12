@@ -132,8 +132,8 @@
 			<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
 				<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
 			</div>
-			<div class="settings_toggle" style="position: absolute; right:5px; top:2px; z-index: 20;">
-				<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg" style="height: 40px;">
+			<div class="settings_toggle open" style="position: absolute; right:5px; top:2px; z-index: 20;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px;">
 			</div>
 			<div>
 				<div style="position: relative;">
@@ -142,7 +142,7 @@
 							<img src="images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg" style="width: 30px;">
 						</div>
 					</div>
-					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: black; font-size: 20px; position: relative; top: -5px;" placeholder="Origin" />
+					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: black; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
 					<i class="fa fa-times clearer from_clear"></i>
 				</div>
 				<div style="position: relative;">
@@ -151,45 +151,8 @@
 							<img src="images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg" style="width: 30px;">
 						</div>
 					</div>
-					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); font-size: 20px; position: relative; top: -5px;" placeholder="Destination" />
+					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
 					<i class="fa fa-times clearer to_clear"></i>
-				</div>
-			</div>
-			<div id="map_settings" class="hidden">
-				<h2>Map/Search Settings</h2>
-				<div class="selection_container" data-key="sort" data-trigger="sort_results">
-					<div class="toggler">
-						<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
-						<div class="option selected">
-
-						</div>
-					</div>
-					<div class="options">
-						<div class="option" data-key="price">
-							<div>Sort by</div>
-							Price
-						</div>
-						<div class="option" data-key="time">
-							<div>Sort by</div>
-							Time
-						</div>
-					</div>
-				</div>
-				<div class="selection_container" data-key="show_external_conf">
-					<div class="toggler">
-						<img src="images/icons2/CUSTOM%20TOGGLE%20DOWN%20ICON.svg">
-						<div class="option selected">
-
-						</div>
-					</div>
-					<div class="options">
-						<div class="option" data-key="true">
-							Show external link confirmation
-						</div>
-						<div class="option" data-key="false">
-							Hide external link confirmation
-						</div>
-					</div>
 				</div>
 			</div>
 			<div style="position: relative; width: 100%;">
@@ -213,10 +176,10 @@
 					</div>
 					<div class="options">
 						<div class="option" data-key="price" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg">
-							Price
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> Price
 						</div>
 						<div class="option" data-key="time" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg">
-							Time
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Time
 						</div>
 					</div>
 				</div>

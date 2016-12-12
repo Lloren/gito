@@ -773,9 +773,9 @@ function startup(){
 	click_event(".settings_toggle", function (e){
 		$(e.currentTarget).toggleClass("open");
 		if ($(e.currentTarget).hasClass("open")){
-			$("#map_settings").removeClass("hidden");
+			$("#settings_tab").removeClass("open");
 		} else {
-			$("#map_settings").addClass("hidden");
+			$("#settings_tab").addClass("open");
 		}
 	});
 
@@ -831,19 +831,14 @@ function startup(){
 	}, true);
 
 	function update_settings(){
-		$(".selection_container").each(function (){
-			var key = $(this).data("key");
-			var opt = $(this).find("[data-key='"+settings.get(key)+"']");
-			$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
-			opt.hide();
-		});
 		$(".settings_container").each(function (){
 			var key = $(this).data("key");
 			var opt = $(this).find("[data-key='"+settings.get(key)+"']");
-			if (opt.data("icon")){
-				$(this).find(".settings_icon").attr("src", opt.data("icon"));
-			}
 			$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+			if (opt.data("icon")){
+				$(this).find(".toggler .settings_icon").attr("src", opt.data("icon"));
+				$(this).find(".option.selected .settings_icon").hide();
+			}
 			opt.hide();
 		});
 	}
@@ -853,12 +848,13 @@ function startup(){
 		var opt = $(e.currentTarget);
 		if (opt.hasClass("selected"))
 			return;
-		var cont = opt.parents(".selection_container, .settings_container");
+		var cont = opt.parents(".settings_container");
 		cont.find(".option.selected").html(opt.html());
 		cont.find(".option").show();
 		settings.set(cont.data("key"), opt.data("key"));
 		if (opt.data("icon")){
-			cont.find(".settings_icon").attr("src", opt.data("icon"));
+			cont.find(".toggler .settings_icon").attr("src", opt.data("icon"));
+			cont.find(".option.selected .settings_icon").hide();
 		}
 		opt.hide();
 		cont.find(".toggler").removeClass("open");
@@ -891,6 +887,24 @@ function startup(){
 }
 
 function open_intent(intent, fallback){
+	console.log("intent", intent, fallback);
+	var fallback = fallback;
+	if (typeof startApp == "undefined"){//browser fallback
+		console.log("intent", intent, fallback);
+		alert("intent "+intent+", "+fallback);
+		return;
+	}
+	startApp.set(intent).start(function (){
+		console.log("successful intent");
+	}, function (){
+		console.log("intent fail");
+		if (fallback.substr(0, 4) == "http"){
+			window.open(fallback, "_blank");
+		} else {
+			window.location = fallback;
+		}
+	});
+	/*
 	var intent = intent;
 	var fallback = fallback;
 	if (typeof CanOpen == "undefined"){//browser fallback
@@ -899,7 +913,7 @@ function open_intent(intent, fallback){
 		return;
 	}
 	CanOpen(intent, function(isInstalled) {
-		console.log("intent", intent, fallback, isInstalled);
+		console.log("can_open_intent", intent, fallback, isInstalled);
 		if(isInstalled) {
 			window.location = intent;
 		} else {
@@ -909,5 +923,5 @@ function open_intent(intent, fallback){
 				window.location = fallback;
 			}
 		}
-	});
+	});*/
 }
