@@ -25,7 +25,7 @@ var results_to_return = 4;
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
 function Settings(){
-	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true}');
+	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true}');
 
 	this.set = function (key, val){
 		this.data[key] = val;
@@ -43,6 +43,9 @@ function get_origin_geo(callback){
 	if (ret == "my location" && my_loc){
 		$("#from_loc").next().show();
 		callback({lat: my_loc.lat(), lng: my_loc.lng()}, true);
+		if ($("#to_loc").val() == ""){
+			map.panTo(my_loc);
+		}
 	} else if (ret != ""){
 		$("#from_loc").next().show();
 		var cache = localStorage.getItem("location:"+ret);
@@ -395,7 +398,7 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
+					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -422,7 +425,7 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
+					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -729,6 +732,11 @@ function startup(){
 
 	click_event("#settings_tab_handle", function (){
 		$("#settings_tab").toggleClass("hidden");
+		if ($("#results_tab").hasClass("hidden")){
+			settings.set("full_map_settings", true);
+		} else {
+			settings.set("full_map_settings", false);
+		}
 	});
 
 	click_event(".result_expander .expander", function (e){
@@ -774,8 +782,10 @@ function startup(){
 		$(e.currentTarget).toggleClass("open");
 		if ($(e.currentTarget).hasClass("open")){
 			$("#settings_tab").removeClass("open");
+			$("#results_tab").removeClass("settings_open");
 		} else {
 			$("#settings_tab").addClass("open");
+			$("#results_tab").addClass("settings_open");
 		}
 	});
 
@@ -883,6 +893,10 @@ function startup(){
 	$(".version").html(device.version);
 	if (typeof AppVersion != "undefined"){
 		$(".build").html(AppVersion.build);
+	}
+
+	if (settings.get("full_map_settings")){
+		$("#settings_tab").removeClass("hidden");
 	}
 }
 

@@ -191,6 +191,9 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	overflow-y: auto;
 	overflow-x: hidden;
 }
+.settings_open #results{
+	max-height: 300px;
+}
 #results::-webkit-scrollbar{
 	width: 4px;
 }
