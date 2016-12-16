@@ -11,8 +11,8 @@
 	</author>
 	<content src="index.html" />
 
-	<allow-navigation href="*" />
 	<access origin="*" />
+	<allow-navigation href="*" />
 	<allow-intent href="http://*/*" />
 	<allow-intent href="https://*/*" />
 	<allow-intent href="lyft:*" launch-external="true" />
@@ -21,9 +21,13 @@
 	<allow-intent href="sms:*" launch-external="true" />
 	<allow-intent href="mailto:*" launch-external="true" />
 	<allow-intent href="geo:*" launch-external="true" />
-	<allow-intent href="market:*" launch-external="true" />
-	<allow-intent href="itms:*" launch-external="true" />
-	<allow-intent href="itms-apps:*" launch-external="true" />
+	<gap:platform name="android">
+		<allow-intent href="market:*" launch-external="true" />
+	</gap:platform>
+	<gap:platform name="ios">
+		<allow-intent href="itms:*" launch-external="true" />
+		<allow-intent href="itms-apps:*" launch-external="true" />
+	</gap:platform>
 
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
@@ -50,6 +54,9 @@
 			<array>
 				<string>uber</string>
 				<string>lyft</string>
+				<string>itms-apps</string>
+				<string>tel</string>
+				<string>mailto</string>
 			</array>
 		</config-file>
 	</gap:platform>
@@ -90,7 +97,7 @@
 	<!--<gap:plugin name="cordova-plugin-webintent2" source="npm" />-->
 	<!--<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
 	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
-	<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />
+	<!--<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />-->
 	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
 
 	<feature name="http://api.phonegap.com/1.0/network" />

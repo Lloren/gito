@@ -107,39 +107,46 @@ function service_google(call_num, start, stop){
 		markers.google_routs = [];
 		transit_holder = [];
 		var bounds = new google.maps.LatLngBounds();
-		for (var i=0;i<response.routes.length;i++){
-			var route = response.routes[i];
-			var msec = 0;
-			if (typeof route.legs[0].departure_time == "undefined")
-				continue;
-			msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
-			var obj = {icon: '<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">', name: "Transit", price: " ---", time: "N/A"};
-			if (route.fare && route.fare.value)
-				obj.price = route.fare.value;
-			obj.time_sec = Math.ceil(msec/1000);
-			var path = new google.maps.Polyline({
-				path: route.overview_path,
-				geodesic: true,
-				strokeColor: '#3366CC',
-				strokeOpacity: 0.6,
-				strokeWeight: 5,
-				map: map,
-				zIndex:2
+		if (status == "OK"){
+			for (var i = 0; i < response.routes.length; i++){
+				var route = response.routes[i];
+				var msec = 0;
+				if (typeof route.legs[0].departure_time == "undefined")
+					continue;
+				msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
+				var obj = {
+					icon:'<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">',
+					name:"Transit",
+					price:" ---",
+					time:"N/A"
+				};
+				if (route.fare && route.fare.value)
+					obj.price = route.fare.value;
+				obj.time_sec = Math.ceil(msec / 1000);
+				var path = new google.maps.Polyline({
+					path:route.overview_path,
+					geodesic:true,
+					strokeColor:'#3366CC',
+					strokeOpacity:0.6,
+					strokeWeight:5,
+					map:map,
+					zIndex:2
+				});
+				markers.google_routs.push(path);
+				route.overview_path.forEach(function(e){
+					bounds.extend(e);
+				});
+				obj.route_id = markers.google_routs.length;
+				obj.transit_info = transit_holder.length;
+				transit_holder.push(route.legs[0]);
+				results.push(obj);
+			}
+			map.panTo(bounds.getCenter());
+			google.maps.event.addListenerOnce(map, 'idle', function(){
+				map.fitBounds(bounds);
 			});
-			markers.google_routs.push(path);
-			route.overview_path.forEach(function(e) {
-				bounds.extend(e);
-			});
-			obj.route_id = markers.google_routs.length;
-			obj.transit_info = transit_holder.length;
-			transit_holder.push(route.legs[0]);
-			results.push(obj);
+			returned_results(results, "Transit");
 		}
-		map.panTo(bounds.getCenter());
-		google.maps.event.addListenerOnce(map, 'idle', function() {
-			map.fitBounds(bounds);
-		});
-		returned_results(results, "Transit");
 		DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
 			console.log("google driving route results", status, response);
 			var bounds = new google.maps.LatLngBounds();
@@ -928,9 +935,9 @@ function open_intent(intent, fallback){
 			}
 		});
 	} else if (thePlatform == "ios"){
-		startApp.set(intent).check(function (){
+		startApp.set(intent).go(function (){
 			console.log("successful intent");
-			window.location = intent;
+			//window.location = intent;
 		}, function (err){
 			console.log("intent fail", err);
 			if (fallback.substr(0, 4) == "http"){
@@ -940,6 +947,18 @@ function open_intent(intent, fallback){
 			}
 		});
 	}
+	/*
+	startApp.set("uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]=37.34886929402844&pickup[longitude]=-121.9004339730331&pickup[nickname]=My%20Location&dropoff[latitude]=37.36401782609635&dropoff[longitude]=-121.92901611328125&dropoff[nickname]=1701%20Airport%20Blvd,%20San%20Jose,%20CA%2095110,%20USA&product_id=ee3ab307-e340-4406-b5ec-9f8c3b43075a&link_text=Transportation-Helper&partner_deeplink=Mooky").go(function (){
+		console.log("successful intent");
+		window.location = intent;
+	}, function (err){
+		console.log("intent fail", err);
+		if (fallback.substr(0, 4) == "http"){
+			window.open(fallback, "_system");
+		} else {
+			window.location = fallback;
+		}
+	});*/
 
 	//$("from_loc").trigger("touchstart");
 	//$("to_loc").trigger("touchstart");
