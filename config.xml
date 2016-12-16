@@ -79,7 +79,7 @@
 
 	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
-	<!--<gap:plugin name="ionic-plugin-keyboard" source="npm" />-->
+	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<gap:plugin name="cordova-plugin-ga" source="npm" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
