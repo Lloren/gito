@@ -177,9 +177,11 @@ function track(catigory, action, label, value){
 
 var splash_checks = 2;
 function start_splash_remove(){
+	console.log("splash_remove");
 	--splash_checks;
 	if (splash_checks <= 0 && navigator.splashscreen){
-		setTimeout(function () { navigator.splashscreen.hide(); }, 100);
+		console.log("splash_remove start");
+		setTimeout(function () { navigator.splashscreen.hide(); console.log("splash_remove run"); }, 100);
 	}
 }
 

@@ -555,8 +555,6 @@ function load_map(){
 
 	$(".page").hide();
 	$("#map").show();
-	
-	start_splash_remove();
 
 	from_autocomplete = new google.maps.places.Autocomplete(document.getElementById("from_loc"));
 	from_autocomplete.bindTo("bounds", map);
@@ -608,6 +606,8 @@ function load_map(){
 	}
 
 	console.log("finish load_map");
+	
+	start_splash_remove();
 }
 
 function open_menu(){
@@ -657,6 +657,7 @@ function get_geo_location(do_load){
 }
 
 function startup(){
+	console.log("startup");
 	if (!dev)
 		$(".dev").hide();
 	if (!has_internet){
