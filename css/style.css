@@ -187,12 +187,12 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 }
 
 #results{
-	max-height: 165px;
+	max-height: 300px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 .settings_open #results{
-	max-height: 300px;
+	max-height: 165px;
 }
 #results::-webkit-scrollbar{
 	width: 4px;

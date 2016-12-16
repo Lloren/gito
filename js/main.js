@@ -621,6 +621,7 @@ function close_menu(){
 }
 
 function get_geo_location(do_load){
+	console.log("request geolocation");
 	var do_load = do_load;
 	navigator.geolocation.getCurrentPosition(function (pos){
 		var loc = pos.coords;
@@ -645,6 +646,7 @@ function get_geo_location(do_load){
 		console.log("Current location");
 		get_origin_geo(coded_location);
 	}, function (error){
+		console.log("geo error", error);
 		$(".my_location").hide();
 		$.getJSON("http://freegeoip.net/json/", function (data){
 			console.log("ippos", data);
@@ -652,7 +654,6 @@ function get_geo_location(do_load){
 			if (do_load)
 				load_map();
 		}, function (err){console.log("call error", err)});
-		console.log("geo error", error);
 	});
 }
 
