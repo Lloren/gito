@@ -77,20 +77,20 @@
 	<preference name="SplashScreenDelay" value="10000" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<!--<gap:plugin name="cordova-plugin-geolocation" source="npm" />-->
-	<!--<gap:plugin name="cordova-plugin-whitelist" source="npm" />-->
+	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
+	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<!--<gap:plugin name="ionic-plugin-keyboard" source="npm" />-->
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-ga" source="npm" />-->
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
 	<gap:plugin name="cordova-plugin-device" source="npm" />
-	<!--<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />-->
-	<!--<gap:plugin name="cordova-plugin-network-information" source="npm" />-->
-	<!--<gap:plugin name="cordova-plugin-appversion" source="npm" />-->
+	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
+	<gap:plugin name="cordova-plugin-network-information" source="npm" />
+	<gap:plugin name="cordova-plugin-appversion" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-webintent2" source="npm" />-->
 	<!--<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
-	<!--<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />-->
-	<!--<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />-->
+	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
+	<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
 
 	<feature name="http://api.phonegap.com/1.0/network" />
