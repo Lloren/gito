@@ -198,7 +198,7 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
-			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&pickup[nickname]="+encodeURI($("#from_loc").val())+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&dropoff[nickname]="+encodeURI($("#to_loc").val())+"&product_id="+price.product_id+"&link_text=Transportation Helper&partner_deeplink=Mooky";
+			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&pickup[nickname]="+encodeURI($("#from_loc").val())+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&dropoff[nickname]="+encodeURI($("#to_loc").val())+"&product_id="+price.product_id+"&link_text=Transportation-Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
@@ -913,24 +913,36 @@ function open_intent(intent, fallback){
 	var data = false;
 	if (thePlatform == "android"){
 		var parts = fallback.split("=");
-		data = {
+		startApp.set({
 			"action": "ACTION_VIEW",
 			"package": parts[1],
 			"uri": intent
-		}
+		}).start(function (){
+			console.log("successful intent");
+		}, function (err){
+			console.log("intent fail", err);
+			if (fallback.substr(0, 4) == "http"){
+				window.open(fallback, "_system");
+			} else {
+				window.location = fallback;
+			}
+		});
 	} else if (thePlatform == "ios"){
-		data = intent;
+		startApp.set(intent).check(function (){
+			console.log("successful intent");
+			window.location = intent;
+		}, function (err){
+			console.log("intent fail", err);
+			if (fallback.substr(0, 4) == "http"){
+				window.open(fallback, "_system");
+			} else {
+				window.location = fallback;
+			}
+		});
 	}
-	startApp.set(data).start(function (){
-		console.log("successful intent");
-	}, function (err){
-		console.log("intent fail", err);
-		if (fallback.substr(0, 4) == "http"){
-			window.open(fallback, "_system");
-		} else {
-			window.location = fallback;
-		}
-	});
+
+	//$("from_loc").trigger("touchstart");
+	//$("to_loc").trigger("touchstart");
 	/*
 	var intent = intent;
 	var fallback = fallback;
