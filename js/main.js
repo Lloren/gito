@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 var map;
 var geocoder;
@@ -8,7 +8,7 @@ var my_loc = false;
 var full_bounds = false;
 var user_moved_map = false;
 
-var DirectionsService = new google.maps.DirectionsService();
+var DirectionsService;
 var from_autocomplete;
 var to_autocomplete;
 var from_blur_handel = false;
@@ -545,6 +545,7 @@ function load_map(){
 		options.center = new google.maps.LatLng(40.4921722, -98.1900234);
 		options.zoom = 5;
 	}
+	DirectionsService = new google.maps.DirectionsService();
 	map = new google.maps.Map(document.getElementById("map-canvas"), options);
 	geocoder = new google.maps.Geocoder();
 
@@ -822,8 +823,11 @@ function startup(){
 
 	function open_external(result){
 		if (result.data("dlink")){
-			open_intent(result.data("dlink"), backup_links[result.data("dlink").substr(0, 4)][thePlatform]);
+			var app = result.data("dlink").substr(0, 4);
+			track("External", app);
+			open_intent(result.data("dlink"), backup_links[app][thePlatform]);
 		} else if (result.data("ulink")){
+			track("External", result.data("ulink").split("/")[2]);
 			window.open(result.data("ulink"), "_blank");
 		}
 	}

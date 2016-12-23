@@ -490,8 +490,8 @@ function onLoad(){
 
 function onunload(){
 	track("Close", "close");
-	if (gaPlugin) {
-		gaPlugin.exit(false, false);
+	if (GA) {
+		GA.exit(false, false);
 	}
 }
 
