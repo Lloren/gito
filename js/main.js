@@ -405,7 +405,7 @@ function coded_location(pos, start, trigger){
 				map: map,
 				draggable: true,
 				icon: {
-					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
+					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
@@ -432,7 +432,7 @@ function coded_location(pos, start, trigger){
 				map:map,
 				draggable:true,
 				icon:{
-					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
+					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(5, 5)
