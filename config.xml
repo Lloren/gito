@@ -136,4 +136,16 @@
 	<icon platform="ios" src="res/icons/ios/icon-76.png" width="76" height="76" />
 	<icon platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" height="152" />
 
+	<splash platform="ios" src="res/screens/ios/Default@2x.png" width="640" height="960" />
+	<splash platform="ios" src="res/screens/ios/Default-568h@2x.png" width="640" height="1136" />
+	<splash platform="ios" src="res/screens/ios/Default-667h@2x.png" width="750" height="1334" />
+	<splash platform="ios" src="res/screens/ios/Default-Portrait-736h@3x.png" width="1242" height="2208" />
+	<splash platform="ios" src="res/screens/ios/Default-Landscape-736h@3x.png" width="2208" height="1242" />
+
+	<splash platform="ios" src="res/screens/ios/Default-Portrait.png" width="768" height="1024" />
+	<splash platform="ios" src="res/screens/ios/Default-Landscape.png" width="1024" height="768" />
+	<splash platform="ios" src="res/screens/ios/Default-Portrait@2x.png" width="1536" height="2048" />
+	<splash platform="ios" src="res/screens/ios/Default-Landscape@2x.png" width="2048" height="1536" />
+
+
 </widget>
