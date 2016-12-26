@@ -120,6 +120,12 @@
 	<icon platform="android" qualifier="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png"/>
 	<icon platform="android" qualifier="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png"/>
 
+	<splash platform="android" qualifier="mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
+	<splash platform="android" qualifier="hdpi" src="res/screens/android/screen-hdpi-portrait.png" />
+	<splash platform="android" qualifier="xhdpi" src="res/screens/android/screen-xhdpi-portrait.png" />
+	<splash platform="android" qualifier="xxhdpi" src="res/screens/android/screen-xxhdpi-portrait.png" />
+	<splash platform="android" qualifier="xxxhdpi" src="res/screens/android/screen-xxxhdpi-portrait.png" />
+
 	<icon platform="ios" src="res/icons/ios/icon-small.png" width="29" height="29" />
 	<icon platform="ios" src="res/icons/ios/icon-small-2x.png" width="58" height="58" />
 	<icon platform="ios" src="res/icons/ios/icon-40.png" width="40" height="40" />
