@@ -175,7 +175,7 @@ function track(catigory, action, label, value){
 	}
 }
 
-var splash_checks = 2;
+var splash_checks = 1;
 function start_splash_remove(){
 	console.log("splash_remove");
 	--splash_checks;
@@ -420,7 +420,7 @@ function on_ready(){
 		$("#templates").remove();
 		if (typeof device != "undefined"){
 			navigator.splashscreen.show();
-			thePlatform = cordova.platformId;//device.platform.toLowerCase();
+			thePlatform = device.platform.toLowerCase();
 
 			GA.startTrackerWithId(dev?"":ga_code);
 			track("Load", "load");
@@ -432,10 +432,8 @@ function on_ready(){
 				ad_manager.init();
 			}
 
-			start_splash_remove();
-
-			//var ver = device.version.split(".");
-			//document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
+			var ver = device.version.split(".");
+			document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
 
 			uuid = device.uuid;
 			
