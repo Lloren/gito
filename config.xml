@@ -81,6 +81,7 @@
 
 	<preference name="SplashScreen" value="splash" />
 	<preference name="SplashScreenDelay" value="5000" />
+	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
 	<gap:plugin name="cordova-plugin-geolocation" source="npm" />
