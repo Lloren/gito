@@ -21,6 +21,8 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
+var one_click_cache = {};
+
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
@@ -189,7 +191,7 @@ function service_uber(call_num, start, stop){
 		var results = [];
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
-			var obj = {app: "uber", icon: '<img src="images/uber_logo.svg">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase()+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			if (price.surge_multiplier > 1)
 				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
@@ -245,7 +247,7 @@ function process_lyft(call_data){
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {app: "lyft", icon: '<img src="images/lyft_logo.svg">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
 			if (surge_multi > 1)
 				obj.show_surge = true;
 			if (est.estimated_cost_cents_max > 0){
@@ -318,9 +320,11 @@ function returned_results(results, over_name){
 	}
 	if (results){
 		if (results.length > 1){
-			results[0].sub_results = format_results(results);
-			results[0].name = over_name + " ("+results.length+")";
-			$("#results").append(template("overload_result", results[0]));
+			var over_result = {};
+			over_result.sub_results = format_results(results);
+			over_result.name = over_name + " ("+results.length+")";
+			over_result.icon = '<img src="images/'+over_name.toLowerCase()+'_logo.svg">';
+			$("#results").append(template("overload_result", over_result));
 		} else {
 			$("#results").append(format_results(results));
 		}
@@ -856,34 +860,40 @@ function startup(){
 	function update_settings(){
 		$(".settings_container").each(function (){
 			var key = $(this).data("key");
-			var opt = $(this).find("[data-key='"+settings.get(key)+"']");
-			$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
-			if (opt.data("icon")){
-				$(this).find(".toggler .settings_icon").attr("src", opt.data("icon"));
-				$(this).find(".option.selected .settings_icon").hide();
+			if (key){
+				var opt = $(this).find("[data-key='"+settings.get(key)+"']");
+				$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+				if (opt.data("icon")){
+					$(this).find(".toggler .settings_icon").attr("src", opt.data("icon"));
+					$(this).find(".option.selected .settings_icon").hide();
+				}
+				opt.hide();
+			} else {
+				$(this).find(".options").show();
 			}
-			opt.hide();
 		});
 	}
 	update_settings();
 	
 	click_event(".option", function (e){
 		var opt = $(e.currentTarget);
-		if (opt.hasClass("selected"))
-			return;
 		var cont = opt.parents(".settings_container");
-		cont.find(".option.selected").html(opt.html());
-		cont.find(".option").show();
-		settings.set(cont.data("key"), opt.data("key"));
-		if (opt.data("icon")){
-			cont.find(".toggler .settings_icon").attr("src", opt.data("icon"));
-			cont.find(".option.selected .settings_icon").hide();
+		if (cont.data("key")){
+			if (opt.hasClass("selected"))
+				return;
+			cont.find(".option.selected").html(opt.html());
+			cont.find(".option").show();
+			settings.set(cont.data("key"), opt.data("key"));
+			if (opt.data("icon")){
+				cont.find(".toggler .settings_icon").attr("src", opt.data("icon"));
+				cont.find(".option.selected .settings_icon").hide();
+			}
+			opt.hide();
+			cont.find(".toggler").removeClass("open");
+			cont.find(".options").slideUp(200);
 		}
-		opt.hide();
-		cont.find(".toggler").removeClass("open");
-		cont.find(".options").slideUp(200);
 		if (jQuery.isFunction(window[cont.data("trigger")]))
-			window[cont.data("trigger")]();
+			window[cont.data("trigger")](opt.data("key"));
 	});
 
 	click_event("#clear_cache", function (e){
@@ -901,6 +911,12 @@ function startup(){
 			$("#menu-overlay").trigger("click_event");
 		}
 	}, false);
+
+	$(document).on("error", function (e){
+		console.log("error", this, e);
+	}).on("load", function (e){
+		console.log("load", this, e);
+	});
 	
 	var device = device_info();
 	$(".version").html(device.version);
@@ -911,6 +927,15 @@ function startup(){
 	if (settings.get("full_map_settings")){
 		$("#settings_tab").removeClass("hidden");
 	}
+}
+
+function one_click(type){
+	var sorter = type;
+	var result = $(".result[app]").sort(function (a, b){
+		return $(a).data(sorter) - $(b).data(sorter);
+	});
+	result.first().trigger("click_event");
+	console.log("one_click", type, result.first());
 }
 
 function open_intent(intent, fallback){

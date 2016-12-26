@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="lyft_line_icon.v1.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\CUSTOM ON DEMAND ICON.v2.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.19778038"
+     inkscape:cx="555.98528"
+     inkscape:cy="1876.9467"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4140" />
+  </sodipodi:namedview>
+  <g
+     id="g4148">
+    <circle
+       style="fill:#f3f3f5;fill-opacity:1;stroke:#ff00bf;stroke-width:128.30799866;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4163"
+       cx="1500"
+       cy="1500"
+       r="1435.8459" />
+    <path
+       style="fill:#ff00bf;fill-opacity:1"
+       id="path4259"
+       d="m 2214.8199,780.30891 c -21.176,-60.94563 -79.0227,-104.33065 -146.6827,-104.33065 l -1136.27439,0 c -67.65998,0 -125.50667,43.38502 -146.6827,104.33065 l -214.85915,618.75309 0,826.3813 c 0,56.8138 46.48395,103.2977 103.29767,103.2977 l 103.29767,0 c 57.33021,0 103.29767,-46.4839 103.29767,-103.2977 l 0,-103.2976 1239.57203,0 0,103.2976 c 0,56.8138 46.484,103.2977 103.2977,103.2977 l 103.2977,0 c 57.3302,0 103.2977,-46.4839 103.2977,-103.2977 l 0,-826.3813 -214.8592,-618.75309 z M 931.86281,1812.2527 c -85.73707,0 -154.94651,-69.2095 -154.94651,-154.9466 0,-85.737 69.20944,-154.9465 154.94651,-154.9465 85.73709,0 154.94649,69.2095 154.94649,154.9465 0,85.7371 -69.2094,154.9466 -154.94649,154.9466 z m 1136.27439,0 c -85.7371,0 -154.9465,-69.2095 -154.9465,-154.9466 0,-85.737 69.2094,-154.9465 154.9465,-154.9465 85.7371,0 154.9465,69.2095 154.9465,154.9465 0,85.7371 -69.2094,154.9466 -154.9465,154.9466 z M 776.9163,1295.7643 931.86281,830.92477 l 1136.27439,0 154.9465,464.83953 -1446.1674,0 z"
+       inkscape:connector-curvature="0" />
+    <path
+       id="path4261"
+       d="m 260.42794,159.4899 2479.14416,0 0,2479.1441 -2479.14416,0 z"
+       inkscape:connector-curvature="0"
+       style="fill:none" />
+    <circle
+       r="185.91103"
+       cy="1062.235"
+       cx="1078.483"
+       id="path4288"
+       style="fill:#ff00bf;fill-opacity:1;stroke:#e8390e;stroke-width:1.10500002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+       r="185.91103"
+       cy="1062.2351"
+       cx="1921.5167"
+       id="path4288-6"
+       style="fill:#ff00bf;fill-opacity:1;stroke:#e8390e;stroke-width:1.10500002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <circle
+       r="185.91103"
+       cy="1062.235"
+       cx="1499.9999"
+       id="path4288-6-8"
+       style="fill:#ff00bf;fill-opacity:1;stroke:#e8390e;stroke-width:1.10500002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

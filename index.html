@@ -42,7 +42,7 @@
 
 <div id="templates" style="display: none;">
 	<div data-key="result">
-		<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}} app="##app##">
+		<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
 			<div class="icon">##icon##</div>
 			<div class="name">##name##</div>
 			<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
@@ -167,6 +167,16 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.W+RO.v4.svg" />
 			</div>
 			<div id="settings">
+				<div class="settings_container" data-trigger="one_click">
+					<div class="options">
+						<div class="option" data-key="price">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> One click price
+						</div>
+						<div class="option" data-key="time">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> One click time
+						</div>
+					</div>
+				</div>
 				<div class="settings_container" data-key="sort" data-trigger="sort_results">
 					<div class="toggler">
 						<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
