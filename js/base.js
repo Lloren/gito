@@ -420,7 +420,7 @@ function on_ready(){
 		$("#templates").remove();
 		if (typeof device != "undefined"){
 			navigator.splashscreen.show();
-			thePlatform = device.platform.toLowerCase();
+			thePlatform = cordova.platformId;//device.platform.toLowerCase();
 
 			GA.startTrackerWithId(dev?"":ga_code);
 			track("Load", "load");
@@ -434,8 +434,8 @@ function on_ready(){
 
 			start_splash_remove();
 
-			var ver = device.version.split(".");
-			document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
+			//var ver = device.version.split(".");
+			//document.body.className = "v"+ver[0]+" version"+device.version.replace(/\./g, "_");
 
 			uuid = device.uuid;
 			

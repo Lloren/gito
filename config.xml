@@ -36,21 +36,17 @@
 	<preference name="phonegap-version" value="cli-6.4.0" />
 	<preference name="android-build-tool" value="gradle" />
 
-	<!-- Android SDK Version -->
-	<!-- Drawerings 1.2.0 changed from Android support version 16 to 19 -->
 	<preference name="android-minSdkVersion" value="16" />
-	<!-- iOS Version -->
-	<!-- Drawerings 1.2.0 changed from iOS support version 6.1 to 7.1 -->
 	<preference name="deployment-target" value="8.0" />
 
 	<preference name="orientation" value="portrait" />
-	<gap:config-file platform="ios" parent="UISupportedInterfaceOrientations" mode="replace">
-		<array>
-			<string>UIInterfaceOrientationPortrait</string>
-		</array>
-	</gap:config-file>
 	<gap:platform name="ios">
-		<config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+		<gap:config-file parent="UISupportedInterfaceOrientations" mode="replace">
+			<array>
+				<string>UIInterfaceOrientationPortrait</string>
+			</array>
+		</gap:config-file>
+		<gap:config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
 			<array>
 				<string>uber</string>
 				<string>lyft</string>
@@ -58,7 +54,7 @@
 				<string>tel</string>
 				<string>mailto</string>
 			</array>
-		</config-file>
+		</gap:config-file>
 	</gap:platform>
 
 	<preference name="fullscreen" value="false" />
@@ -90,14 +86,13 @@
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
 	<gap:plugin name="cordova-plugin-ga" source="npm" />
 	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
-	<gap:plugin name="cordova-plugin-device" source="npm" />
+	<!--<gap:plugin name="cordova-plugin-device" source="npm" />-->
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	<gap:plugin name="cordova-plugin-network-information" source="npm" />
 	<gap:plugin name="cordova-plugin-appversion" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-webintent2" source="npm" />-->
 	<!--<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
 	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
-	<!--<gap:plugin name="cordova-plugin-queries-schemes" source="npm" />-->
 	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
 
 	<feature name="http://api.phonegap.com/1.0/network" />
