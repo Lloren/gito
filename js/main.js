@@ -189,7 +189,7 @@ function service_uber(call_num, start, stop){
 		var results = [];
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
-			var obj = {app: "Uber", icon: '<img src="images/uber_icon.png">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var obj = {app: "uber", icon: '<img src="images/uber_logo.svg">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			if (price.surge_multiplier > 1)
 				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
@@ -245,7 +245,7 @@ function process_lyft(call_data){
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {app: "Lyft", icon: '<img src="images/lyft_icon.png">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			var obj = {app: "lyft", icon: '<img src="images/lyft_logo.svg">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
 			if (surge_multi > 1)
 				obj.show_surge = true;
 			if (est.estimated_cost_cents_max > 0){
@@ -468,7 +468,7 @@ function run_services(){
 				bounds.extend(new google.maps.LatLng(start_location));
 				bounds.extend(new google.maps.LatLng(stop_location));
 				map.panTo(bounds.getCenter());
-				google.maps.event.addListenerOnce(map, 'idle', function() {
+				google.maps.event.addListenerOnce(map, "idle", function() {
 					map.fitBounds(bounds);
 				});
 				$("#results").html("");
@@ -839,7 +839,7 @@ function startup(){
 			var add = "";
 			if (["a", "e", "i", "o", "u"].indexOf(name.charAt(0).toLowerCase()) != -1)
 				add = "n";
-			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app")+" app for a"+add+" "+name+" now? <br /><br /><input type='checkbox' id='dont_show_external_conf'>  Do not show me this message again.", button2: true, callback: function (btn){
+			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app").ucfirst()+" app for a"+add+" "+name+" now? <br /><br /><input type='checkbox' id='dont_show_external_conf' name='cc'><label for='dont_show_external_conf'><span><img src='images/radio_off.svg'><img src='images/radio_on.svg'></span></label>  Do not show me this message again.", button2: true, callback: function (btn){
 				if ($("#dont_show_external_conf").prop("checked")){
 					settings.set("show_external_conf", false);
 					update_settings();

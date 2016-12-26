@@ -40,6 +40,36 @@
 </head>
 <body onload="onLoad()" onunload="onunload()">
 
+<div id="templates" style="display: none;">
+	<div data-key="result">
+		<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}} app="##app##">
+			<div class="icon">##icon##</div>
+			<div class="name">##name##</div>
+			<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
+			<div class="time">##time##</div>
+		</div>
+	</div>
+	<div data-key="overload_result">
+		<div class="result_group">
+			<div class="result result_expander">
+				<div class="icon expander"><img class="img_toggle" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg"> ##icon##</div>
+				<div class="name expander">##name##</div>
+				<div class="price expander">##price##</div>
+				<div class="time expander">##time##</div>
+			</div>
+			<div class="sub_results">##sub_results##</div>
+		</div>
+	</div>
+	<div data-key="transit_step">
+		<div class="transit_step">
+			<div class="num">##num##)</div>
+			<img src="##icon##" style="height: 30px;">
+			<div class="action">##action##</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
 <div id="cont">
 
 	<div id="modal-overlay"></div>
@@ -67,36 +97,6 @@
 			<li style="background: black;">Dev</li>
 			<li id="clear_cache">Clear cache</li>
 		</ul>
-	</div>
-
-	<div id="templates" style="display: none;">
-		<div data-key="result">
-			<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}} app="##app##">
-				<div class="icon">##icon##</div>
-				<div class="name">##name##</div>
-				<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
-				<div class="time">##time##</div>
-			</div>
-		</div>
-		<div data-key="overload_result">
-			<div class="result_group">
-				<div class="result result_expander">
-					<div class="icon expander"><img class="img_toggle" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg"> ##icon##</div>
-					<div class="name expander">##name##</div>
-					<div class="price expander">##price##</div>
-					<div class="time expander">##time##</div>
-				</div>
-				<div class="sub_results">##sub_results##</div>
-			</div>
-		</div>
-		<div data-key="transit_step">
-			<div class="transit_step">
-				<div class="num">##num##)</div>
-				<img src="##icon##" style="height: 30px;">
-				<div class="action">##action##</div>
-				<div class="clear"></div>
-			</div>
-		</div>
 	</div>
 
 	<div id="header">
