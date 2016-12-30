@@ -646,7 +646,7 @@ function get_geo_location(do_load){
 				position: my_loc,
 				map: map,
 				icon: {
-					url: "images/person.png",
+					url: "images/location.svg",
 					size: new google.maps.Size(35, 35),
 					origin: new google.maps.Point(0,0),
 					anchor: new google.maps.Point(17, 17)
@@ -675,6 +675,7 @@ function startup(){
 		$(".dev").hide();
 	if (!has_internet){
 		$("body").html("This app requires internet to function.");
+		start_splash_remove();
 		return;
 	}
 	
@@ -912,12 +913,44 @@ function startup(){
 		}
 	}, false);
 
-	$(document).on("error", function (e){
-		console.log("error", this, e);
-	}).on("load", function (e){
-		console.log("load", this, e);
+	click_event("#menu_contact", function (e){
+		$("#menu-overlay").trigger("click_event");
+		open_modal({title: "Contact us!", content: '<p>Send us a message, we\'d love to hear from you!</p><textarea id="message_text" class="touch_focus" placeholder="Contact us about bugs, requests, feedback, ideas, or just to say hi. :)" style="height: 150px; width:100%;"></textarea><input type="text" id="message_email" class="touch_focus" placeholder="Your email (for replies)" />', callback: function (btn) {
+			if (btn == "Send"){
+				var text = $("#message_text").val();
+				var email = $("#message_email").val();
+				if (text != ""){
+					if (email == ""){
+						if (confirm("Are you sure you want to send without a reply email address? We will be unable to respond to any questions or concerns.")){
+							$.getJSON(base_url+"/ajax/app_contact.php", {app: app_info(), message:text, email:email}, function (data){
+								console.log(data);
+							});
+						} else {
+							reopen_modal();
+							return;
+						}
+					} else {
+						$.getJSON(base_url+"/ajax/app_contact.php", {app: app_info(), message:text, email:email}, function (data){
+							console.log(data);
+						});
+					}
+					open_modal("Sent!<i class='fa fa-envelope-o'></i>", "Thank you for your message!", false, false, "Close");
+				}
+			}
+		}, button2: true, button1: "Send", add_class: "contact_form"});
 	});
-	
+	click_event("#menu_toc", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+		$("#toc").show();
+	});
+
+	click_event("#menu_about", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+		$("#about").show();
+	});
+
 	var device = device_info();
 	$(".version").html(device.version);
 	if (typeof AppVersion != "undefined"){
@@ -930,6 +963,7 @@ function startup(){
 }
 
 function one_click(type){
+	track("Results", "one click", type);
 	var sorter = type;
 	var result = $(".result[app]").sort(function (a, b){
 		return $(a).data(sorter) - $(b).data(sorter);
@@ -976,39 +1010,4 @@ function open_intent(intent, fallback){
 			}
 		});
 	}
-	/*
-	startApp.set("uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]=37.34886929402844&pickup[longitude]=-121.9004339730331&pickup[nickname]=My%20Location&dropoff[latitude]=37.36401782609635&dropoff[longitude]=-121.92901611328125&dropoff[nickname]=1701%20Airport%20Blvd,%20San%20Jose,%20CA%2095110,%20USA&product_id=ee3ab307-e340-4406-b5ec-9f8c3b43075a&link_text=Transportation-Helper&partner_deeplink=Mooky").go(function (){
-		console.log("successful intent");
-		window.location = intent;
-	}, function (err){
-		console.log("intent fail", err);
-		if (fallback.substr(0, 4) == "http"){
-			window.open(fallback, "_system");
-		} else {
-			window.location = fallback;
-		}
-	});*/
-
-	//$("from_loc").trigger("touchstart");
-	//$("to_loc").trigger("touchstart");
-	/*
-	var intent = intent;
-	var fallback = fallback;
-	if (typeof CanOpen == "undefined"){//browser fallback
-		console.log("intent", intent, fallback);
-		alert("intent "+intent+", "+fallback);
-		return;
-	}
-	CanOpen(intent, function(isInstalled) {
-		console.log("can_open_intent", intent, fallback, isInstalled);
-		if(isInstalled) {
-			window.location = intent;
-		} else {
-			if (fallback.substr(0, 4) == "http"){
-				window.open(fallback, "_blank");
-			} else {
-				window.location = fallback;
-			}
-		}
-	});*/
 }

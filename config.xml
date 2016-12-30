@@ -5,6 +5,7 @@
 			version			= "1.0.0">
 	<name>Mooky Dev</name>
 	<description>
+		Making it easy to search, discover, and explore transportation options around you.
 	</description>
 	<author email="support@mooky.com" href="http://mooky.com">
 		Mooky, Inc.
@@ -74,7 +75,12 @@
 
 	<preference name="StatusBarOverlaysWebView" value="true" />
 	<preference name="StatusBarBackgroundColor" value="#e8390e" />
-	<preference name="StatusBarStyle" value="default" />
+	<gap:platform name="ios">
+		<preference name="StatusBarStyle" value="default" />
+	</gap:platform>
+	<gap:platform name="android">
+		<preference name="StatusBarStyle" value="blacktranslucent" />
+	</gap:platform>
 	<feature name="StatusBar">
 		<param name="ios-package" value="CDVStatusBar" onload="true" />
 	</feature>

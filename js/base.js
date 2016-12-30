@@ -123,7 +123,7 @@ function template(key, data){
 }
 
 function open_modal(options){
-	options = $.extend({}, {content: "", title: "", callback: false, button1: "Ok", button2: false, overwrite: true}, options || {});
+	options = $.extend({}, {content: "", title: "", callback: false, button1: "Ok", button2: false, overwrite: true, add_class: ""}, options || {});
 	if (options.button2 === true)
 		options.button2 = "Cancel";
 	
@@ -147,7 +147,7 @@ function open_modal(options){
 		if (options.callback)
 			options.callback($(this).html());
 	});
-	$("#modal").show();
+	$("#modal").attr("class", options.add_class).show();
 	$("#modal-overlay").addClass("enabled");
 }
 
@@ -162,6 +162,11 @@ function open_modala(text, dismiss){
 			$("#modal-overlay").removeClass("enabled");
 		});
 	}
+}
+
+function reopen_modal(){
+	$("#modal").show();
+	$("#disable-overlay").off().addClass("enabled modal");
 }
 
 function close_modala(){
@@ -503,4 +508,11 @@ $(function () {
 	Origami.fastclick(document.body);
 	if (typeof window.cordova == "undefined")
 		on_ready();
+	
+	$(document).on("touchend", ".touch_focus", function(e){
+		$(this).focus();
+	});
+	$(document).on("touchend", ".touch_click", function(e){
+		$(this).click();
+	});
 });

@@ -18,7 +18,7 @@
 		var dev = true;
 		var ads = false;
 		var app = "Mooky Dev";
-		var base_url = "http://gito.notomono.onnix.net";//"http://www.drawerings.com";
+		var base_url = "http://gito.notomono.onnix.net";
 		var ga_code = "";
 		var admob_code = "";
 		var admob_code_droid = "";
@@ -28,7 +28,7 @@
 		window.onerror = function(message, url, lineNumber) {
 			if (dev)
 				alert(message+"\r\n"+url+"\r\n"+lineNumber);
-			$.get("http://www.2dio.com/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
+			$.get(base_url+"/ajax/app_js_error.php", {app:app_info(), message:message, url:url, line_number:lineNumber}, function (data){});
 			return false;
 		};
 	</script>
@@ -88,9 +88,9 @@
 		<ul>
 			<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>
 			<li><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
-			<li><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
-			<li><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
-			<li><img src="images/icons3/CUSTOM%20ABOUT%20US%20ICON.W+RO.v1.svg"> About Us</li>
+			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
+			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
+			<li id="menu_about"><img src="images/icons3/CUSTOM%20ABOUT%20US%20ICON.W+RO.v1.svg"> About Us</li>
 			<li><img src="images/icons3/CUSTOM%20VERSION%20ICON.W+RO.v2.svg"> Version <span class="version"></span> <span class="build"></span></li>
 		</ul>
 		<ul class="dev">
@@ -216,6 +216,345 @@
 
 			</div>
 		</div>
+	</div>
+
+	<div id="toc" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+			You acknowledge and agree that by accessing the Mooky or services, you consent
+			to this disclaimer and the User Privacy Statement. If you do not agree to these
+			terms, you may not access or use our app or services. The Mooky and our services
+			are being made available to you without charge for your individual use and
+			information only. We may change the app and our services, or your access, at any
+			time, without prior notice.  Our app and services contain information from our
+			links to separate third party providers which are not affiliated with Mooky. You
+			agree to use our app and services at your own risk. We do not take responsibility,
+			nor are we liable for any direct, indirect, consequential, special, incidental, punitive
+			or other loss or damage resulting from or related to your access to the Mooky or
+			our services.  Fares and pick up time displayed in the app are estimates only.  The
+			estimates don&#39;t include any tolls or surcharges, if any. The actual price and time for
+			the car to arrive may significantly vary based on the demand, traffic and other
+			charges determined by the provider.
+			USER PRIVACY STATEMENT
+			Mooky collects information about you when you use our mobile applications,
+			websites, and other online products and services (collectively, the “Services”) and
+			through other interactions and communications you have with us. This Privacy
+			Statement (“Statement&quot;) applies to persons anywhere in the world who use our
+			Services to request transportation, delivery, or other on-demand services (“Users”).
+			COLLECTION OF INFORMATION
+			We collect information you provide directly to us, such as when you create or
+			modify your account, request on-demand services, contact customer support, or
+			otherwise communicate with us. This information may include: name, email,
+			phone number, postal address, profile picture, payment method, delivery notes, and
+			other information you choose to provide.
+			INFORMATION WE COLLECT THROUGH YOUR USE OF OUR SERVICES
+			When you use our Services, we collect information about you in the following
+			general categories:
+			 Location Information: When you use the Services for transportation or
+			delivery, we collect precise location data from the Mooky. If you permit the
+			Mooky to access location services through the permission system used by
+			your mobile operating system (“platform”), we may also collect the precise
+			location of your device when the app is running in the foreground or
+			background. We may also derive your approximate location from your IP
+			address.
+			 Contacts Information: If you permit the Mooky to access the address book
+			on your device through the platform, we may access and store names and
+			contact information from your address book to facilitate social interactions
+			through our Services and for other purposes described in this Statement or
+			at the time of consent or collection.
+			 Transaction Information: We collect transaction details related to your use of
+			our Services, including the type of service requested, date and time the
+			service was provided, amount charged, distance traveled, and other related
+			transaction details. Additionally, if someone uses your promo code, we may
+			associate your name with that person.
+			 Usage and Preference Information: We collect information about how you
+			and site visitors interact with our Services, preferences expressed, and
+			settings chosen.
+			 Device Information: We may collect information about your mobile device,
+			including, for example, the hardware model, operating system and version,
+			software and file names and versions, preferred language, unique device
+			identifier, advertising identifiers, serial number, device motion information,
+			and mobile network information.
+			 Log Information: When you interact with the Services, we collect server
+			logs, which may include information such as device IP address, access dates
+			and times, app features or pages viewed, app crashes and other system
+			activity, type of browser, and the third-party site or service you were using
+			before interacting with our Services.
+			 Email Newsletter: When you submit your first name, last name, and email
+			address to subscribe to the Mooky email newsletter, you are giving us
+			permission to contact you via email to share news about Mooky and its
+			partners.
+			 Submission of feedback, bug reports, requests for help: Any information you
+			share with Mooky about your experience may be used by us for quality
+			control and other purposes.
+			USE OF INFORMATION
+			We may use the information we collect about you to:
+			 Provide, maintain, and improve our Services, including, for example, to
+			provide services you request (and send related information), develop new
+			features, provide customer support to Users, develop safety features,
+			authenticate users, and send product updates and administrative messages;
+			 Perform internal operations, including, for example, to prevent fraud and
+			abuse of our Services; to troubleshoot software bugs and operational
+			problems; to conduct data analysis, testing, and research; and to monitor
+			and analyze usage and activity trends;
+			 Send or facilitate communications (i) such as estimated times of arrival
+			(ETAs), or (ii) in connection with your use of certain features, such as
+			referrals, invites, split fare requests, or ETA sharing;
+			 Send communications we think will be of interest to you, including
+			information about products, services, promotions, news, and events of
+			Mooky and other companies, where permissible and according to local
+			applicable laws; and to process contest, sweepstake, or other promotion
+			entries or fulfill any related awards; or
+			 Personalize and improve the Services, including to provide or recommend
+			features, content, social connections, referrals, and advertisements.
+			We may transfer the information described in this Statement to, and process and
+			store it in, the United States and other countries, some of which may have less
+			protective data protection laws than the region in which you reside. Where this is
+			the case, we will take appropriate measures to protect your personal information in
+			accordance with this Statement.
+			SHARING OF INFORMATION
+			We may share the information we collect about you as described in this Statement
+			or as described at the time of collection or sharing, including as follows:
+			THROUGH OUR SERVICES
+			We may share your information:
+			 With third parties to provide you a service you requested through a
+			partnership or promotional offering made by a third party or us;
+			 With the general public if you submit content in a public forum, such as blog
+			comments, social media posts, or other features of our Services that are
+			viewable by the general public; or
+			 With third parties with whom you choose to let us share information, for
+			example other apps or websites that integrate with our API or Services, or
+			those with an API or Service with which we integrate.
+			OTHER IMPORTANT SHARING
+			We may share your information:
+			 With vendors, consultants, marketing partners, and other service providers
+			who need access to such information to carry out work on our behalf;
+			 In response to a request for information by a competent authority if we
+			believe disclosure is in accordance with, or is otherwise required by, any
+			applicable law, regulation, or legal process;
+			 With law enforcement officials, government authorities, or other third
+			parties if we believe your actions are inconsistent with our policies, or to
+			protect the rights, property, or safety of Mooky or others;
+			 In connection with, or during negotiations of, any merger, sale of company
+			assets, consolidation or restructuring, financing, or acquisition of all or a
+			portion of our business by or into another company;
+			 If we otherwise notify you and you consent to the sharing; or
+			 In an aggregated and/or anonymized form which cannot reasonably be used
+			to identify you.
+			SOCIAL SHARING FEATURES
+			The Services may integrate with social sharing features and other related tools
+			which let you share actions you take on our Services with other apps, sites, or
+			media, and vice versa. Your use of such features enables the sharing of information
+			with your friends or the public, depending on the settings you establish with the
+			social sharing service. Please refer to the privacy policies of those social sharing
+			services for more information about how they handle the data you provide to or
+			share through them.
+			ANALYTICS AND ADVERTISING SERVICES PROVIDED BY OTHERS
+			We may allow others to provide audience measurement and analytics services for
+			us, to serve advertisements on our behalf across the Internet, and to track and
+			report on the performance of those advertisements. These entities may use cookies,
+			web beacons, SDKs, and other technologies to identify your device when you visit
+			our site and use our Services, as well as when you visit other online sites and
+			services.
+			ACCOUNT INFORMATION
+			You may correct your account information at any time by logging into your in-app
+			account. Please note that in some cases we may retain certain information about
+			you as required by law, or for legitimate business purposes to the extent permitted
+			by law. For instance, if you have a standing credit or debt on your account, or if we
+			believe you have committed fraud or violated our terms, we may seek to resolve
+			the issue before terminating your access or deleting your information.
+			ACCESS RIGHTS
+			Mooky will comply with individual’s requests regarding access, correction, and/or
+			deletion of the personal data it stores in accordance with applicable law.
+			LOCATION INFORMATION
+			We request permission for our app’s collection of precise location from your
+			device per the permission system used by your mobile operating system. If you
+			initially permit the collection of this information, you can later disable it by
+			changing the location settings on your mobile device. However, this will limit your
+			ability to use certain features of our Services. Additionally, disabling our app’s
+			collection of precise location from your device will not limit our ability to collect
+			other trip location information or our ability to derive approximate location from
+			your IP address.
+			CONTACT INFORMATION
+			We may also seek permission for our app’s collection and syncing of contact
+			information from your device per the permission system used by your mobile
+			operating system. If you initially permit the collection of this information, iOS
+			users can later disable it by changing the contacts settings on your mobile device.
+			The Android platform does not provide such a setting.
+			CHANGES TO THE STATEMENT
+			We may modify the Terms at any time, in our sole discretion. If we do so, we’ll let
+			you know either by posting the modified Terms on the Site or App or through other
+			communications. It’s important that you review the Terms whenever we modify
+			them because if you continue to use the Services after we have posted modified
+			Terms on the Site or App, you are indicating to us that you agree to be bound by
+			the modified Terms. If you don’t agree to be bound by the modified Terms, then
+			you can’t use the Services anymore. Because our Services are evolving over time
+			we may change or discontinue all or any part of the Services, at any time and
+			without notice, at our sole discretion.
+			If you have any questions about the Statement or our practices, please feel free to
+			contact us at info@Mookyapp.com.
+			For the avoidance of doubt, Mooky does not provide transportation services, and
+			Mooky is not a transportation carrier. It is up to the driver to offer transportation
+			services, which may be requested by a passenger through the use of the services.
+			Any decision by a passenger to accept transportation once such passenger is
+			matched through the services with a driver is a decision made in such passenger’s
+			sole discretion. Mooky offers information and a method to connect drivers and
+			passengers with each other, but does not and does not intend to provide
+			transportation services or act in any manner as a transportation carrier, and has no
+			responsibility or liability for any transportation services voluntarily provided to
+			any passenger by any driver using the services.
+			ASSUMPTION OF RISK AND INDEMNITY
+			You knowingly and freely assume all risk when using the services. You, on behalf
+			of yourself, your personal representatives and your heirs, hereby voluntarily agree
+			to release, waive, discharge, hold harmless, defend and indemnify Mooky and its
+			officers, directors, employees, consultants, agents, successors and assigns, from
+			and against any claims, disputes, demands, liabilities, damages, losses, and costs
+			and expenses, including, without limitation, reasonable legal and accounting fees
+			arising out of or in any way connected with (i) your access to or use of the services
+			or content or your user content (ii) ride contracts or your receipt of rides including,
+			without limitation, for bodily injury, wrongful death, emotional distress, or other
+			damages or harm, whether to you or to third parties, which may result from the
+			provision of rides or participants therein, or (iii) violation of these terms, including,
+			without limitation, claims for bodily injury, wrongful death, emotional distress,
+			loss of services or other damages or harm, whether to you or to third parties, which
+			may result from your use of the services.
+			AGREEMENT TO ARBITRATE
+			You and Mooky agree that any dispute, claim or controversy between you and
+			Mooky arising out of or relating to these Terms or the breach, termination,
+			enforcement, interpretation or validity thereof or the use of the Services or Content
+			(collectively, “Disputes”) will be settled by binding arbitration, except that each
+			party retains the right: (i) to bring an individual action in small claims court and (ii)
+			to seek injunctive or other equitable relief in a court of competent jurisdiction to
+			prevent the actual or threatened infringement, misappropriation or violation of a
+			party’s copyrights, trademarks, trade secrets, patents or other intellectual property
+			rights (the action described in the foregoing clause (ii), an “IP Protection Action”).
+			The exclusive jurisdiction and venue of any IP Protection Action will be the state
+			and federal courts located in the Northern District of California and each of the
+			parties hereto waives any objection to jurisdiction and venue in such courts. You
+			acknowledge and agree that you and Mooky are each waiving the right to a trial by
+			jury or to participate as a plaintiff or class Passenger in any purported class action
+			or representative proceeding. Further, unless both you and Mooky otherwise agree
+			in writing, the arbitrator may not consolidate more than one person&#39;s claims, and
+			may not otherwise preside over any form of any class or representative proceeding.
+			If this specific paragraph is held unenforceable, then the entirety of this “Dispute
+			Resolution” section will be deemed void. Except as provided in the preceding
+			sentence, this “Dispute Resolution” section will survive any termination of these
+			Terms.
+			Arbitration Rules
+			The arbitration will be administered by the American Arbitration Association
+			(“AAA”) in accordance with the Commercial Arbitration Rules and the
+			Supplementary Procedures for Consumer Related Disputes (the “AAA Rules”)
+			then in effect, except as modified by this “Dispute Resolution” section. (The AAA
+			Rules are available at www.adr.org/arb_med or by calling the AAA at 1-800- 778-
+			7879.) The Federal Arbitration Act will govern the interpretation and enforcement
+			of this Section.
+			Arbitration Process
+			A party who desires to initiate arbitration must provide the other party with a
+			written Demand for Arbitration as specified in the AAA Rules. (The AAA
+			provides a form Demand for Arbitration
+			at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175 and a separate form
+			for California residents
+			athttp://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822.) The arbitrator will
+			be either a retired judge or an attorney licensed to practice law and will be selected
+			by the parties from the AAA’s roster of arbitrators. If the parties are unable to
+			agree upon an arbitrator within seven (7) days of delivery of the Demand for
+			Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA
+			Rules.
+			Arbitration Location and Procedure
+			Unless you and Mooky otherwise agree, the arbitration will be conducted in the
+			county where you reside. If your claim does not exceed $10,000, then the
+			arbitration will be conducted solely on the basis of the documents that you and
+			Mooky submit to the arbitrator, unless you request a hearing or the arbitrator
+			determines that a hearing is necessary. If your claim exceeds $10,000, your right to
+			a hearing will be determined by the AAA Rules. Subject to the AAA Rules, the
+			arbitrator will have the discretion to direct a reasonable exchange of information
+			by the parties, consistent with the expedited nature of the arbitration.
+			Arbitrator’s Decision
+			The arbitrator will render an award within the time frame specified in the AAA
+			Rules. The arbitrator’s decision will include the essential findings and conclusions
+			upon which the arbitrator based the award. Judgment on the arbitration award may
+			be entered in any court having jurisdiction thereof. The arbitrator’s award of
+			damages must be consistent with the terms of the “Limitation of Liability” section
+			above as to the types and amounts of damages for which a party may be held
+			liable. The arbitrator may award declaratory or injunctive relief only in favor of the
+			claimant and only to the extent necessary to provide relief warranted by the
+			claimant’s individual claim. If you prevail in arbitration you will be entitled to an
+			award of attorneys’ fees and expenses, to the extent provided under applicable law.
+			Mooky will not seek, and hereby waives all rights it may have under applicable
+			law to recover, attorneys’ fees and expenses if it prevails in arbitration.
+			Fees
+			Your responsibility to pay any AAA filing, administrative and arbitrator fees will
+			be solely as set forth in the AAA Rules. However, if your claim for damages does
+			not exceed $75,000, Mooky will pay all such fees unless the arbitrator finds that
+			either the substance of your claim or the relief sought in your Demand for
+			Arbitration was frivolous or was brought for an improper purpose (as measured by
+			the standards set forth in Federal Rule of Civil Procedure 11(b)).
+			Changes
+			Notwithstanding the provisions of the “Changes to Terms or Services” section
+			above, if Mooky changes this “Dispute Resolution” section after the date you first
+			accepted these Terms (or accepted any subsequent changes to these Terms), you
+			may reject any such change by sending us written notice (including by email to
+			info@Mookyapp.com) within 30 days of the date such change became effective, as
+			indicated in the “Last Updated” date above or in the date of Mooky’s email to you
+			notifying you of such change. By rejecting any change, you are agreeing that you
+			will arbitrate any Dispute between you and Mooky in accordance with the
+			provisions of this “Dispute Resolution” section as of the date you first accepted
+			these Terms (or accepted any subsequent changes to these Terms).
+			General Terms
+			These Terms constitute the entire and exclusive understanding and agreement
+			between Mooky and you regarding the Services and Content, and these Terms
+			supersede and replace any and all prior oral or written understandings or
+			agreements between Mooky and you regarding the Services and Content. If for any
+			reason a court of competent jurisdiction finds any provision of these Terms invalid
+			or unenforceable, that provision will be enforced to the maximum extent
+			permissible and the other provisions of these Terms will remain in full force and
+			effect.
+			You may not assign or transfer these Terms, by operation of law or otherwise,
+			without Mooky’s prior written consent. Any attempt by you to assign or transfer
+			these Terms, without such consent, will be null and of no effect. Mooky may freely
+			assign or transfer these Terms without restriction. Subject to the foregoing, these
+			Terms will bind and inure to the benefit of the parties, their successors and
+			permitted assigns.
+			Any notices or other communications provided by Mooky under these Terms,
+			including those regarding modifications to these Terms, will be given: by Mooky
+			(i) via email; or (ii) by posting to the Services. For notices made by e-mail, the date
+			of receipt will be deemed the date on which such notice is transmitted.
+			Mooky’s failure to enforce any right or provision of these Terms will not be
+			considered a waiver of those rights. The waiver of any such right or provision will
+			be effective only if in writing and signed by a duly authorized representative of
+			Mooky. Except as expressly set forth in these Terms, the exercise by either party of
+			any of its remedies under these Terms will be without prejudice to its other
+			remedies under these Terms or otherwise.
+			Contact Information
+			If you have any questions about these Terms or the Services, please contact Mooky
+			at info@Mookyapp.com.
+	</div>
+
+	<div id="about" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+		<div>Compare rides - Search and compare your options.</div>
+		<div>Save money - Discover your lowest rate.</div>
+		<div>Save time - Discover your fastest option.</div>
+		<div>Travel Smarter - Explore your options before you book your ride.</div>
+	</div>
+
+	<div id="geofence" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+		<h2>We are sorry, we are only available to a limited test audience as of now.</h2>
 	</div>
 
 </div>
