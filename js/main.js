@@ -388,7 +388,7 @@ function geo_location(id, geo){
 			localStorage.setItem("location:"+results[0].formatted_address, JSON.stringify(geo));
 
 			console.log("geo results", id, results);
-			$(id).val(results[0].formatted_address);
+			$(id).val(results[0].formatted_address).next().show();
 		}
 	});
 }
@@ -646,7 +646,7 @@ function get_geo_location(do_load){
 				position: my_loc,
 				map: map,
 				icon: {
-					url: "images/location.svg",
+					url: "images/person.png",
 					size: new google.maps.Size(14, 14),
 					origin: new google.maps.Point(0, 0),
 					anchor: new google.maps.Point(7, 7)
@@ -795,9 +795,10 @@ function startup(){
 		$("#transit_details_tab").show();
 
 		$(".transit_step .action").each(function (){
-			if ($(this).width() > screen.width - 125){
+			var wid = $(window).width();
+			if ($(this).width() > wid - 125){
 				var sec = "";
-				while ($(this).width() > screen.width - 140){
+				while ($(this).width() > wid - 140){
 					var cont = $(this).html().split(" ");
 					sec = cont.pop() + " " + sec;
 					$(this).html(cont.join(" "));
