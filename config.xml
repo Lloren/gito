@@ -115,6 +115,9 @@
 	<gap:config-file platform="android" parent="/manifest/application">
 		<activity android:windowSoftInputMode="adjustPan" />
 	</gap:config-file>
+	<gap:config-file target="AndroidManifest.xml" parent="/*">
+		<uses-permission android:name="android.permission.CALL_PHONE" />
+	</gap:config-file>
 
 	<!-- Default Icon/Splash -->
 	<icon src="icon.png" />
