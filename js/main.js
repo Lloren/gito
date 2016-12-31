@@ -933,7 +933,7 @@ function startup(){
 			var html = "";
 			for (var i=0;i<buss.length;i++){
 				var bus = buss[i];
-				html += '<a style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
+				html += '<a class="no_close" style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
 			}
 			close_modala();
 			open_modal({title: "Taxi Companies", content: html, button1: "Close"});

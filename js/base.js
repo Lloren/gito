@@ -141,10 +141,12 @@ function open_modal(options){
 		$("#mbutton2").hide();
 	}
 	$("#modal a").off().on("touchend", function (e){
-		$("#modal").hide();
-		$("#modal-overlay").removeClass("enabled");
-		if (options.callback)
-			options.callback($(this).html());
+		if (!$(this).hasClass("no_close")){
+			$("#modal").hide();
+			$("#modal-overlay").removeClass("enabled");
+			if (options.callback)
+				options.callback($(this).html());
+		}
 	});
 	$("#modal").attr("class", options.add_class).show();
 	$("#modal-overlay").addClass("enabled");
