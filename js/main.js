@@ -408,6 +408,7 @@ function coded_location(pos, start, trigger){
 				position: start_location,
 				map: map,
 				draggable: true,
+				zIndex: 1,
 				icon: {
 					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
@@ -435,6 +436,7 @@ function coded_location(pos, start, trigger){
 				position:stop_location,
 				map:map,
 				draggable:true,
+				zIndex: 2,
 				icon: {
 					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
@@ -645,12 +647,13 @@ function get_geo_location(do_load){
 			var marker = new google.maps.Marker({
 				position: my_loc,
 				map: map,
+				zIndex: 3,
 				icon: {
 					url: "images/location.svg",
 					size: new google.maps.Size(3000, 3000),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(20, 20),
-					scaledSize: new google.maps.Size(40, 40)
+					anchor: new google.maps.Point(15, 15),
+					scaledSize: new google.maps.Size(30, 30)
 				}
 			});
 			markers.my_loc = marker;

@@ -352,6 +352,18 @@ input[type="checkbox"]:checked + label span{
 	display:none;
 }
 
+.about_head{
+	vertical-align: middle;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+
+.about_img{
+	width: 40px;
+	top: 13px;
+	position: relative;
+}
+
 
 /*TODO: merge with "settings" values*/
 .settings_toggle img{
