@@ -360,8 +360,7 @@ input[type="checkbox"]:checked + label span{
 
 .about_img{
 	width: 40px;
-	top: 13px;
-	position: relative;
+	margin-top: 20px;
 }
 
 

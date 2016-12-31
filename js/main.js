@@ -406,7 +406,7 @@ function coded_location(pos, start, trigger){
 			markers.start = new google.maps.Marker({
 				position: start_location,
 				map: map,
-				//draggable: true,
+				draggable: true,
 				zIndex: 10,
 				icon: {
 					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
