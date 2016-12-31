@@ -406,6 +406,7 @@ function coded_location(pos, start, trigger){
 			markers.start = new google.maps.Marker({
 				position: start_location,
 				map: map,
+				optimized:false,
 				draggable: true,
 				zIndex: 10,
 				icon: {
@@ -434,6 +435,7 @@ function coded_location(pos, start, trigger){
 			markers.stop = new google.maps.Marker({
 				position:stop_location,
 				map:map,
+				optimized:false,
 				draggable:true,
 				zIndex: 20,
 				icon: {
@@ -646,6 +648,7 @@ function get_geo_location(do_load){
 			var marker = new google.maps.Marker({
 				position: my_loc,
 				map: map,
+				optimized:false,
 				zIndex: 30,
 				icon: {
 					url: "images/location.svg",

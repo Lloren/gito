@@ -337,18 +337,18 @@ input[type="checkbox"]:checked + label span{
 	padding-left: 2px;
 }
 
-.transit_step .action {
+.transit_step .action{
 	width: initial;
 }
 
-.transit_step.sec_line {
+.transit_step.sec_line{
 	left: 90px;
 	padding-left: 18px;
 }
-.transit_step.sec_line .icon {
+.transit_step.sec_line .icon{
 	display:none;
 }
-.transit_step.sec_line .time {
+.transit_step.sec_line .time{
 	display:none;
 }
 
