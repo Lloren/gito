@@ -936,7 +936,7 @@ function startup(){
 				html += '<a class="no_close" style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
 			}
 			close_modala();
-			open_modal({title: "Taxi Companies", content: html, button1: "Close"});
+			open_modal({title: "Taxi Companies", content: html, button1: "Close", add_class: "tff_model"});
 		});
 	}, true);
 
