@@ -21,8 +21,6 @@ var transit_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
-var one_click_cache = {};
-
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
@@ -232,8 +230,6 @@ function service_uber(call_num, start, stop){
 	});
 }
 
-//https://api.taxifarefinder.com/businesses?key=<TFF API KEY>&entity_handle=Boston
-//https://api.taxifarefinder.com/entity?key=<TFF API KEY>&location=42.356261,-71.065334
 function service_tff(call_num, start, stop){
 	$.ajax({
 		dataType: "jsonp",
@@ -244,7 +240,31 @@ function service_tff(call_num, start, stop){
 			if (results_call > call_num)
 				return;
 			if (data.status == "OK"){
-				returned_results([{icon: '<img src="images/icons3/CUSTOM%20TAXI%20ICON.RO.v6.svg">', name: "Taxi", price: data.total_fare}]);
+				returned_results([{icon: '<img src="images/icons3/CUSTOM%20TAXI%20ICON.RO.v6.svg">', name: "Taxi", price: data.total_fare, tff:true}]);
+			}
+		}
+	});
+}
+
+function tff_numbers(loc, callback){
+	$.ajax({
+		dataType: "jsonp",
+		cache: true,
+		url: "https://api.taxifarefinder.com/entity?callback=?",
+		data: {key: "bREfab7g3fEp", location: loc.lat+","+loc.lng},
+		success: function (data){
+			if (data.handle){
+				$.ajax({
+					dataType: "jsonp",
+					cache: true,
+					url: "https://api.taxifarefinder.com/businesses?callback=?",
+					data: {key: "bREfab7g3fEp", entity_handle: data.handle},
+					success: function (data){
+						if (data.status == "OK"){
+							callback(data.businesses);
+						}
+					}
+				});
 			}
 		}
 	});
@@ -905,6 +925,19 @@ function startup(){
 		} else {
 			open_external(result);
 		}
+	}, true);
+
+	click_event(".tff_click", function (e){
+		open_modala("loading...");
+		tff_numbers(start_location, function(buss){
+			var html = "";
+			for (var i=0;i<buss.length;i++){
+				var bus = buss[i];
+				html += '<a style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
+			}
+			close_modala();
+			open_modal({title: "Taxi Companies", content: html, button1: "Close"});
+		});
 	}, true);
 
 	function update_settings(){
