@@ -118,7 +118,7 @@ function service_google(call_num, start, stop){
 				msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
 				var obj = {
 					icon:'<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">',
-					name:"Transit",
+					name:"Walk",
 					price:" ---",
 					time:"N/A"
 				};
@@ -140,6 +140,24 @@ function service_google(call_num, start, stop){
 				});
 				obj.route_id = markers.google_routs.length;
 				obj.transit_info = transit_holder.length;
+				var num = 0;
+				var has_name = false;
+				for (var j=0;j<route.legs[0].steps.length;j++){
+					var step = route.legs[0].steps[j];
+					if (step.transit){
+						num++;
+						if (!has_name){
+							has_name = true;
+							obj.name = step.transit.line.vehicle.name+" "+step.transit.line.short_name;
+							if (step.transit.line.vehicle.name == "Train"){
+								obj.name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
+							}
+						}
+					}
+				}
+				if (num > 1){
+					obj.name += " (+"+(num-1)+")";
+				}
 				transit_holder.push(route.legs[0]);
 				results.push(obj);
 			}
@@ -406,7 +424,6 @@ function coded_location(pos, start, trigger){
 			markers.start = new google.maps.Marker({
 				position: start_location,
 				map: map,
-				optimized:false,
 				draggable: true,
 				zIndex: 10,
 				icon: {
@@ -435,7 +452,6 @@ function coded_location(pos, start, trigger){
 			markers.stop = new google.maps.Marker({
 				position:stop_location,
 				map:map,
-				optimized:false,
 				draggable:true,
 				zIndex: 20,
 				icon: {
@@ -648,7 +664,6 @@ function get_geo_location(do_load){
 			var marker = new google.maps.Marker({
 				position: my_loc,
 				map: map,
-				optimized:false,
 				zIndex: 30,
 				icon: {
 					url: "images/location.svg",

@@ -85,8 +85,8 @@
 			<img src="images/icons3/MOOKY_LOGOTYPE.B.v1.svg" style="width: 150px; width: 150px; position: absolute; margin: auto; left: 0; right: 0; top: 5px;">
 		</div>
 		<ul>
-			<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>
-			<li><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
+			<!--<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>-->
+			<li id="menu_rate"><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
 			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
 			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
 			<li id="menu_about"><img src="images/icons3/CUSTOM%20ABOUT%20US%20ICON.W+RO.v1.svg"> About Us</li>
@@ -126,7 +126,6 @@
 					</div>
 					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: white; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
 					<img class="clearer from_clear" src="images/remove_text.svg">
-					<!--<i class="fa fa-times clearer from_clear"></i>-->
 				</div>
 				<div style="position: relative;">
 					<div style="width: 40px; display: inline-block;">
@@ -136,7 +135,6 @@
 					</div>
 					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color:white; font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
 					<img class="clearer to_clear" src="images/remove_text.svg">
-					<!--<i class="fa fa-times clearer to_clear"></i>-->
 				</div>
 			</div>
 			<div style="position: relative; width: 100%;">
@@ -153,33 +151,37 @@
 			</div>
 			<div id="settings">
 				<div class="settings_container" data-trigger="one_click">
+					<div class="toggler open">
+						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<img class="settings_icon" src="images/settings_one_click.svg">
+						One-Click features
+					</div>
 					<div class="options">
 						<div class="option" data-key="price">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> One click price
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> Lowest Price
 						</div>
 						<div class="option" data-key="time">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> One click time
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Fastest Time
 						</div>
 					</div>
 				</div>
 				<div class="settings_container" data-key="sort" data-trigger="sort_results">
 					<div class="toggler">
-						<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
-						<img class="settings_icon" src="">
-						Sort results by <span class="option selected"></span>
+						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<span class="option selected"></span>
 					</div>
 					<div class="options">
-						<div class="option" data-key="price" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> Price
+						<div class="option" data-key="price">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.PRICE.RO.v11.svg"> Sort by Price
 						</div>
-						<div class="option" data-key="time" data-icon="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Time
+						<div class="option" data-key="time">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Sort by Time
 						</div>
 					</div>
 				</div>
 				<div class="settings_container" data-key="show_external_conf">
 					<div class="toggler">
-						<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
 						<span class="option selected"></span>
 					</div>
 					<div class="options">
@@ -219,7 +221,7 @@
 			</div>
 		</div>
 		<h2>Terms and Conditions</h2>
-		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 110px); padding: 5px 5px 30px 5px;">
+		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 85px); padding: 5px 5px 30px 5px; color: white;">
 			You acknowledge and agree that by accessing the Mooky or services, you consent
 			to this disclaimer and the User Privacy Statement. If you do not agree to these
 			terms, you may not access or use our app or services. The Mooky and our services
@@ -537,8 +539,8 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
 			</div>
 		</div>
-		<h2>About</h2>
-		<div style="text-align: center;">
+		<h2>About Us</h2>
+		<div style="text-align: center; color: white;">
 			<div>
 				<img class="about_img" src="images/about_compare.png" />
 				<div class="about_head">Compare rides</div>
