@@ -58,7 +58,7 @@ function get_origin_geo(callback){
 		}
 		geocoder.geocode({bounds: map.getBounds(), address: ret}, function (results, status){
 			if (status == "OK"){
-				localStorage.setItem("location:"+ret, JSON.stringify(results[0].geometry.location));
+				//localStorage.setItem("location:"+ret, JSON.stringify(results[0].geometry.location));
 				callback({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()}, true);
 			} else {
 				callback(false, true);
@@ -82,7 +82,7 @@ function get_destination_geo(callback){
 		}
 		geocoder.geocode({bounds: map.getBounds(), address: ret}, function (results, status){
 			if (status == "OK"){
-				localStorage.setItem("location:"+ret, JSON.stringify(results[0].geometry.location));
+				//localStorage.setItem("location:"+ret, JSON.stringify(results[0].geometry.location));
 				callback({lat: results[0].geometry.location.lat(), lng: results[0].geometry.location.lng()});
 			} else {
 				callback(false);
@@ -385,8 +385,7 @@ function sort_results(){
 function geo_location(id, geo){
 	geocoder.geocode({location: geo}, function (results, status){
 		if (status == "OK"){
-			localStorage.setItem("location:"+results[0].formatted_address, JSON.stringify(geo));
-
+			//localStorage.setItem("location:"+results[0].formatted_address, JSON.stringify(geo));
 			console.log("geo results", id, results);
 			$(id).val(results[0].formatted_address).next().show();
 		}
@@ -407,8 +406,8 @@ function coded_location(pos, start, trigger){
 			markers.start = new google.maps.Marker({
 				position: start_location,
 				map: map,
-				draggable: true,
-				zIndex: 1,
+				//draggable: true,
+				zIndex: 10,
 				icon: {
 					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
@@ -436,7 +435,7 @@ function coded_location(pos, start, trigger){
 				position:stop_location,
 				map:map,
 				draggable:true,
-				zIndex: 2,
+				zIndex: 20,
 				icon: {
 					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
@@ -578,7 +577,7 @@ function load_map(){
 		if (place.geometry){
 			if (from_blur_handel)
 				clearTimeout(from_blur_handel);
-			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+			//localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, true);
 			var addr = place.formatted_address;
 			if (place.address_components[0].types != "street_number")
@@ -595,7 +594,7 @@ function load_map(){
 		if (place.geometry){
 			if (from_blur_handel)
 				clearTimeout(to_blur_handel);
-			localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+			//localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
 			coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, false);
 			var addr = place.formatted_address;
 			if (place.address_components[0].types != "street_number")
@@ -647,13 +646,13 @@ function get_geo_location(do_load){
 			var marker = new google.maps.Marker({
 				position: my_loc,
 				map: map,
-				zIndex: 3,
+				zIndex: 30,
 				icon: {
 					url: "images/location.svg",
 					size: new google.maps.Size(3000, 3000),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(15, 15),
-					scaledSize: new google.maps.Size(30, 30)
+					anchor: new google.maps.Point(11, 11),
+					scaledSize: new google.maps.Size(22, 22)
 				}
 			});
 			markers.my_loc = marker;
