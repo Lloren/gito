@@ -166,7 +166,7 @@ function open_modala(text, dismiss){
 
 function reopen_modal(){
 	$("#modal").show();
-	$("#disable-overlay").off().addClass("enabled modal");
+	$("#modal-overlay").addClass("enabled");
 }
 
 function close_modala(){

@@ -19,7 +19,7 @@
 		var ads = false;
 		var app = "Mooky Dev";
 		var base_url = "http://gito.notomono.onnix.net";
-		var ga_code = "";
+		var ga_code = "UA-89570885-2";
 		var admob_code = "";
 		var admob_code_droid = "";
 		var fb_app_id = false;
@@ -61,11 +61,10 @@
 		</div>
 	</div>
 	<div data-key="transit_step">
-		<div class="transit_step">
-			<div class="num">##num##)</div>
-			<img src="##icon##" style="height: 30px;">
+		<div class="transit_step result{{sec_line? sec_line}}">
+			<div class="icon"><img src="##icon##"></div>
+			<div class="time">##time##</div>
 			<div class="action">##action##</div>
-			<div class="clear"></div>
 		</div>
 	</div>
 </div>
@@ -110,22 +109,6 @@
 		Getting location...
 	</div>
 
-	<div id="transit_info" class="page">
-		<div id="transit_header" style="position: absolute; top: 0; background: white; width: 100%; height: 45px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
-			<div style="height: 40px; text-align: center; margin:2px;">
-				<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
-			</div>
-		</div>
-		<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
-			<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
-		</div>
-		<div style="top:45px; height:calc(100% - 45px); width:100%; overflow: auto; position: absolute; background: white;">
-			<div id="transit_steps">
-
-			</div>
-		</div>
-	</div>
-
 	<div id="map" class="page">
 		<div id="map_header" style="position: absolute; top: 0; background: white; width: 100%; height: 140px; background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);">
 			<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
@@ -142,7 +125,8 @@
 						</div>
 					</div>
 					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: white; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
-					<i class="fa fa-times clearer from_clear"></i>
+					<!--<i class="fa fa-times clearer from_clear"></i>-->
+					<img class="clearer from_clear" src="images/remove_text.svg">
 				</div>
 				<div style="position: relative;">
 					<div style="width: 40px; display: inline-block;">
@@ -151,7 +135,8 @@
 						</div>
 					</div>
 					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color:white; font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
-					<i class="fa fa-times clearer to_clear"></i>
+					<!--<i class="fa fa-times clearer to_clear"></i>-->
+					<img class="clearer to_clear" src="images/remove_text.svg">
 				</div>
 			</div>
 			<div style="position: relative; width: 100%;">
@@ -213,6 +198,14 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.W+RO.v4.svg" />
 			</div>
 			<div id="results">
+
+			</div>
+		</div>
+		<div id="transit_details_tab" style="display: none;">
+			<div id="transit_details_tab_handle">
+				<img src="images/close.svg" />
+			</div>
+			<div id="transit_details">
 
 			</div>
 		</div>
@@ -543,7 +536,7 @@
 		</div>
 		<div>Compare rides - Search and compare your options.</div>
 		<div>Save money - Discover your lowest rate.</div>
-		<div>Save time - Discover your fastest option.</div>
+		<div>Save time - Discover your fastest time.</div>
 		<div>Travel Smarter - Explore your options before you book your ride.</div>
 	</div>
 

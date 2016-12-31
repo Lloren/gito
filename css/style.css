@@ -94,8 +94,9 @@ input[type="checkbox"]:checked + label span{
 .clearer{
 	position: absolute;
 	padding: 10px;
+	width: 40px;
 	top: -2px;
-	right: 8px;
+	right: 5px;
 	display: none;
 	font-size: 20px;
 	text-shadow: 0 0 #fff, 0 0 3px #fff, 0 0 10px #fff;
@@ -114,6 +115,9 @@ input[type="checkbox"]:checked + label span{
 }
 #settings_tab.open.hidden{
 	transform: translate3d(calc(100% - 50px), 0, 0);
+}
+#settings_tab.transit_open{
+	transform: translate3d(100%, 0, 0) !important;
 }
 #settings_tab_handle{
 	position: absolute;
@@ -196,6 +200,12 @@ input[type="checkbox"]:checked + label span{
 }
 #results_tab.hidden{
 	transform: translate3d(calc(100% - 60px), 0, 0);
+}
+#results_tab.transit_open{
+	transform: translate3d(0, calc(100% + 40px), 0);
+}
+#results_tab.hidden.transit_open{
+	transform: translate3d(calc(100% - 60px), calc(100% + 40px), 0);
 }
 #results_tab_handle{
 	position: absolute;
@@ -296,6 +306,48 @@ input[type="checkbox"]:checked + label span{
 	transform: rotate(-90deg);
 }
 
+#transit_details_tab{
+	height: calc(100% - 200px);
+	width: 100%;
+	top: 200px;
+	position: absolute;
+}
+
+#transit_details_tab_handle{
+	position: absolute;
+	top: -38px;
+	right: 5px;
+}
+
+#transit_details_tab_handle img{
+	width: 35px;
+}
+
+#transit_details{
+	max-height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.transit_step{
+	padding-left: 2px;
+}
+
+.transit_step .action {
+	width: initial;
+}
+
+.transit_step.sec_line {
+	left: 90px;
+	padding-left: 18px;
+}
+.transit_step.sec_line .icon {
+	display:none;
+}
+.transit_step.sec_line .time {
+	display:none;
+}
+
 
 /*TODO: merge with "settings" values*/
 .settings_toggle img{
@@ -303,6 +355,9 @@ input[type="checkbox"]:checked + label span{
 }
 .settings_toggle.open img{
 	transform: rotate(-90deg);
+}
+.settings_toggle.close_transit img{
+	transform: rotate(90deg);
 }
 #map_settings{
 	position: fixed;
@@ -360,29 +415,6 @@ input[type="checkbox"]:checked + label span{
 }
 .sort span{
 	font-size: 0.6em;
-}
-
-.transit_step{
-	padding: 4px;
-}
-
-.transit_step:nth-child(2n) {
-	background: #eaeaea;
-}
-
-.transit_step .num {
-	float: left;
-	width: 30px;
-}
-
-.transit_step img {
-	float: left;
-	width: 40px;
-}
-
-.transit_step .action {
-	float: right;
-	width: calc(100% - 70px);
 }
 
 

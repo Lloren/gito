@@ -191,7 +191,7 @@ function service_uber(call_num, start, stop){
 		var results = [];
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
-			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase()+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			if (price.surge_multiplier > 1)
 				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
@@ -435,7 +435,7 @@ function coded_location(pos, start, trigger){
 				position:stop_location,
 				map:map,
 				draggable:true,
-				icon:{
+				icon: {
 					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
 					origin: new google.maps.Point(0, 0),
@@ -647,9 +647,9 @@ function get_geo_location(do_load){
 				map: map,
 				icon: {
 					url: "images/location.svg",
-					size: new google.maps.Size(35, 35),
-					origin: new google.maps.Point(0,0),
-					anchor: new google.maps.Point(17, 17)
+					size: new google.maps.Size(14, 14),
+					origin: new google.maps.Point(0, 0),
+					anchor: new google.maps.Point(7, 7)
 				}
 			});
 			markers.my_loc = marker;
@@ -685,7 +685,7 @@ function startup(){
 		get_services();
 		run_services();
 	});
-	
+
 	click_event(".my_location", function (){
 		get_geo_location();
 		$("#from_loc").val("My Location");
@@ -768,39 +768,66 @@ function startup(){
 		var steps_html = [];
 		for (var i=0;i<transit_holder[info_id].steps.length;i++){
 			var step = transit_holder[info_id].steps[i];
-			var icon = "";
-			var action = "";
+			var temp = {num: i+1, time: ""};
 			if (step.transit){
 				var name = step.transit.line.short_name;
-				icon = "images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg";
+				temp.icon = "images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg";
 				if (step.transit.line.vehicle.name == "Train"){
 					name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
-					icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
+					temp.icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
 				} else if (step.transit.line.vehicle.type == "TRAM"){
-					icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
+					temp.icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
 				}
-				action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign+" at "+step.transit.departure_time.text;
+				temp.time = step.transit.departure_time.text;
+				temp.action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign;
 			} else {
-				icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
-				action = step.instructions;
+				temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
+				temp.action = step.instructions;
 			}
-			steps_html.push(template("transit_step", {"num": i+1, "action": action, "icon": icon}));
+			steps_html.push(template("transit_step", temp));
 		}
 
-		$("#transit_steps").html(steps_html.join(""));
+		$("#transit_details").html(steps_html.join(""));
+		$("#settings_tab").addClass("transit_open");
+		$("#results_tab").addClass("transit_open");
+		$(".settings_toggle").addClass("close_transit");
 
-		$(".page").hide();
-		$("#transit_info").show();
+		$("#transit_details_tab").show();
+
+		$(".transit_step .action").each(function (){
+			if ($(this).width() > screen.width - 125){
+				var sec = "";
+				while ($(this).width() > screen.width - 140){
+					var cont = $(this).html().split(" ");
+					sec = cont.pop() + " " + sec;
+					$(this).html(cont.join(" "));
+				}
+				if (sec != ""){
+					$(this).parents(".transit_step").after(template("transit_step", {sec_line: true, action: sec.trim()}));
+				}
+			}
+		});
+	}, true);
+
+	click_event("#transit_details_tab_handle", function (e){
+		$(".settings_toggle").trigger("click_event");
 	}, true);
 
 	click_event(".settings_toggle", function (e){
-		$(e.currentTarget).toggleClass("open");
-		if ($(e.currentTarget).hasClass("open")){
-			$("#settings_tab").removeClass("open");
-			$("#results_tab").removeClass("settings_open");
+		if ($(e.currentTarget).hasClass("close_transit")){
+			$(e.currentTarget).removeClass("close_transit");
+			$("#settings_tab").removeClass("transit_open");
+			$("#results_tab").removeClass("transit_open");
+			$("#transit_details_tab").hide();
 		} else {
-			$("#settings_tab").addClass("open");
-			$("#results_tab").addClass("settings_open");
+			$(e.currentTarget).toggleClass("open");
+			if ($(e.currentTarget).hasClass("open")){
+				$("#settings_tab").removeClass("open");
+				$("#results_tab").removeClass("settings_open");
+			} else {
+				$("#settings_tab").addClass("open");
+				$("#results_tab").addClass("settings_open");
+			}
 		}
 	});
 
@@ -906,6 +933,8 @@ function startup(){
 		var backs = $(".back:visible");
 		if (backs.length > 0){
 			backs.first().trigger("click_event");
+		} else if ($(".settings_toggle").hasClass("close_transit")){
+			$(".settings_toggle").trigger("click_event");
 		} else if ($(".settings_toggle").hasClass("open")){
 			$(".settings_toggle").trigger("click_event");
 		} else if ($("#menu-overlay:visible")){
@@ -934,11 +963,12 @@ function startup(){
 							console.log(data);
 						});
 					}
-					open_modal("Sent!<i class='fa fa-envelope-o'></i>", "Thank you for your message!", false, false, "Close");
+					open_modal({title: "Sent!", content: "Thank you for your message!", button1: "Close"});
 				}
 			}
 		}, button2: true, button1: "Send", add_class: "contact_form"});
 	});
+
 	click_event("#menu_toc", function (e){
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
