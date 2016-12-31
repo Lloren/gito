@@ -646,10 +646,11 @@ function get_geo_location(do_load){
 				position: my_loc,
 				map: map,
 				icon: {
-					url: "images/person.png",
-					size: new google.maps.Size(14, 14),
+					url: "images/location.svg",
+					size: new google.maps.Size(3000, 3000),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(7, 7)
+					anchor: new google.maps.Point(7, 7),
+					scaledSize: new google.maps.Size(14, 14)
 				}
 			});
 			markers.my_loc = marker;
