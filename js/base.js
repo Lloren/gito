@@ -4,7 +4,6 @@ String.prototype.ucfirst = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-var GA = false;
 var storage_location = "";
 var has_internet = false;
 var uuid = "comp";
@@ -175,7 +174,7 @@ function close_modala(){
 }
 
 function track(catigory, action, label, value){
-	if (GA){
+	if (typeof GA != "undefined"){
 		catigory = catigory || "Hit";
 		action = action || catigory;
 		label = label || action;
@@ -431,7 +430,7 @@ function on_ready(){
 			navigator.splashscreen.show();
 			thePlatform = device.platform.toLowerCase();
 
-			GA.startTrackerWithId(dev?"":ga_code);
+			GA.startTrackerWithId(ga_code);
 			track("Load", "load");
 
 			has_internet = navigator.connection.type != Connection.NONE;
@@ -497,7 +496,7 @@ function onLoad(){
 
 function onunload(){
 	track("Close", "close");
-	if (GA) {
+	if (typeof GA != "undefined") {
 		GA.exit(false, false);
 	}
 }
