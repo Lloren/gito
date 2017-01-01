@@ -561,8 +561,8 @@ function minify_rout(pow){//turned off, remove if determined to not use
 	bounds.extend(new google.maps.LatLng({lat: lat3, lng: map.getBounds().getNorthEast().lng()}));
 	map.fitBounds(bounds);
 	/*setTimeout(function (){
-		map.setZoom(map.getZoom()+1);
-	}, 1);*/
+	 map.setZoom(map.getZoom()+1);
+	 }, 1);*/
 }
 
 function full_rout(){//turned off, remove if determined to not use
@@ -1034,6 +1034,16 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#about").show();
+	});
+
+	click_event("#menu_rate", function (e){
+		if (thePlatform == "ios"){
+			track("Menu", "rate apple");
+			window.open("https://itunes.apple.com/us/app/apple-store/id1191203281?mt=8", '_blank');
+		} else if (thePlatform == "android"){
+			track("Menu", "rate android");
+			open_intent("market://details?id=com.mooky", "https://play.google.com/store/apps/details?id=com.mooky");
+		}
 	});
 
 	var device = device_info();

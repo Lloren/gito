@@ -1,13 +1,14 @@
 <widget	xmlns				= "http://www.w3.org/ns/widgets"
 			xmlns:gap		= "http://phonegap.com/ns/1.0"
 			xmlns:android	= "http://schemas.android.com/apk/res/android"
+			android-versionCode="10000"
 			id				= "com.mooky.dev"
 			version			= "1.0.0">
 	<name>Mooky Dev</name>
 	<description>
 		Search, discover, and explore your rides.
 	</description>
-	<author email="support@mooky.com" href="http://mooky.com">
+	<author email="info@mookyapp.com" href="http://www.mookyapp.com">
 		Mooky, Inc.
 	</author>
 	<content src="index.html" />
@@ -120,8 +121,8 @@
 	</gap:config-file>
 
 	<!-- Default Icon/Splash -->
-	<icon src="icon.png" />
-	<gap:splash src="splash.png" /> <!-- ??? *Breaks iOS build/preferences sometimes ??? -->
+	<icon src="res/icon.png" />
+	<gap:splash src="res/splash.png" /> <!-- ??? *Breaks iOS build/preferences sometimes ??? -->
 
 	<icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
 	<icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
