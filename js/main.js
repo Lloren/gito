@@ -24,20 +24,6 @@ var results_to_return = 4;
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
-function Settings(){
-	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true}');
-
-	this.set = function (key, val){
-		this.data[key] = val;
-		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
-	};
-
-	this.get = function (key){
-		return this.data[key];
-	};
-}
-window.settings = new Settings();
-
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
 	if (ret == "my location" && my_loc){
@@ -689,8 +675,8 @@ function get_geo_location(do_load){
 					url: "images/location.svg",
 					size: new google.maps.Size(3000, 3000),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(11, 11),
-					scaledSize: new google.maps.Size(22, 22)
+					anchor: new google.maps.Point(25, 25),
+					scaledSize: new google.maps.Size(50, 50)
 				}
 			});
 			markers.my_loc = marker;
@@ -1045,6 +1031,71 @@ function startup(){
 			open_intent("market://details?id=com.mooky", "https://play.google.com/store/apps/details?id=com.mooky");
 		}
 	});
+
+	click_event("#menu_signup", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+		$("#signup").show();
+	});
+
+	click_event("#signup_do", function (){
+		open_modala("Loading...");
+		$("#signup_errors").html("");
+		$.postJSON(base_url+"/ajax/signup.php?callback=?", {uuid: settings.get("uuid"), email: $("#signup_email").val(), password: $("#signup_password").val(), cpassword: $("#signup_cpassword").val(), name: $("#signup_name").val(), phone: $("#signup_phone").val()}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				for (var i=0;i<data.mess.Error.length;i++)
+					$("#signup_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+			} else {
+				settings.set("user_id", data.user_id);
+				$(".logged_in").show();
+				$(".logged_out").hide();
+				$(".page").hide();
+				$("#map").show();
+			}
+		});
+	});
+
+	click_event("#menu_login", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+		$("#login").show();
+	});
+
+	click_event("#login_do", function (){
+		open_modala("Loading...");
+		$("#signup_errors").html();
+		$.postJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				for (var i=0;i<data.mess.Error.length;i++)
+					$("#login_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+			} else {
+				settings.set("user_id", data.user_id);
+				$(".logged_in").show();
+				$(".logged_out").hide();
+				$(".page").hide();
+				$("#map").show();
+			}
+		});
+	});
+
+	click_event("#menu_logout", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".logged_in").hide();
+		$(".logged_out").show();
+		settings.delete("user_id");
+	});
+	
+	if (settings.get("user_id")){
+		$(".logged_in").show();
+		$(".logged_out").hide();
+	} else {
+		$(".logged_in").hide();
+		$(".logged_out").show();
+	}
 
 	var device = device_info();
 	$(".version").html(device.version);

@@ -86,6 +86,9 @@
 		</div>
 		<ul>
 			<!--<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>-->
+			<li id="menu_signup" class="logged_out"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Signup</li>
+			<li id="menu_login" class="logged_out"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Login</li>
+			<li id="menu_logout" class="logged_in"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Logout</li>
 			<li id="menu_rate"><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
 			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
 			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
@@ -154,7 +157,7 @@
 					<div class="toggler open">
 						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
 						<img class="settings_icon" src="images/settings_one_click.svg">
-						One-Click features
+						One-Click Features
 					</div>
 					<div class="options">
 						<div class="option" data-key="price">
@@ -186,10 +189,10 @@
 					</div>
 					<div class="options">
 						<div class="option" data-key="true">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.SHOW.W+RO.v4.svg" > Show external link confirmation
+							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.SHOW.W+RO.v4.svg" > Show Confirmation
 						</div>
 						<div class="option" data-key="false">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.HIDE.W+RO.v3.svg" > Hide external link confirmation
+							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.HIDE.W+RO.v3.svg" > Hide Confirmation
 						</div>
 					</div>
 				</div>
@@ -542,17 +545,17 @@
 		<h2>About Us</h2>
 		<div style="text-align: center; color: white;">
 			<div>
-				<img class="about_img" src="images/about_compare.png" />
+				<img class="about_img" src="images/about_compare.svg" />
 				<div class="about_head">Compare rides</div>
 				Search and compare your options.
 			</div>
 			<div>
-				<img class="about_img" src="images/about_low.png" />
+				<img class="about_img" src="images/about_low.svg" />
 				<div class="about_head">Save money</div>
 				Discover your lowest rate.
 			</div>
 			<div>
-				<img class="about_img" src="images/about_fast.png" />
+				<img class="about_img" src="images/about_fast.svg" />
 				<div class="about_head">Save time</div>
 				Discover your fastest time.
 			</div>
@@ -564,7 +567,7 @@
 		</div>
 	</div>
 
-	<div id="login" class="page">
+	<div id="login" class="page form">
 		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
 			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
 			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
@@ -572,16 +575,31 @@
 			</div>
 		</div>
 		<h2>Login</h2>
+
+		<input type="text" id="login_email" placeholder="Email" />
+		<input type="password" id="login_password" placeholder="Password" />
+		<div id="signup_errors"></div>
+		<input type="button" id="login_do" value="Login" />
+
+		account recovery
+
 	</div>
 
-	<div id="signup" class="page">
+	<div id="signup" class="page form">
 		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
 			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
 			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
 			</div>
 		</div>
-		<h2>signup</h2>
+		<h2>Signup</h2>
+		<input type="text" id="signup_email" placeholder="Email" />
+		<input type="password" id="signup_password" placeholder="Password" />
+		<input type="password" id="signup_cpassword" placeholder="Password Conformation" />
+		<input type="text" id="signup_name" placeholder="Name*" />
+		<input type="text" id="signup_phone" placeholder="Phone*" />
+		<div id="signup_errors"></div>
+		<input type="button" id="signup_do" value="Signup" />
 	</div>
 
 	<div id="geofence" class="page">

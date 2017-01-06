@@ -1,15 +1,35 @@
 "use strict";
 
-String.prototype.ucfirst = function() {
-	return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
 var storage_location = "";
+var modala_handle = "";
 var has_internet = false;
 var uuid = "comp";
 var ad_manager = false;
 var thePlatform = "";
 var templates = {};
+
+String.prototype.ucfirst = function() {
+	return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
+function Settings(){
+	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true}');
+	
+	this.set = function (key, val){
+		this.data[key] = val;
+		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
+	};
+	
+	this.get = function (key){
+		return this.data[key];
+	};
+
+	this.delete = function (key){
+		delete this.data[key];
+		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
+	};
+}
+window.settings = new Settings();
 
 var last_touch = {x: 0, y:0, trigger:""};
 function set_touch(e, trigger){
@@ -152,11 +172,15 @@ function open_modal(options){
 	$("#modal-overlay").addClass("enabled");
 }
 
-function open_modala(text, dismiss){
+function open_modala(text, dismiss, time){
 	dismiss = dismiss || false;
+	time = time || 10000;
 	$("#modal h1").html(text);
 	$("#modal").addClass("loading").css("display", "table");
 	$("#modal-overlay").off().addClass("enabled");
+	modala_handle = setTimeout(function (){
+		close_modala();
+	}, time);
 	if (dismiss){
 		$("#disable-overlay").on("touchend", function(e){
 			$("#modal").hide();
@@ -171,6 +195,7 @@ function reopen_modal(){
 }
 
 function close_modala(){
+	clearTimeout(modala_handle);
 	$("#modal").hide().removeClass("loading");
 	$("#modal-overlay").removeClass("enabled");
 }
@@ -472,6 +497,7 @@ function on_ready(){
 				window.localStorage.setItem("set_uuid", uuid);
 			}
 		}
+		settings.set("uuid", uuid);
 		if (typeof startup === "function")
 			startup();
 	}, 1);
@@ -506,6 +532,23 @@ function onunload(){
 $(function () {
 	if (!dev)
 		$(".dev").remove();
+
+	jQuery["postJSON"] = function( url, data, callback ) {
+		// shift arguments if data argument was omitted
+		if ( jQuery.isFunction( data ) ) {
+			callback = data;
+			data = undefined;
+		}
+
+		return jQuery.ajax({
+			url: url,
+			type: "POST",
+			dataType: "json",
+			data: data,
+			success: callback
+		});
+	};
+	
 	Origami.fastclick(document.body);
 	if (typeof window.cordova == "undefined")
 		on_ready();
