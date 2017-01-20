@@ -67,6 +67,20 @@
 			<div class="action">##action##</div>
 		</div>
 	</div>
+	<div data-key="taxi_info">
+		<div class="taxi_info result">
+			<a href="tel: ##phone##">
+				<div class="icon"><img src="images/icons3/CUSTOM%20PHONE%20ICON.W+RO.v2.svg"></div>
+				<div class="phone">##phone##</div>
+				<div class="name">##name##</div>
+			</a>
+		</div>
+	</div>
+	<div data-key="search_prediction">
+		<div class="prediction">
+			##rediction##
+		</div>
+	</div>
 </div>
 
 <div id="cont">
@@ -86,11 +100,12 @@
 		</div>
 		<ul>
 			<!--<li><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>-->
-			<li id="menu_signup" class="logged_out"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Signup</li>
-			<li id="menu_login" class="logged_out"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Login</li>
+			<li id="menu_signup" class="logged_out"><img src="images/icon_signup.svg"> Signup</li>
+			<li id="menu_login" class="logged_out"><img src="images/icon_login.svg"> Login</li>
 			<li id="menu_logout" class="logged_in"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Logout</li>
 			<li id="menu_rate"><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
 			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
+			<li id="menu_pp"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Privacy Policy</li>
 			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
 			<li id="menu_about"><img src="images/icons3/CUSTOM%20ABOUT%20US%20ICON.W+RO.v1.svg"> About Us</li>
 			<li><img src="images/icons3/CUSTOM%20VERSION%20ICON.W+RO.v2.svg"> Version <span class="version"></span> <span class="build"></span></li>
@@ -127,7 +142,10 @@
 							<img src="images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg" style="width: 30px;">
 						</div>
 					</div>
-					<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color: white; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
+					<div class="loc_cont" data-type="from" style="display:inline-block; width: calc(100% - 80px); position: relative;">
+						<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width:100%; color: white; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
+						<div class="prediction_holder"></div>
+					</div>
 					<img class="clearer from_clear" src="images/remove_text.svg">
 				</div>
 				<div style="position: relative;">
@@ -136,7 +154,10 @@
 							<img src="images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg" style="width: 30px;">
 						</div>
 					</div>
-					<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: calc(100% - 80px); color:white; font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
+					<div class="loc_cont" data-type="to" style="display:inline-block; width: calc(100% - 80px); position: relative;">
+						<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: 100%; color:white; font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
+						<div class="prediction_holder"></div>
+					</div>
 					<img class="clearer to_clear" src="images/remove_text.svg">
 				</div>
 			</div>
@@ -206,13 +227,486 @@
 
 			</div>
 		</div>
-		<div id="transit_details_tab" style="display: none;">
-			<div id="transit_details_tab_handle">
+		<div id="transit_details_tab" class="main_info_tab" style="display: none;">
+			<div id="transit_details_tab_handle" class="main_info_handle">
 				<img src="images/close.svg" />
 			</div>
 			<div id="transit_details">
 
 			</div>
+		</div>
+		<div id="taxi_details_tab" class="main_info_tab" style="display: none;">
+			<div id="taxi_details_tab_handle" class="main_info_handle">
+				<img src="images/close.svg" />
+			</div>
+			<div id="taxi_details">
+
+			</div>
+		</div>
+	</div>
+	<div id="pp" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+		<h2>Privacy Policy</h2>
+		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 85px); padding: 5px 5px 30px 5px; color: white;">
+			Effective Date: January 3 rd , 2017 – V1.01
+			PLEASE READ. YOUR USE OF THIS MOBILE APP IS SUBJECT TO THE
+			FOLLOWING PRIVACY POLICY AND THE MOBILE APP TERMS AND
+			CONDITIONS.
+			Index
+			I. Notice
+			II. Personally Identifiable Information That We Collect
+			III. E-mail or push notification (by SMS/text message) Newsletter Subscriptions
+			IV. User Accounts
+			V. Special Promotions and Purchases; Submission of Content to be Published
+			VI. Information Collected by Other Means or Media
+			VII. Information About Other People
+			VIII. Customer Service
+			IX. Non-Personally Identifiable Information That We Collect
+			X. Cookies and Related Technology
+			XI. Not Intended for Persons Under 18
+			XII. Use, Disclosure, and Sharing of Information
+			a. Non-Personally Identifiable Information
+			b. Personally Identifiable Information
+			c. Information Disclosed to other Users of this Mobile App
+			d. Information Disclosed to other Third Parties
+			XIII. Our Commitment to Data Security
+			XIV. Hyperlinks To and From Other Sites
+			XV. Consent to Processing in the United States
+			XVI. Contact Us Regarding Privacy
+			XVII. Notification of Changes
+			
+			____________________________________________________________________________
+			I. Notice
+			The &quot;Mobile App&quot; refers to this Mobile App also known as &quot;Mooky&quot;. This Mobile App is
+			owned or operated by Mooky Inc and/or its subsidiary companies in the United States of
+			2
+			America (collectively the &quot;COMPANY&quot;, &quot;us&quot;, or &quot;we&quot;). This privacy policy (&quot;Privacy Policy&quot;)
+			applies to information that you provide to COMPANY or is collected about you via this Mobile
+			App and/or by your use of services (collectively, the &quot;Services&quot;) that may be provided by this
+			Mobile App or by the Company via some other means, including as set forth below and as
+			defined in the applicable Terms and Conditions or other terms.
+			This Privacy Policy is intended to provide you notice of COMPANY&#39;s information management
+			practices, including the types of information gathered, how it is used and safeguarded, and the
+			degree to which you may control the maintenance and sharing of your information. Your use of
+			any COMPANY Service or Mobile App constitutes acceptance of this Privacy Policy and any
+			other applicable terms. This Privacy Policy is part of and incorporated by reference into the
+			Terms and Conditions for this Mobile App.
+			II. Personally Identifiable Information That We Collect
+			COMPANY respects your privacy and is committed to protecting personally identifiable
+			information that you provide in connection with your use of its Mobile Apps and Services.
+			The COMPANY collects information you provide directly to us, such as when you create or
+			modify your account, request on-demand services, contact customer support, or otherwise
+			communicate with us. This information may include: name, email, phone number, postal
+			address, profile picture, payment method, delivery notes, and other information you choose to
+			provide.
+			When you use our Services, we collect information about you in the following general
+			categories:
+			i) Location Information: When you use the Services for transportation or delivery,
+			we collect precise location data from the Mobile App. If you permit the Mobile
+			App to access location services through the permission system used by your
+			mobile operating system (&quot;platform&quot;), we may also collect the precise location of
+			your device when the app is running in the foreground or background. We may
+			also derive your approximate location from your IP address and/or geolocation.
+			Further, We may also collect the precise location of your device using network-
+			based, handset-based, WI-FI based, and /or hybrid based location techniques.We
+			request permission for our Mobile App’s collection of precise location from your
+			device per the permission system used by your mobile operating system. If you
+			initially permit the collection of this information, you can later disable it by
+			changing the location settings on your mobile device. However, this will limit
+			your ability to use certain features of our Services. Additionally, disabling our
+			Mobile App’s collection of precise location from your device will not limit our
+			ability to collect other trip location information or our ability to derive
+			approximate location from your IP address and/or geolocation .
+			ii) Contacts In formation: We may also seek permission for our Mobile App’s
+			collection and syncing of contact information from your device per the permission
+			system used by your mobile operating system. If you initially permit the
+			collection of this information, iOS users can later disable it by changing the
+			contacts settings on your mobile device. If you permit the Mobile App to access
+			3
+			the address book on your device through the platform, we may access and store
+			names and contact information from your address book to facilitate social
+			interactions through our Services and for other purposes described in this Privacy
+			Policy or at the time of consent or collection.
+			iii) Transaction Information: We collect transaction details related to your use of our
+			Services, including the type of service requested, date and time the service was
+			provided, amount charged, distance traveled, and other related transaction details.
+			Additionally, if someone uses your promo code, we may associate your name
+			with that person.
+			iv) Usage and Preference Information: We collect information about how you and
+			others users of the Services interact with our Services, preferences expressed, and
+			settings chosen.
+			v) Device Information: We may collect information about your mobile device,
+			including, for example, the hardware model, operating system and version,
+			software and file names and versions, preferred language, unique device
+			identifier, advertising identifiers, serial number, device motion information, and
+			mobile network information.
+			vi) Log Information: When you interact with the Services, we collect server logs,
+			which may include information such as device IP address and/or geolocation,
+			access dates and times, app features or pages viewed, app crashes and other
+			system activity, type of browser, and the third-party site or service you were using
+			before interacting with our Services.
+			vii) Email Newsletter: When you submit your first name, last name, and email address
+			to subscribe to the Company email newsletter, you are giving us permission to
+			contact you via email or push notification (by SMS/text message) to share news
+			about the Company and its associated affiliates, vendors and suppliers.
+			viii) Submission of feedback, bug reports, requests for help: Any information you
+			share with the Company about your experience may be used by us for quality
+			control and other purposes;
+			ix) Information regarding you and your preferences.
+			III. E-mail or push notification (by SMS/text message) Newsletter Subscriptions
+			To subscribe to our e-mail newsletters, if any, you will need to provide your e-mail address
+			and/or phone number. You may also be asked for other information when you subscribe.
+			IV. User Accounts
+			In order to use our Services, you will need to register and create a user account (&quot;User
+			Account&quot;). There may or may not be a cost to create a User Account. You may be asked to
+			choose a user name, screen name, or member name (each, a &quot;User Name&quot;) and password. Please
+			do not use your real name or the real name of another person when selecting a User Name. You
+			will also be asked to provide certain personally identifiable information and other information
+			about yourself, such as your first and last name, date of birth, address, telephone number, and e-
+			mail address.
+			4
+			Please note that your User Name will be available to others while you participate in some
+			Services, such as when you communicate with third party service providers, like ride sharing
+			services, and their personnel, so you should exercise discretion when using these Services. This
+			Privacy Policy does not apply to any information you may disclose publicly in such Services. In
+			some instances, you may choose to create a &quot;Public Profile&quot; that will be available to others on
+			the Internet. Public Profiles are managed entirely by you, and you are solely responsible for your
+			Public Profile&#39;s content and its &quot;public&quot; or &quot;private&quot; status. The Company bears no responsibility
+			for any action or policies of any third parties who collect any information that users may disclose
+			in user forums or other public areas of this Mobile App. You are also responsible for maintaining
+			and updating the registration information in your User Account with current and complete
+			information. You may access, edit or remove your Public Profile by signing into your User
+			Account and performing such actions there. You can also send an e-mail to
+			info@mookyapp.com to request deactivation of your User Account.
+			Please review our restrictions on use and guidelines for user forums in the &quot;Terms and
+			Conditions&quot; for the Mobile App.
+			You can unsubscribe from receiving commercial e-mail from the Mobile App by clicking the
+			link contained within such e-mails sent to you. You should be aware that it is not always possible
+			to completely remove or modify information in our databases. In addition, we may institute a
+			policy in which user information is deleted after a certain amount of time, and therefore, your
+			user information may no longer exist in the COMPANY&#39;s active database(s). In addition, even if
+			you choose to unsubscribe or otherwise modify your User Account settings, the COMPANY
+			reserves the right to contact you regarding your account and your use of this Mobile App.
+			You may correct your account information at any time by logging into your in-app account.
+			Please note that in some cases we may retain certain information about you as required by law,
+			or for legitimate business purposes to the extent permitted by law. For instance, if you have a
+			standing credit or debt on your account, or if we believe you have committed fraud or violated
+			our terms, we may seek to resolve the issue before terminating your access or deleting your
+			information.
+			V. Special Promotions and Purchases; Submission of Content to be Published
+			To participate in some Services such as sweepstakes, contests and surveys (&quot;Special
+			Promotions&quot;), or to make online purchases or subscriptions (such purchases or subscriptions
+			herein referred to as &quot;Purchases&quot;), you will need to provide personally identifiable information,
+			such as name, mailing address, e-mail address, phone number, and date of birth. Your
+			information may be collected by COMPANY or by a third party, such as a co-sponsor or a
+			vendor involved in, or providing services in connection with, a Special Promotion, or an e-
+			commerce partner in the case of a Purchase.
+			If you make a Purchase or enter a sweepstakes or other Special Promotion on one of our sites or
+			through our Services, COMPANY will collect your personally identifiable information, and you
+			are deemed to consent to us providing your information to third parties who provide certain
+			services such as processing of credit card transactions, customer service, promotion or
+			sweepstakes administration, order fulfillment and/or prize delivery, as applicable. (As more fully
+			5
+			described below in Section XII, these third parties are generally prohibited from using this
+			information for their own marketing purposes and/or from sharing, selling, or otherwise
+			distributing any personal data of our customers, unless you choose to opt in for such additional
+			uses and/or disclosure by the third parties, under their respective privacy policies.). Also, by
+			entering a sweepstakes or other Special Promotion, you are agreeing to the official rules that
+			govern that sweepstakes or other Special Promotion, which may contain specific provisions
+			applicable to you, including, except where prohibited by law, allowing the sponsor(s) of the
+			promotion to use your name, voice or likeness in advertising or marketing associated with the
+			promotion.
+			If you make a purchase or enter a promotion (such as a sweepstakes) in which COMPANY is
+			participating on a third party&#39;s Mobile App (or through some other means or medium), we will
+			collect your information from the third party only if you opt-in to receive additional
+			communications from us, or we are required to fulfill some function in relation to your activity
+			(e.g., to send your order or deliver a prize).
+			If you submit to the Mobile App a comment, photograph or other content to be published, online
+			or offline (including on-air, in a DVD, or any other format), we may publish your name or other
+			personally identifiable information in connection with publishing the content and you are hereby
+			deemed to give us permission to do such.
+			VI. Information Collected by Other Means or Media
+			In some situations, we may also collect personally identifiable information and other information
+			about you through other means, directly or indirectly. For example, if you access any
+			COMPANY content, or purchase such content via your wireless carrier or through another third
+			party, the COMPANY may collect information directly from you or through the third party.
+			Likewise, if you use our software, or provide information to other companies who share
+			information about their customers, we may collect additional information about you. In each of
+			these cases, the COMPANY will apply this Privacy Policy to any personally identifiable
+			information.
+			VII. Information About Other People
+			Some COMPANY Mobile Apps and Services may ask you to submit personally identifiable
+			information about other people. For example, if you provide us with personally identifiable
+			information of a friend, or your friend provides personally identifiable information about you, for
+			the purpose of receiving an e-mail from us about the Mobile App, the e-mail addresses you or
+			your friend supply us for this purpose will not be used to send you or your friend other e-mail
+			communications unless disclosed at the time you provide the information. A record of that
+			transaction will be maintained as allowed and/or required by law.
+			VIII. Customer Service
+			Some Services may offer support and technical assistance through customer service centers via
+			telephone, online chat, or e-mail. Whenever you communicate with customer service, you do so
+			with the understanding that an operator may view and make changes to the information in your
+			User Account in order to provide the assistance that you need.
+			6
+			IX. Non-Personally Identifiable Information That We Collect
+			As part of the registration process for some Services, you may be asked to provide information
+			that does not personally identify you. For example, you may be asked to provide information
+			concerning your personal preferences, purchasing habits, and the like. This information is
+			generally optional but may be included in your User Account profile. COMPANY requests this
+			information to understand you better and to also bring to your attention new services, programs,
+			or offers that may be of interest to you.
+			In many cases, COMPANY will automatically collect certain non-personally identifiable
+			information about your use of its sites and Services. COMPANY might collect, among other
+			things, information concerning the type of Internet browser or computer operating system you
+			are using, the domain name of your Internet service provider, your &quot;click path&quot; through the
+			COMPANY sites or &quot;click-through&quot; from an e-mail, the Mobile App or advertisement that was
+			linked to or from the COMPANY site when you visited, and your IP address and/or geolocation.
+			To do this, COMPANY may use cookies and other technology (see below). If you are using any
+			Services of ours that are wireless, we may also automatically collect information such as the type
+			of wireless device you are using, your mobile identification number (assigned by your
+			telecommunications carrier) and telecommunications carrier. Your use of our Mobile Apps and
+			Services, and information provided through these technologies, will be anonymous unless you
+			provide us with personally identifiable information or have provided such information in the
+			past.
+			X. Cookies and Related Technology
+			This Mobile App&#39;s pages or e-mail messages may contain cookies, web beacons (also known as
+			clear gifs), or similar technologies as they become available. Cookies are information files that
+			this Mobile App may place on your computer to provide extended functionality. The
+			COMPANY may use cookies for a number of purposes, such as tracking usage patterns on the
+			Mobile App, measuring the effectiveness of advertising, limiting multiple responses and
+			registrations, facilitating your ability to navigate the Mobile App and as part of a verification or
+			screening process. Most browsers are initially set up to accept cookies. Most browsers will allow
+			you to erase cookies from your computer hard drive, block acceptance of cookies, or receive a
+			warning before a cookie is stored. You should refer to your browser instructions, &quot;Help&quot; screen,
+			or similar such resource to learn more about how to manage cookies and possibly reset your
+			browser to refuse all cookies or to indicate when a cookie is being sent by indicating this in the
+			preferences, options, or similar such menu in your browser. However, it is possible that some
+			parts of this Mobile App will not operate correctly if you disable cookies and you may not be
+			able to take advantage of some of this Mobile App&#39;s features. You should consult with your
+			browser&#39;s provider/manufacturer if you have any questions regarding disabling cookies.
+			The COMPANY’s web pages and Mobile App may include advertisements for third parties and
+			their products, and those third-party advertisements may include a cookie or web beacon served
+			by the third party. The COMPANY does not control cookies in such third party ads, and visitors
+			are encouraged to check the privacy policies of advertisers and/or ad services to learn about their
+			use of cookies and other technology. The COMPANY&#39;s Privacy Policy does not cover the use of
+			information collected from you by third party ad servers. These companies may use information
+			7
+			(not including your name, address, e-mail address or telephone number) about your visits to this
+			and other Mobile Apps in order to provide advertisements on this site and other sites about goods
+			and services that may be of interest to you.
+			A web beacon is a small graphic image that allows the party that set the web beacon to monitor
+			and collect certain information about the viewer of the web page, web-based document or e-mail
+			message, such as the type of browser requesting the web beacon, the IP address and/or
+			geolocation of the computer that the web beacon is sent to and the time the web beacon was
+			viewed. Web beacons can be very small and invisible to the user, but, in general, any electronic
+			image viewed as part of a web page or e-mail, including HTML based content, can act as a web
+			beacon. The COMPANY may use web beacons to count visitors to the web pages on the Mobile
+			App or to monitor how our users navigate the Mobile App, and the COMPANY may include
+			web beacons in e-mail messages in order to count how many messages sent were actually
+			opened, acted upon or forwarded.
+			XI. Not Intended for Persons Under 18
+			COMPANY recognizes the sensitivity of personally identifiable information concerning children
+			and minors. COMPANY is committed to complying with all applicable laws and regulations
+			regarding children, including the Children&#39;s Online Privacy Protection Act (&quot;COPPA&quot;). This site
+			is only intended for persons 18 and over. If you are under 18 years of age, immediately
+			discontinue use of this site and leave this Mobile App. The COMPANY will not knowingly
+			collect, maintain, or disclose any personally identifiable information from a person under 18.
+			If you are a parent or guardian who has discovered that your child under the age of 18 has
+			submitted his or her personally identifiable information without your permission or consent,
+			COMPANY will make reasonable efforts to remove the information from its active list, at your
+			request. To request the removal of your child&#39;s information, please send an e-mail to
+			info@mookyapp.com and be sure to include in your message the same User Name and
+			password and/or e-mail address that your child submitted.
+			XII. Use, Disclosure, and Sharing of Information
+			a. Non-Personally Identifiable Information
+			From time to time, COMPANY may use and share with third parties aggregate, non-personally
+			identifiable user information to show general demographic and preference information among
+			users of the COMPANY Web sites or the Mobile App. When you visit or download information
+			from this Mobile App, our web servers may automatically collect Mobile App usage
+			information. Mobile App usage information is non-personally identifying information that
+			describes how our visitors use the Mobile App. It can include the number and frequency of
+			visitors to each page and the length of their stays, browser type, referrer data that identifies the
+			page visited prior and subsequent to visiting the Mobile App, and IP addresses and/or
+			geolocation (see below for more information on IP addresses). COMPANY may use IP addresses
+			and/or geolocation for a number of purposes, such as system administration, to generally
+			determine your computer&#39;s server location, to report aggregate information to our business
+			partners or to audit use of the Mobile App. We also may determine your screen resolution and
+			8
+			the technology available in order to serve you the most appropriate version of a web page, e-mail
+			or similar service.
+			b. Personally Identifiable Information
+			COMPANY uses information about you to deliver the Services that you request, to keep you
+			informed about changes affecting our Services or your account, to inform you of other Services
+			or offers in which you might be interested, and to improve and enhance our sites and Services. If
+			you provide COMPANY with personally identifiable information, we will take all reasonable
+			and appropriate steps to protect it from unauthorized disclosure.
+			If you desire to opt out to receive marketing e-mail, SMS/text messages, or other communication
+			from us, email us at info@mookyapp.com and inform us of such However, if you choose to opt
+			out of marketing messages, we reserve the right to contact you regarding your account status,
+			technical support, product information, changes to account terms, and any other matter that
+			might affect our service to you and/or any products you purchased from us or registered with us,
+			as applicable.
+			As stated in the Terms and Conditions, you will be deemed to have consented to the disclosure
+			to, and use by, a subsequent owner or operator of a COMPANY Mobile App or Service, of any
+			information about you contained in the applicable COMPANY database, if COMPANY or one
+			of its companies assigns its rights and obligations regarding any of your information at the time
+			of a merger, acquisition, or sale of all or substantially all of COMPANY&#39;s or such COMPANY
+			company&#39;s assets related to the applicable site or Service to a subsequent owner or operator. In
+			the event of such a merger, acquisition, or sale, your continued use of the Mobile App or any
+			related Service signifies your agreement to be bound by the Terms and Conditions, California
+			Privacy Policy and Privacy Policy of the Mobile App&#39;s or Service&#39;s subsequent owner or
+			operator.
+			The COMPANY and other entities may work together in order to provide portions of the
+			COMPANY Mobile Apps and some Services (e.g., to fulfill prizes won in a sweepstakes, or to
+			provide other support for a Service). These companies will handle your personally identifiable
+			information in accordance with this Privacy Policy.
+			As stated above in Section V, COMPANY may also work with third parties to provide some
+			Services on our Mobile Apps. In connection with those Services, you are deemed to consent to
+			us sharing your information with third parties who provide services such as processing of credit
+			card transactions, customer service, promotion administration, order fulfillment and/or prize
+			delivery, as applicable. The Mobile App may also work with and send information to third
+			parties you already have an account with, such as Uber, Lyft, and the like (&quot;Independent Service
+			Providers&quot;). We may forward information you provide us for you to use their services and
+			facilitate your transactions with them on your behalf. You hereby give us permission to provide
+			the Independent Service Providers with any and all information regarding you, with the
+			understanding that such information will be handled by the Independent Service Providers in
+			accord to your agreements with such Independent Service Providers.
+			9
+			Please note that whenever you opt in to receive future communications or services from a third
+			party, your information will be subject to the third party&#39;s privacy policy. If you later decide that
+			you do not want that third party to use your information, you will need to contact the third party
+			directly, as we have no control over how third parties use information. You should always
+			review the privacy policy of any party that collects your information to determine how that entity
+			will handle your information.
+			COMPANY will not share, sell, rent, or disclose any personally identifiable information that we
+			have collected except as stated herein, or in the following instances: 1) we have been given your
+			consent to disclose; 2) we have previously informed you of the disclosure, including by means of
+			our Privacy Policy or on the Mobile App, or through the Service where you provided your
+			information; 3) we are required by law, legal process, or court order to disclose; 4) disclosure is
+			necessary to identify, contact, or bring legal action against someone who may cause or be
+			causing harm to, or interference with, COMPANY&#39;s rights or property, other COMPANY
+			Mobile App users, or anyone else; or 5) to respond to an inquiry, request or complaint that you
+			have made. COMPANY may also use IP addresses and/or geolocation in cooperation with
+			Internet service providers to identify users if we deem it necessary to comply with law, to
+			enforce compliance with this Privacy Policy or our Terms and Conditions, or to protect our sites,
+			customers, or others.
+			We may use the information we collect about you to:
+			i) Provide, maintain, and improve our Services, including, for example, to provide
+			services you request (and send related information), develop new features,
+			provide customer support to Users, develop safety features, authenticate users,
+			and send product updates and administrative messages;
+			ii) Perform internal operations, including, for example, to prevent fraud and abuse
+			of our Services; to troubleshoot software bugs and operational problems; to
+			conduct data analysis, testing, and research; and to monitor and analyze usage
+			and activity trends;
+			iii) Send or facilitate communications (a) such as estimated times of arrival (ETAs),
+			or (b) in connection with your use of certain features, such as referrals, invites,
+			split fare requests, or ETA sharing;
+			vi) Send communications we think will be of interest to you, including information
+			about products, services, promotions, news, and events of the Company and
+			other companies, where permissible and according to local applicable laws; and
+			to process contest, sweepstake, or other promotion entries or fulfill any related
+			awards; or
+			v) Personalize and improve the Services, including to provide or recommend
+			features, content, social connections, referrals, and advertisements.
+			c. Information Disclosed to other Users of this Mobile App
+			The Services of the Mobile App include functionality that may allow you i) to request
+			information from various third parties in order to compare their services and to use their services,
+			ii) view information about or contact others about the services or items they wish to sell, and/or
+			iii) to transact with others, including the Independent Service Providers. When you seek to
+			contact others about the services or items they wish to sell, you are consenting that information
+			10
+			about you, such as your interests, preferences, identity, payment information and contact
+			information, will be shared with those you are seeking to contact. When you seek to transact with
+			others, your communication will be shared with those you are seeking to transaction with, as
+			well as your identity and contact information.
+			d. Information Disclosed to other Third Parties
+			We may share the information we collect about you as described in this Privacy Policy or as
+			described at the time of collection or sharing, including as follows:
+			i) With third parties to provide you a service you requested through a partnership,
+			business arrangement, or promotional offering made by a third party or us;
+			ii) With the general public if you submit content in a public forum, such as blog
+			comments, social media posts, or other features of our Services that are viewable
+			by the general public;
+			iii) With third parties with whom you choose to let us share information, for
+			example other apps or websites that integrate with our API or Services, or those
+			with an API or Service with which we integrate.
+			iv) With vendors, consultants, marketing partners, and other service providers who
+			need access to such information to carry out work on our behalf;
+			v) In response to a request for information by a competent authority if we believe
+			disclosure is in accordance with, or is otherwise required by, any applicable law,
+			regulation, or legal process;
+			vi) With law enforcement officials, government authorities, or other third parties if
+			we believe your actions are inconsistent with our policies, or to protect the rights,
+			property, or safety of the Company or others;
+			vii) In connection with, or during negotiations of, any merger, sale of company
+			assets, consolidation or restructuring, financing, or acquisition of all or a portion
+			of our business by or into another company;
+			viii) If we otherwise notify you and you consent to the sharing; or
+			ix) In an aggregated and/or anonymized form which cannot reasonably be used to
+			identify you.
+			The Services may integrate with social sharing features and other related tools which let you
+			share actions you take on our Services with other apps, sites, or media, and vice versa. Your use
+			of such features enables the sharing of information with your friends or the public, depending on
+			the settings you establish with the social sharing service. Please refer to the privacy policies of
+			those social sharing services for more information about how they handle the data you provide to
+			or share through them.
+			We may allow others to provide audience measurement and analytics services for us, to serve
+			advertisements on our behalf across the Internet, and to track and report on the performance of
+			those advertisements. These entities may use cookies, web beacons, SDKs, and other
+			technologies to identify your device when you visit our site and use our Services, as well as
+			when you visit other online sites and services.
+			XIII. Our Commitment to Data Security
+			11
+			While COMPANY takes reasonable and appropriate precautions to protect your personally
+			identifiable information from unauthorized disclosure and to prevent possible security breaches
+			in our Mobile Apps, Services, and customer databases, no Mobile App, Internet transmission,
+			computer system, or wireless connection is completely secure. Consequently, COMPANY
+			cannot guarantee that unauthorized access, hacking, data loss, or other breaches will never occur.
+			Your use of the COMPANY Mobile Apps and Services is at your own risk. COMPANY urges
+			you to take steps to keep your information safe by memorizing your password or keeping it in a
+			safe place (separate from your account information), logging out of your User Account, and
+			closing your Web browser.
+			Whenever you give COMPANY sensitive or confidential information (for example, credit card
+			numbers for Purchases), COMPANY will take commercially reasonable steps to protect the
+			information by establishing a secure connection with your Web browser. COMPANY employs a
+			security technology known as a secure-socket- layer (&quot;SSL&quot;) to protect the transmission of
+			payment information to the site.
+			XIV. Hyperlinks To and From Other Sites
+			COMPANY sites may frame, and/or contain links to, or advertisements about, non-COMPANY
+			Web sites. Other sites may also reference, advertise, or link to COMPANY Mobile Apps.
+			COMPANY does not endorse or sponsor other Mobile Apps, is not responsible for the privacy
+			practices or the content of non-COMPANY sites, expressly disclaims any statements or
+			assertions made on such Mobile Apps, and denies and disclaims all liability associated with your
+			use of, and the content on, such other sites and advertisements.
+			XV. Consent to Processing in the United States
+			By providing any personally identifiable information to COMPANY, all users, including,
+			without limitation, users in the member states of the European Union, fully understand and
+			unambiguously consent to this Privacy Policy and to the collection, storage, and processing of
+			such information in the United States of America.
+			XVI. Contact Us Regarding Privacy
+			COMPANY is dedicated to protecting your personally identifiable information and welcomes
+			comments and questions on this Privacy Policy. You may e-mail your questions or comments to:
+			Info@mookyapp.com
+			Please note that information submitted to the Mobile App via a &quot;contact us,&quot; &quot;help&quot; or other
+			similar e-mail address or form will not necessarily receive a response. We will not use the
+			information provided to these e-mail addresses or forms for marketing purposes unrelated to
+			your request.
+			The Company will comply with individual’s requests regarding access, correction, and/or
+			deletion of the personal data it stores in accordance with applicable law.
+			XVII. Notification of Changes
+			12
+			COMPANY reserves the right to change this Privacy Policy and its Terms and Conditions at any
+			time. In case of any material change to the Privacy Policy, we will replace the &quot;Privacy Policy&quot;
+			link on the home page of our sites with a link entitled &quot;Updated Privacy Policy&quot; for no less than
+			30 days. All changes to the Privacy Policy and/or Terms of Service will be effective when
+			posted, and your continued use of any COMPANY Mobile App or Service after the posting will
+			constitute acceptance of, and agreement to be bound by, those changes.
 		</div>
 	</div>
 
@@ -225,313 +719,613 @@
 		</div>
 		<h2>Terms and Conditions</h2>
 		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 85px); padding: 5px 5px 30px 5px; color: white;">
-			You acknowledge and agree that by accessing the Mooky or services, you consent
-			to this disclaimer and the User Privacy Statement. If you do not agree to these
-			terms, you may not access or use our app or services. The Mooky and our services
-			are being made available to you without charge for your individual use and
-			information only. We may change the app and our services, or your access, at any
-			time, without prior notice.  Our app and services contain information from our
-			links to separate third party providers which are not affiliated with Mooky. You
-			agree to use our app and services at your own risk. We do not take responsibility,
-			nor are we liable for any direct, indirect, consequential, special, incidental, punitive
-			or other loss or damage resulting from or related to your access to the Mooky or
-			our services.  Fares and pick up time displayed in the app are estimates only.  The
-			estimates don&#39;t include any tolls or surcharges, if any. The actual price and time for
-			the car to arrive may significantly vary based on the demand, traffic and other
-			charges determined by the provider.
-			USER PRIVACY STATEMENT
-			Mooky collects information about you when you use our mobile applications,
-			websites, and other online products and services (collectively, the “Services”) and
-			through other interactions and communications you have with us. This Privacy
-			Statement (“Statement&quot;) applies to persons anywhere in the world who use our
-			Services to request transportation, delivery, or other on-demand services (“Users”).
-			COLLECTION OF INFORMATION
-			We collect information you provide directly to us, such as when you create or
-			modify your account, request on-demand services, contact customer support, or
-			otherwise communicate with us. This information may include: name, email,
-			phone number, postal address, profile picture, payment method, delivery notes, and
-			other information you choose to provide.
-			INFORMATION WE COLLECT THROUGH YOUR USE OF OUR SERVICES
-			When you use our Services, we collect information about you in the following
-			general categories:
-			 Location Information: When you use the Services for transportation or
-			delivery, we collect precise location data from the Mooky. If you permit the
-			Mooky to access location services through the permission system used by
-			your mobile operating system (“platform”), we may also collect the precise
-			location of your device when the app is running in the foreground or
-			background. We may also derive your approximate location from your IP
-			address.
-			 Contacts Information: If you permit the Mooky to access the address book
-			on your device through the platform, we may access and store names and
-			contact information from your address book to facilitate social interactions
-			through our Services and for other purposes described in this Statement or
-			at the time of consent or collection.
-			 Transaction Information: We collect transaction details related to your use of
-			our Services, including the type of service requested, date and time the
-			service was provided, amount charged, distance traveled, and other related
-			transaction details. Additionally, if someone uses your promo code, we may
-			associate your name with that person.
-			 Usage and Preference Information: We collect information about how you
-			and site visitors interact with our Services, preferences expressed, and
-			settings chosen.
-			 Device Information: We may collect information about your mobile device,
-			including, for example, the hardware model, operating system and version,
-			software and file names and versions, preferred language, unique device
-			identifier, advertising identifiers, serial number, device motion information,
-			and mobile network information.
-			 Log Information: When you interact with the Services, we collect server
-			logs, which may include information such as device IP address, access dates
-			and times, app features or pages viewed, app crashes and other system
-			activity, type of browser, and the third-party site or service you were using
-			before interacting with our Services.
-			 Email Newsletter: When you submit your first name, last name, and email
-			address to subscribe to the Mooky email newsletter, you are giving us
-			permission to contact you via email to share news about Mooky and its
-			partners.
-			 Submission of feedback, bug reports, requests for help: Any information you
-			share with Mooky about your experience may be used by us for quality
-			control and other purposes.
-			USE OF INFORMATION
-			We may use the information we collect about you to:
-			 Provide, maintain, and improve our Services, including, for example, to
-			provide services you request (and send related information), develop new
-			features, provide customer support to Users, develop safety features,
-			authenticate users, and send product updates and administrative messages;
-			 Perform internal operations, including, for example, to prevent fraud and
-			abuse of our Services; to troubleshoot software bugs and operational
-			problems; to conduct data analysis, testing, and research; and to monitor
-			and analyze usage and activity trends;
-			 Send or facilitate communications (i) such as estimated times of arrival
-			(ETAs), or (ii) in connection with your use of certain features, such as
-			referrals, invites, split fare requests, or ETA sharing;
-			 Send communications we think will be of interest to you, including
-			information about products, services, promotions, news, and events of
-			Mooky and other companies, where permissible and according to local
-			applicable laws; and to process contest, sweepstake, or other promotion
-			entries or fulfill any related awards; or
-			 Personalize and improve the Services, including to provide or recommend
-			features, content, social connections, referrals, and advertisements.
-			We may transfer the information described in this Statement to, and process and
-			store it in, the United States and other countries, some of which may have less
-			protective data protection laws than the region in which you reside. Where this is
-			the case, we will take appropriate measures to protect your personal information in
-			accordance with this Statement.
-			SHARING OF INFORMATION
-			We may share the information we collect about you as described in this Statement
-			or as described at the time of collection or sharing, including as follows:
-			THROUGH OUR SERVICES
-			We may share your information:
-			 With third parties to provide you a service you requested through a
-			partnership or promotional offering made by a third party or us;
-			 With the general public if you submit content in a public forum, such as blog
-			comments, social media posts, or other features of our Services that are
-			viewable by the general public; or
-			 With third parties with whom you choose to let us share information, for
-			example other apps or websites that integrate with our API or Services, or
-			those with an API or Service with which we integrate.
-			OTHER IMPORTANT SHARING
-			We may share your information:
-			 With vendors, consultants, marketing partners, and other service providers
-			who need access to such information to carry out work on our behalf;
-			 In response to a request for information by a competent authority if we
-			believe disclosure is in accordance with, or is otherwise required by, any
-			applicable law, regulation, or legal process;
-			 With law enforcement officials, government authorities, or other third
-			parties if we believe your actions are inconsistent with our policies, or to
-			protect the rights, property, or safety of Mooky or others;
-			 In connection with, or during negotiations of, any merger, sale of company
-			assets, consolidation or restructuring, financing, or acquisition of all or a
-			portion of our business by or into another company;
-			 If we otherwise notify you and you consent to the sharing; or
-			 In an aggregated and/or anonymized form which cannot reasonably be used
-			to identify you.
-			SOCIAL SHARING FEATURES
-			The Services may integrate with social sharing features and other related tools
-			which let you share actions you take on our Services with other apps, sites, or
-			media, and vice versa. Your use of such features enables the sharing of information
-			with your friends or the public, depending on the settings you establish with the
-			social sharing service. Please refer to the privacy policies of those social sharing
-			services for more information about how they handle the data you provide to or
-			share through them.
-			ANALYTICS AND ADVERTISING SERVICES PROVIDED BY OTHERS
-			We may allow others to provide audience measurement and analytics services for
-			us, to serve advertisements on our behalf across the Internet, and to track and
-			report on the performance of those advertisements. These entities may use cookies,
-			web beacons, SDKs, and other technologies to identify your device when you visit
-			our site and use our Services, as well as when you visit other online sites and
-			services.
-			ACCOUNT INFORMATION
-			You may correct your account information at any time by logging into your in-app
-			account. Please note that in some cases we may retain certain information about
-			you as required by law, or for legitimate business purposes to the extent permitted
-			by law. For instance, if you have a standing credit or debt on your account, or if we
-			believe you have committed fraud or violated our terms, we may seek to resolve
-			the issue before terminating your access or deleting your information.
-			ACCESS RIGHTS
-			Mooky will comply with individual’s requests regarding access, correction, and/or
-			deletion of the personal data it stores in accordance with applicable law.
-			LOCATION INFORMATION
-			We request permission for our app’s collection of precise location from your
-			device per the permission system used by your mobile operating system. If you
-			initially permit the collection of this information, you can later disable it by
-			changing the location settings on your mobile device. However, this will limit your
-			ability to use certain features of our Services. Additionally, disabling our app’s
-			collection of precise location from your device will not limit our ability to collect
-			other trip location information or our ability to derive approximate location from
-			your IP address.
-			CONTACT INFORMATION
-			We may also seek permission for our app’s collection and syncing of contact
-			information from your device per the permission system used by your mobile
-			operating system. If you initially permit the collection of this information, iOS
-			users can later disable it by changing the contacts settings on your mobile device.
-			The Android platform does not provide such a setting.
-			CHANGES TO THE STATEMENT
-			We may modify the Terms at any time, in our sole discretion. If we do so, we’ll let
-			you know either by posting the modified Terms on the Site or App or through other
-			communications. It’s important that you review the Terms whenever we modify
-			them because if you continue to use the Services after we have posted modified
-			Terms on the Site or App, you are indicating to us that you agree to be bound by
-			the modified Terms. If you don’t agree to be bound by the modified Terms, then
-			you can’t use the Services anymore. Because our Services are evolving over time
-			we may change or discontinue all or any part of the Services, at any time and
-			without notice, at our sole discretion.
-			If you have any questions about the Statement or our practices, please feel free to
-			contact us at info@Mookyapp.com.
-			For the avoidance of doubt, Mooky does not provide transportation services, and
-			Mooky is not a transportation carrier. It is up to the driver to offer transportation
-			services, which may be requested by a passenger through the use of the services.
-			Any decision by a passenger to accept transportation once such passenger is
-			matched through the services with a driver is a decision made in such passenger’s
-			sole discretion. Mooky offers information and a method to connect drivers and
-			passengers with each other, but does not and does not intend to provide
-			transportation services or act in any manner as a transportation carrier, and has no
-			responsibility or liability for any transportation services voluntarily provided to
-			any passenger by any driver using the services.
-			ASSUMPTION OF RISK AND INDEMNITY
-			You knowingly and freely assume all risk when using the services. You, on behalf
-			of yourself, your personal representatives and your heirs, hereby voluntarily agree
-			to release, waive, discharge, hold harmless, defend and indemnify Mooky and its
-			officers, directors, employees, consultants, agents, successors and assigns, from
-			and against any claims, disputes, demands, liabilities, damages, losses, and costs
-			and expenses, including, without limitation, reasonable legal and accounting fees
-			arising out of or in any way connected with (i) your access to or use of the services
-			or content or your user content (ii) ride contracts or your receipt of rides including,
-			without limitation, for bodily injury, wrongful death, emotional distress, or other
-			damages or harm, whether to you or to third parties, which may result from the
-			provision of rides or participants therein, or (iii) violation of these terms, including,
-			without limitation, claims for bodily injury, wrongful death, emotional distress,
-			loss of services or other damages or harm, whether to you or to third parties, which
-			may result from your use of the services.
-			AGREEMENT TO ARBITRATE
-			You and Mooky agree that any dispute, claim or controversy between you and
-			Mooky arising out of or relating to these Terms or the breach, termination,
-			enforcement, interpretation or validity thereof or the use of the Services or Content
-			(collectively, “Disputes”) will be settled by binding arbitration, except that each
-			party retains the right: (i) to bring an individual action in small claims court and (ii)
-			to seek injunctive or other equitable relief in a court of competent jurisdiction to
-			prevent the actual or threatened infringement, misappropriation or violation of a
-			party’s copyrights, trademarks, trade secrets, patents or other intellectual property
-			rights (the action described in the foregoing clause (ii), an “IP Protection Action”).
-			The exclusive jurisdiction and venue of any IP Protection Action will be the state
-			and federal courts located in the Northern District of California and each of the
-			parties hereto waives any objection to jurisdiction and venue in such courts. You
-			acknowledge and agree that you and Mooky are each waiving the right to a trial by
-			jury or to participate as a plaintiff or class Passenger in any purported class action
-			or representative proceeding. Further, unless both you and Mooky otherwise agree
-			in writing, the arbitrator may not consolidate more than one person&#39;s claims, and
-			may not otherwise preside over any form of any class or representative proceeding.
-			If this specific paragraph is held unenforceable, then the entirety of this “Dispute
-			Resolution” section will be deemed void. Except as provided in the preceding
-			sentence, this “Dispute Resolution” section will survive any termination of these
-			Terms.
-			Arbitration Rules
-			The arbitration will be administered by the American Arbitration Association
-			(“AAA”) in accordance with the Commercial Arbitration Rules and the
-			Supplementary Procedures for Consumer Related Disputes (the “AAA Rules”)
-			then in effect, except as modified by this “Dispute Resolution” section. (The AAA
-			Rules are available at www.adr.org/arb_med or by calling the AAA at 1-800- 778-
-			7879.) The Federal Arbitration Act will govern the interpretation and enforcement
-			of this Section.
-			Arbitration Process
-			A party who desires to initiate arbitration must provide the other party with a
-			written Demand for Arbitration as specified in the AAA Rules. (The AAA
-			provides a form Demand for Arbitration
-			at http://www.adr.org/aaa/ShowPDF?doc=ADRSTG_004175 and a separate form
-			for California residents
-			athttp://www.adr.org/aaa/ShowPDF?doc=ADRSTG_015822.) The arbitrator will
-			be either a retired judge or an attorney licensed to practice law and will be selected
-			by the parties from the AAA’s roster of arbitrators. If the parties are unable to
-			agree upon an arbitrator within seven (7) days of delivery of the Demand for
-			Arbitration, then the AAA will appoint the arbitrator in accordance with the AAA
-			Rules.
-			Arbitration Location and Procedure
-			Unless you and Mooky otherwise agree, the arbitration will be conducted in the
-			county where you reside. If your claim does not exceed $10,000, then the
-			arbitration will be conducted solely on the basis of the documents that you and
-			Mooky submit to the arbitrator, unless you request a hearing or the arbitrator
-			determines that a hearing is necessary. If your claim exceeds $10,000, your right to
-			a hearing will be determined by the AAA Rules. Subject to the AAA Rules, the
-			arbitrator will have the discretion to direct a reasonable exchange of information
-			by the parties, consistent with the expedited nature of the arbitration.
-			Arbitrator’s Decision
-			The arbitrator will render an award within the time frame specified in the AAA
-			Rules. The arbitrator’s decision will include the essential findings and conclusions
-			upon which the arbitrator based the award. Judgment on the arbitration award may
-			be entered in any court having jurisdiction thereof. The arbitrator’s award of
-			damages must be consistent with the terms of the “Limitation of Liability” section
-			above as to the types and amounts of damages for which a party may be held
-			liable. The arbitrator may award declaratory or injunctive relief only in favor of the
-			claimant and only to the extent necessary to provide relief warranted by the
-			claimant’s individual claim. If you prevail in arbitration you will be entitled to an
-			award of attorneys’ fees and expenses, to the extent provided under applicable law.
-			Mooky will not seek, and hereby waives all rights it may have under applicable
-			law to recover, attorneys’ fees and expenses if it prevails in arbitration.
-			Fees
-			Your responsibility to pay any AAA filing, administrative and arbitrator fees will
-			be solely as set forth in the AAA Rules. However, if your claim for damages does
-			not exceed $75,000, Mooky will pay all such fees unless the arbitrator finds that
-			either the substance of your claim or the relief sought in your Demand for
-			Arbitration was frivolous or was brought for an improper purpose (as measured by
-			the standards set forth in Federal Rule of Civil Procedure 11(b)).
-			Changes
-			Notwithstanding the provisions of the “Changes to Terms or Services” section
-			above, if Mooky changes this “Dispute Resolution” section after the date you first
-			accepted these Terms (or accepted any subsequent changes to these Terms), you
-			may reject any such change by sending us written notice (including by email to
-			info@Mookyapp.com) within 30 days of the date such change became effective, as
-			indicated in the “Last Updated” date above or in the date of Mooky’s email to you
-			notifying you of such change. By rejecting any change, you are agreeing that you
-			will arbitrate any Dispute between you and Mooky in accordance with the
-			provisions of this “Dispute Resolution” section as of the date you first accepted
-			these Terms (or accepted any subsequent changes to these Terms).
-			General Terms
-			These Terms constitute the entire and exclusive understanding and agreement
-			between Mooky and you regarding the Services and Content, and these Terms
-			supersede and replace any and all prior oral or written understandings or
-			agreements between Mooky and you regarding the Services and Content. If for any
-			reason a court of competent jurisdiction finds any provision of these Terms invalid
-			or unenforceable, that provision will be enforced to the maximum extent
-			permissible and the other provisions of these Terms will remain in full force and
-			effect.
-			You may not assign or transfer these Terms, by operation of law or otherwise,
-			without Mooky’s prior written consent. Any attempt by you to assign or transfer
-			these Terms, without such consent, will be null and of no effect. Mooky may freely
-			assign or transfer these Terms without restriction. Subject to the foregoing, these
-			Terms will bind and inure to the benefit of the parties, their successors and
-			permitted assigns.
-			Any notices or other communications provided by Mooky under these Terms,
-			including those regarding modifications to these Terms, will be given: by Mooky
-			(i) via email; or (ii) by posting to the Services. For notices made by e-mail, the date
-			of receipt will be deemed the date on which such notice is transmitted.
-			Mooky’s failure to enforce any right or provision of these Terms will not be
-			considered a waiver of those rights. The waiver of any such right or provision will
-			be effective only if in writing and signed by a duly authorized representative of
-			Mooky. Except as expressly set forth in these Terms, the exercise by either party of
-			any of its remedies under these Terms will be without prejudice to its other
-			remedies under these Terms or otherwise.
-			Contact Information
-			If you have any questions about these Terms or the Services, please contact Mooky
-			at info@Mookyapp.com.
+			Agreement with Mooky Inc.
+			(V1.01 - Effective January 19 th , 2017)
+			PLEASE READ THE FOLLOWING TERMS AND CONDITIONS RELATING TO
+			YOUR PURCHASES AND SUBSCRIPTIONS OF PRODUCTS AND SERVICES
+			PROVIDED THROUGH THE WEBSITE/APP AND YOUR GENERAL USE OF THE
+			WEBSITE/APP.
+			The “Website/APP” refers collectively to the website at www.mookyapp.com, and its subdomains, and
+			related domains, (the aforementioned websites being the “Website”) and also the mobile app entitled
+			“Mooky” (the “APP”), available at the itunes store and google play store, as well as other mobile app
+			stores. “Operator”, the “Company”, “we”, or “us” refers to Mooky Inc, the owner and operator of
+			the Website/APP.
+			I. You Are Entering Into An Agreement:
+			II. Restrictions On Use; Conduct Requirements; Grant Of Rights:
+			III. Links:
+			IV. OPERATOR Is Not A Party To Your Transactions; Third Party Content And
+			Services; Partial List of Transaction Risks; No Personal Advice:
+			V. Parental Permission; Minimum Age 18 Requirement:
+			VI. Copyright; Trademarks:
+			VII. Digital Millennium Copyright Act; Procedure For Making Claims Of Copyright
+			Infringement:
+			VIII. User Public Forum Submission/Participation Policy And Terms:
+			IX. Your Fees; Product/Service Purchases; Special Offers And Promotions:
+			X. Limited Rights When You Purchase From Operator:
+			XI. Termination Of Service; Satisfaction Policy:
+			XII. Disclaimers Of Liability; No Representations Or Warranties:
+			XIII. Indemnification:
+			XIV. Misc.; Binding Arbitration; Disputes:
+			************************************************************************
+			I. You Are Entering Into An Agreement:
+			PLEASE READ THE FOLLOWING TERMS AND CONDITIONS RELATING TO
+			YOUR USE OF THE WEBSITE/APP AND THE PRODUCTS AND SERVICES
+			PROVIDED HEREUNDER CAREFULLY. By i) using the Website/APP, ii) purchasing any
+			products or services from OPERATOR through the Website/APP, or iii) utilizing any of the
+			products or services from OPERATOR through the Website/APP, you are agreeing and are
+			hereby deemed to have agreed to these Terms and Conditions. We reserve the right to modify
+			them at any time. You should check these Terms and Conditions periodically for changes. By
+			using the Website/APP after we post any changes to these terms and conditions, you agree to
+			accept those changes, whether or not you have reviewed them. With regard to products and
+			services purchased or utilized from OPERATOR, the version of these Terms and Conditions that
+			were posted at the time of purchase or utilization apply. However, if you renew or extend any
+			subscription or service purchase from OPERATOR, the version of these Terms and Conditions
+			(alternately referred to as the “Agreement”) posted at the time of renewal or extension applies to
+			the renewal or extension.
+			If you choose not to accept these Terms and Conditions, do not use the Website/APP or purchase
+			anything through the Website/APP. Once you use the Website/APP or purchase products or
+			services through the Website/APP, you cannot opt out of this Agreement.
+			This Agreement incorporates the Privacy Policy and California Privacy Policy.
+			Any attempt to alter, supplement, modify, or amend this Agreement by you will be considered an
+			attempted material alteration of this Agreement and such attempted material alteration is
+			therefore null and void.
+			II. Restrictions On Use; Conduct Requirements; Grant Of Rights:
+			 
+			The contents of the Website/APP are protected by copyright and trademark laws and are the
+			property of their owners. Unless we say otherwise, you may access the materials located within
+			the Website/APP only for your own use. You may not transmit the information you receive
+			through the Website/APP to third parties except as needed by you to utilize the services provided
+			through the Website/APP or the entities. This means you may download one copy of posted
+			materials on a single computer for archival purposes only, for your own use only, so long as you
+			neither change nor delete any author attribution, trademark, legend, or copyright notice. When
+			you download copyrighted material you do not obtain any ownership rights in that material.
+			You may not modify, copy, publish, display, transmit, adapt, or in any way exploit the content of
+			the Website/APP, except as may be explicitly allowed by us in writing. Only if you obtain prior
+			written consent from us and from all other entities with an interest in the relevant intellectual
+			property may you publish, display, or commercially exploit any material from the Website/APP.
+			You agree to comply with; i) the reasonable rules and regulations as may be promulgated by
+			OPERATOR from time to time and communicated to you either by email, on or through the
+			Website/APP, or in these Terms and Conditions with regard to the use of the Website/APP, ii)
+			the terms of these Terms and Conditions, iii) the requirement that you use the Website/APP
+			functionality in good-faith (which includes that your communication through the Website/APP
+			or with other users of the Website/APP be made in good faith), iv) all applicable law, v) the
+			requirement that you shall not violate the rights of any third party, and vi) the requirement that
+			any information you submit shall be accurate and shall not in any way be deceptive or
+			misleading.
+			You represent and warrant that you are aware of and will comply with all applicable law at all
+			times, including but not limited to the CAN-SPAM Act of 2003 (15 U.S.C. §7701, et seq.), the
+			regulations of the FTC, the Consumer Legal Remedies Act (Cal. Civil Code §1750, et seq.), and
+			Cal. Business and Professions Code §17529.5.
+			To the extent you are the original copyright holder of any post or submission by you to the
+			Website/APP and such post or submission does not contain any of the information or material of
+			OPERATOR or other information you are required to preserve as confidential by OPERATOR,
+			then; i) you remain owner of such post or submission to the extent you were the owner; ii) you
+			automatically grant on behalf of yourself or otherwise warrant that the owner of such content or
+			intellectual property has expressly granted OPERATOR a royalty-free, perpetual, irrevocable,
+			world-wide, nonexclusive license to use, reproduce, create derivative works from, modify,
+			publish, edit, translate, distribute, perform, display, and/or otherwise exploit, the post,
+			submission, communication, or content in any media or medium, or any form, format, or forum
+			now known or hereafter developed; and iii) you agree, represent and warrant that OPERATOR
+			may sublicense or assign its rights through multiple tiers of sublicenses or assigns. Please also
+			see “VIII. User Public Forum Submission/Participation Policy And Terms:” for other rights
+			you are granting to us.
+			OPERATOR has the right, but not the obligation, to remove any information provided by you
+			that it has a good faith belief is incorrect or misleading, which may subject OPERATOR or its
+			users to any liability, or for any other reason in its sole discretion.
+			 
+			You agree not to do any of the following while using the Website/APP:
+			1. harass, stalk, or otherwise abuse another user;
+			2. transmit or otherwise make available any content that is false, harmful, threatening,
+			abusive, tortious, defamatory, libelous, disparaging (including disparaging of the
+			Website/APP), vulgar, obscene, pornographic, or that promotes violence, racial hatred,
+			terrorism, or illegal acts, or is otherwise objectionable (as determined by us in our sole
+			discretion);
+			3. transmit or otherwise make available any content that is unlawful or infringes, violates, or
+			misappropriates any patent, trademark, trade identity right, trade secret, publicity right,
+			privacy right, copyright, or any other intellectual property or any other rights of any third
+			party;
+			4. upload or transmit viruses, Trojan horses, or other harmful, disruptive, or destructive files
+			or post material that interferes with any third party&#39;s uninterrupted use and enjoyment of
+			the Website/APP;
+			5. impersonate any person or entity, or otherwise disguise the origin of any content
+			transmitted through the Website/APP or to us, including forging any TCP/IP packet
+			header or any part of the header information in any transmission to the Website/APP for
+			any reason;
+			6. transmit or otherwise make available through the Website/APP any personal advertising,
+			junk mail, spam, chain letters, pyramid schemes, or offer for sale of any products or
+			services, except in areas specifically designated for such purposes;
+			7. engage in “harvesting” or “phishing” for email addresses from any public or other
+			sources such as, but not limited to, chat rooms and message boards, including community
+			Website/APPs that prohibit such activity;
+			8. falsely or misleadingly imply you are, represent, or are a part of any entity; or
+			9. violate any applicable local, state, federal, or international law, rule, or regulation.
+			You agree to provide accurate, current and complete information as and when requested by the
+			OPERATOR, such as during a registration process, and to update such information to keep it
+			accurate, current and complete. OPERATOR reserves the right to suspend or terminate your
+			right to use the Website/APP if any information provided by you proves to be inaccurate, not
+			current or incomplete. You are responsible for safeguarding your passwords, including but not
+			limited to simple notification service passwords, facebook passwords and mobile phone
+			password. You agree that you will not disclose your password for the Website/APP to any third
+			party and that you will take sole responsibility for any activities or actions under your User
+			Account, whether or not you have authorized such activities or actions. You will immediately
+			notify OPERATOR of any unauthorized use of your User Account.
+			As a feature of the Website/APP, you may be able to invite non-registered users to use the
+			Website/APP. If you select the option of adding one or more email addresses, SNS contacts or
+			mobile telephone numbers to an online form, a message you create in the corresponding template
+			may be sent by OPERATOR to those email addresses, SNS contacts or mobile telephone
+			numbers on your behalf. These email addresses, SNS contacts and mobile telephone numbers
+			will be used only for the purpose of sending the email, SNS communication or text message
+			communication to the addressee.
+			The Website/APP may allow you to select to use it to interface and communicate through other
+			services and programs, such as facebook, SNSs, twitter, instagram and the like. If you select such
+			features, you are authorizing the OPERATOR to access and utilize such services and programs
+			for such purposes, and the gather information about you from such services and programs.
+			III. Links:
+			These Terms and Conditions apply only to the Website/APP, and not to the website or Apps of
+			any other companies or organizations, including those to which the Website/APP may link. We
+			are not responsible for the availability of any other websites or apps to which the Website/APP
+			links. We do not endorse or take responsibility for the contents, advertising, products, or other
+			materials made available through any other websites or apps. Under no circumstances will we be
+			held responsible or liable, directly or indirectly, for any loss or damage that is caused or alleged
+			to have been caused to you in connection with your use of, or reliance on, any content, goods, or
+			services available on any other websites or apps. You should direct any concerns to that websites
+			or apps administrator or webmaster.
+			Other sites may link to the Website/APP only through a plain-text link or provided graphics link.
+			Permission must be granted by us for any other type of link to the Website/APP. To seek our
+			permission, you may send E - mail to info@mookyappcom.
+			Please place &quot;Link Request&quot; in the Subject Header. 
+			We reserve the right, however, to rescind any permission granted by us to link through a plain-
+			text link or any other type of link, and to require termination of any such link the Website/APP,
+			at our discretion at any time.
+			 
+			IV. OPERATOR Is Not A Party To Your Transactions; Third Party Content And Services;
+			Partial List Of Transaction Risks; No Personal Advice:
+			
+			The Website/APP is an information exchange Website/APP. Subject to these Terms and
+			Conditions, users may access the Website/APP to communicate with third party providers of
+			services to request information from such third parties in order to compare their services and to
+			use their services. OPERATOR does not provide this information, nor does it review such
+			information for accuracy. OPERATOR makes no representations or warranties regarding such
+			information provided by third parties, such as Website/APP users. While users of the
+			Website/APP may use the Website/APP to facilitate transactions, the Website/APP and
+			OPERATOR are not parties to such transactions.
+			The Website/APP may contain links to websites and applications maintained by third parties
+			(&quot;Third Party Website/APPs&quot;), including service providers and sellers of products. Such links to
+			Third Party Website/APPs are provided for your convenience and reference only. OPERATOR
+			does not operate or control, in any respect, any information, content, software, products, or
+			services available on such Third Party Website/APPs and is not responsible for any content on
+			such Third Party Website/APPs, including the websites or applications of any service provider or
+			any other third party. OPERATOR&#39;s inclusion of links to such Third Party Website/APPs does
+			not imply any endorsement, warranty, guarantee, or recommendation of such Third Party
+			Website/APPs, or of the content, products or services, or of the sponsoring organization thereof.
+			OPERATOR is a data aggregator of content supplied by third parties and users and assumes no
+			obligation to exercise editorial control over the opinions, advice, statements, services, offers, or
+			other content provided by third parties, including by users. Nevertheless, OPERATOR reserves
+			the right to screen, review, edit, or remove any content if it does not comply with laws, rules, or
+			regulations, or for any other reason OPERATOR deems relevant in its sole discretion.
+			Descriptions and other information appearing on the Website/APP or on Third Party
+			Website/APPs have not been verified by OPERATOR and such descriptions, data, and
+			information are not intended to be and are not binding on OPERATOR.
+			You acknowledge and agree that your use of any product or service provided to you by a third
+			party shall be subject to the terms of a separate agreement between you and the applicable third
+			party. OPERATOR has no liability to you in relation to any product or service provided by a
+			third party or for any acts or omissions of any third party.
+			For its services and referrals, OPERATOR may receive payment from third parties. This
+			constitutes your acknowledgment of and agreement to such compensation arrangements.
+			Since we are not a party to your transactions with other users of the Website/APP, we have no
+			fiduciary, agency, or other due diligence or disclosure obligation to or for you. Advertisements
+			and third party content (such as that of other users) on our Website/APP are not the actions,
+			representations, statements, or activities of OPERATOR. We do not review the qualifications of
+			any user. We do not review any advertising or other statement on our Website/APP for legality.
+			For example, we do not review whether a description of a person is accurate.
+			The information contained in or made available through the Website/APP (including but not
+			limited to information contained on Forums, in files, in products, or from services) cannot
+			replace or substitute for the services of trained professionals in any field, including, but not
+			limited to, psychological, technical, tax, financial, medical, or legal matters. You should consult
+			experts (such as financial experts, doctors, scientists, engineers, accountants, and lawyers) for
+			advice as appropriate. We and our licensors or suppliers make no representations or warranties,
+			(for example, we make no representations or warranties regarding determining the
+			appropriateness of, likelihood of, or applicability of any technology, tax policy, or financial
+			result) in regards to following the advice or information offered or provided within or through
+			the Website/APP (including but not limited to any product or service purchased, utilized, or
+			otherwise obtained from the Website/APP). Neither we nor our associates, or any of their
+			affiliates, will be liable for any direct, indirect, consequential, special, exemplary, or other
+			damages that may result, including but not limited to economic loss, injury, illness, or death.
+			V. Parental Permission; Minimum Age 18 Requirement:
+			The Website/APP (as well as any product or service purchased, utilized or otherwise obtained
+			from the Website/APP) is not directed to persons under the age of 18 and we will not knowingly
+			collect personally identifiable information from persons under 18. WE STRONGLY
+			RECOMMEND THAT PARENTS PARTICIPATE IN THEIR CHILDREN’S
+			EXPLORATION OF THE INTERNET AND ANY ONLINE SERVICES AND USE
+			THEIR BROWSER’S PARENTAL CONTROLS TO LIMIT THE AREAS OF THE
+			INTERNET TO WHICH THEIR CHILDREN HAVE ACCESS.
+			We require all users of the Website/APP or purchasers of OPERATOR&#39;s products and services to
+			be over 17. You agree to abide by any such restrictions and not to help anyone avoid these
+			restrictions. If you are under 18, you agree to immediately stop accessing the Website/APP or
+			using any of the products or services of OPERATOR. If you are accessing the Website/APP or
+			using or purchasing any of the products or services of OPERATOR, you represent that you are at
+			least 18 years of age.
+			 
+			VI. Copyright; Trademarks:
+			All content included on the Website/APP, such as text, graphics, logos, button icons, images,
+			audio clips, digital downloads, data compilations, and software, is the property of OPERATOR
+			or its content suppliers and protected by United States and international copyright laws. The
+			compilation of all content on the Website/APP is the exclusive property of OPERATOR and
+			protected by U.S. and international copyright laws. All software used on the Website/APP is the
+			property of OPERATOR or its software suppliers and protected by United States and
+			international copyright laws.
+			“Mooky” and “MookyApp” and other OPERATOR logos, page headers, button icons, scripts,
+			and service names are trademarks, registered trademarks, or trade dress of OPERATOR or its
+			affiliates in the U.S. and/or other countries. OPERATOR&#39;s trademarks and trade dress may not
+			be used in connection with any product or service that is not OPERATOR&#39;s, in any manner that
+			is likely to cause confusion, or in any manner that disparages or discredits OPERATOR. All
+			other trademarks not owned by OPERATOR or its affiliates that appear on the Website/APP are
+			the property of their respective owners, who may or may not be affiliated with, connected to, or
+			sponsored by OPERATOR or its affiliates.
+			VII. Digital Millennium Copyright Act; Procedure For Making Claims Of Copyright
+			Infringement:
+			It is the policy of OPERATOR to respond to notices of alleged infringement that comply with
+			the Digital Millennium Copyright Act. If you believe that your copyrighted work has been
+			copied and is accessible on the Website/APP in a way that constitutes copyright infringement,
+			you may notify us by providing our copyright agent with the following information in a “DMCA
+			Notice”:
+			1. the electronic or physical signature of the owner of the copyright or the person
+			authorized to act on the owner&#39;s behalf;
+			2. a description of the copyrighted work that you claim has been infringed and a
+			description of the infringing activity;
+			3. identification of the location where the original or an authorized copy of the
+			copyrighted work exists, for example the URL of the Website/APP where it is posted or
+			the name of the book in which it has been published;
+			4. identification of the URL or other specific location on the Website/APP where the
+			material that you claim is infringing is located (you must include enough information to
+			allow us to locate the material);
+			5. your name, address, telephone number, and email address;
+			6. a statement by you that you have a good faith belief that the disputed use is not
+			authorized by the copyright owner, its agent, or the law; and
+			7. a sworn statement by you, made under penalty of perjury, that the above information in
+			your DMCA Notice is accurate and that you are the copyright owner or are authorized
+			to act on the copyright owner&#39;s behalf.
+			Our agent for DMCA notice of claims of copyright infringement on the Website/APP can be
+			reached as follows:
+			By email:
+			info@mookyapp.com
+			Please place &quot;OPERATOR Legal Support, DMCA&quot; in the Subject Header. 
+			Please note that you may be liable for damages (including attorneys&#39; fees and other costs) if you
+			materially misrepresent a claim that content is infringing upon your copyright. Therefore, if you
+			are not sure if material available online infringes your copyright (it may be protected under
+			exceptions to the copyright law, like fair use), we suggest that you contact legal counsel before
+			submitting any claim.
+			Please note that a copy of each legal notice and claim (without your personal information) could
+			be sent to a third-party partner for publication and annotation. You can see examples of such a
+			publication at http://www.chillingeffects.org/dmca512/notice.cgi.
+			This contact information is only for reporting copyright infringement.
+			VIII. User Public Forum Submission/Participation Policy and Terms:
+			a) General:
+			As a service to our users, the Website/APP may feature message boards, chat rooms/areas,
+			discussion forums, ratings, comments, bulletin board services, news groups (including, without
+			limitation, Usenet and other third party news groups), communities and/or other message or
+			communication facilities and other public/semi-public/private forums (collectively, &quot;Forums&quot;)
+			where users with similar interests or similar experiences can share information and support one
+			another or where users can post questions for others to answer. We may also offer online
+			discussions moderated by various experts or other persons.
+			Much of the content of the Forums, including without limitation the descriptions for many
+			Forums and the content within a specific message, comment or posting, may be provided by and
+			therefore is the responsibility of the third party creator of the Forum or the person posting in that
+			Forum. OPERATOR has no responsibility for such content and is merely providing access to
+			such content as a service to you.
+			BY THEIR VERY NATURE, FORUMS MAY CARRY OFFENSIVE, HARMFUL,
+			INACCURATE, OR OTHERWISE INAPPROPRIATE MATERIAL, OR IN SOME
+			CASES, POSTINGS THAT HAVE BEEN MISLABELED OR ARE OTHERWISE
+			DECEPTIVE. WE EXPECT THAT YOU WILL USE CAUTION AND COMMON SENSE
+			AND EXERCISE PROPER JUDGMENT WHEN USING DISCUSSION FORUMS.
+			b) Your Participation/Contribution Requires Consideration:
+			Any information shared (including personally identifiable information or other personal
+			information) that you reveal in a Forum is by design open to the public (or to a private group
+			within a special Forum) and is not a private, secure service. You should think carefully before
+			disclosing any information in any Forum. What you have written may be seen, disclosed to, or
+			collected by third parties and may potentially be used by others in ways we are unable to control
+			or predict, including to contact you for unauthorized purposes. By submitting communications or
+			content to Forums, you agree that such submission is non-confidential for all purposes.
+			c) Confidential Obligations:
+			You agree that you will not upload or transmit any communications or content of any type to a
+			Forum that infringes or violates any rights of any party. Further, you may have entered into an
+			agreement with OPERATOR that requires you to maintain the confidentiality of certain material
+			or information of OPERATOR. It is your obligation to confirm that any post to a Forum you
+			make does not breach any confidentiality obligation you have. Unless a Forum specifically notes
+			that all members of the Forum who are able to view posts are bound by confidentiality
+			obligations, and further notes what types of information may be discussed, you may not post
+			information which OPERATOR has required you to preserve as confidential.
+			d) Grant of Rights:
+			To the extent you are the copyright holder of any post or submission by you to a Forum, or the
+			Website/APP in general, and such post or submission does not contain any of the information or
+			material of OPERATOR or other information you are required to preserve as confidential by
+			OPERATOR, then; i) you remain the owner of such post or submission to the extent you were
+			the owner; ii) you automatically grant on behalf of yourself or otherwise represent and warrant
+			that the owner of such content or intellectual property has expressly granted OPERATOR, a
+			royalty-free, perpetual, irrevocable, world-wide, nonexclusive license to use, reproduce, create
+			derivative works from, modify, publish, edit, translate, distribute, perform, display, and/or
+			otherwise exploit, the post, submission, communication, or content in any media or medium, or
+			any form, format, or forum now known or hereafter developed; and iii) you agree, represent, and
+			warrant that OPERATOR may sublicense or assign its rights through multiple tiers of
+			sublicenses or assigns.
+			e) No Obligation to Monitor:
+			OPERATOR does not necessarily control the information delivered to the Forums and has no
+			obligation to monitor the Forums. However, OPERATOR reserves the right at all times to
+			disclose any information as necessary to satisfy any applicable law, regulation, legal process, or
+			legal governmental request or to edit, refuse to post, or to remove any information or materials,
+			in whole or in part, for any reason whatsoever, in OPERATOR&#39;s sole discretion.
+			f) No Obligation to Remove; Right to Act:
+			OPERATOR is not obligated to remove any content from the Website/APP which does not
+			violate any civil or criminal laws and any contributions intended for display on this Website/APP
+			via any means, whether submitted via HTTP (web), SMTP (mail), NNTP (newsreader), or
+			otherwise, are presumed to be contributed by the author/contributor with the intent that
+			OPERATOR shall have an ongoing non-exclusive right to publish the contributed content for an
+			indefinite amount of time, unless the content submitted was made under an agreement with
+			OPERATOR with differing terms. If you do not wish to have something which you submit to be
+			published, do not submit it in the first place.
+			If OPERATOR discovers communications which allegedly do not conform to any
+			requirements/restrictions of the Website/APP or of OPERATOR, OPERATOR may investigate
+			the allegation and determine in good faith and in its sole discretion whether to remove or request
+			the removal of the communication. OPERATOR will have no liability or responsibility for
+			performance or non-performance of such activities. OPERATOR reserves the right to terminate
+			or restrict your access to any or all of the Forums at any time without notice for any reason
+			whatsoever. You acknowledge that some Forums available through the Website/APP are
+			available only through the Website/APP and others are available both through the Website/APP
+			and other sources, such as Usenet, over which OPERATOR has absolutely no control.
+			 
+			g) No Endorsement:
+			 
+			OPERATOR does not endorse, support, represent or guaranty the truthfulness, accuracy, or
+			reliability of any communications posted in the Forums or endorse any opinions expressed in the
+			Forums. You acknowledge that any reliance on material posted in the Forums will be at your
+			own risk.
+			IX. Your Fees; Product/Service Purchases; Special Offers and Promotions:
+			The Website/APP provides various opportunities to purchase products and services. In
+			purchasing such, the applicable fees and related terms are disclosed to you and you are required
+			to accept such. These Terms and Conditions are in addition to the terms and fees you agree to
+			when making a purchase.
+			By make any purchase from the Website/APP, you are agreeing to pay the fees disclosed to you
+			related to such purchase. You are agreeing to have such amounts charged to the credit card,
+			PayPal, itunes account or similar means that you provided. If you purchased something with a
+			reoccurring charge, you are agreeing to have such amounts charged to the credit card or PayPal
+			account or other means you provided, until you terminate your subscription or other purchase as
+			set forth herein or as specified in the terms when you made your purchase.
+			You are required to pay all charges on time, and hereby agree to submit an accompanying
+			payment authorization in connection with these charges when requested by OPERATOR. Credit
+			card transactions require an acceptable and currently working/continuously valid credit card
+			number/account. OPERATOR may terminate or disable your purchases or subscriptions if you
+			fail to pay fully and in a timely manner all amounts due to OPERATOR. If your credit card
+			expires or is otherwise declined for payment, or payment via your PayPal account is not made,
+			your access to the Website/APP may be modified, suspended or cancelled, in OPERATOR&#39;s sole
+			discretion and without notice to you. You agree that in no event shall you seek a chargeback
+			unless OPERATOR has authorized such. If any payment due from you is more than thirty (30)
+			calendar days past due, interest pro-rated daily, at the lower of 18% percent per annum, or the
+			maximum allowable by law, on such past due amounts shall accrue, and the entire amount of
+			unpaid charges, plus this assessment, will become immediately due and payable. You shall pay
+			all costs incurred by OPERATOR with respect to collection of any past due amount, including
+			legal fees. Each time you access or use the Website/APP, you are affirming that OPERATOR is
+			authorized to obtain payment through the applicable payment method. All fees are quoted and
+			payable in United States Dollars. You are also responsible for paying all applicable taxes for
+			services or products you receive from OPERATOR, and any other costs incurred in connection
+			with the use of or access to the Website/APP.
+			You may contact the OPERATOR Customer Support Department by e-mail at
+			info@mookyapp.com. Notwithstanding the foregoing, in no event may you dispute any charge or
+			account billing hereunder later than ninety (90) days after such questionable account billing or
+			other discrepancy should have been or could have been reasonably discovered by you.
+			Otherwise, except as required by applicable law, any and all such complaints of yours are waived
+			by you.
+			OPERATOR may, from time to time, offer promotions or special offers. OPERATOR reserves
+			the right to modify or terminate such promotions or special offers in its discretion.
+			X. Limited Rights When You Purchase from OPERATOR:
+			The Website/APP is and shall remain the sole and exclusive property of OPERATOR. You shall
+			have only the limited rights with respect to the Website/APP as expressly granted in these Terms
+			and Conditions or as the Website/APP specifically provides in the terms of a purchase from the
+			Website/APP. All rights not expressly granted herein are reserved by OPERATOR. You
+			acknowledge and agree that only OPERATOR shall have the right to alter, maintain, enhance, or
+			otherwise modify the Website/APP, or its products or services. You agree that you will not
+			disassemble, decompile, manipulate, or reverse engineer the Website/APP or aid others to do so.
+			Under no circumstances shall you sell, license, publish, display, copy, distribute, collect,
+			aggregate, indirectly or directly search or otherwise make available the Website/APP (or any
+			products or services provided herein) in any form or by any means, including without limitation
+			the transfer to a third party, except as expressly permitted in this Agreement. You will take all
+			reasonable steps to protect the security of the Website/APP and to prevent unauthorized use or
+			disclosure thereof. You are responsible for all access to and use of the Website/APP by means of
+			your equipment or under your user ID and password, whether or not you have knowledge of or
+			authorized such access or use. You shall be responsible for maintaining the confidentiality of all
+			assigned user IDs and passwords, and you shall be responsible for all charges relating to the use
+			of such user IDs and passwords, whether or not authorized by you.
+			OPERATOR reserves the right to modify or to discontinue the Website/APP and any products or
+			services provided by OPERATOR hereunder, with or without notice to you. OPERATOR shall
+			not liable to you in the event that OPERATOR exercises its rights under this Section.
+			XI. Termination Of Services; Satisfaction Policy:
+			a) Termination of Services:
+			OPERATOR reserves the right to terminate the services you receive from the Website/APP for
+			any reason, effective upon written notice to you.
+			To cancel, send an email to info@mookyapp.comwith the subject line: “CANCEL” prior to the
+			desired termination date and include your username in the content of the email.
+			XII. Disclaimers Of Liability; No Representations Or Warranties:
+			For the avoidance of doubt, OPERATOR does not provide transportation services, and
+			OPERATOR is not a transportation carrier. It is up to the driver to offer transportation services,
+			which may be requested by you through the use of the services of OPERATOR. Any decision by
+			you to accept transportation once you are matched through Website/App with a driver is a
+			decision made by you in your sole discretion. OPERATOR offers information and a method to
+			connect drivers and passengers with each other, but does not and does not intend to provide
+			transportation services or act in any manner as a transportation carrier, and has no responsibility
+			or liability for any transportation services voluntarily provided to any passenger by any driver
+			using the services. You knowingly and freely assume all risk when using the services of
+			OPERATOR.
+			OPERATOR attempts to ensure that information that OPERATOR provides and its content
+			(which is separate and distinct from the content of third parties, including but not limited to
+			advertisers, users and other third parties) is accurate and reliable, however, errors sometimes
+			occur. OPERATOR does not make any representation, warranty, or guarantee regarding the
+			accuracy of the material posted or transmitted via the Website/APP or the products and services
+			provided by OPERATOR and advises you independently to verify the accuracy of the
+			information provided. OPERATOR does not buy or sell or represent any buyer or seller of
+			services (such as Uber, Lyft, and the like) on the Website/APP, and disclaims any and all
+			responsibility and liability for all sales or attempted sales on and through the Website/APP.
+			OPERATOR makes no guarantee, whether express or implied, that you will find opportunities,
+			products, or services that meet your specifications. In addition, OPERATOR may make changes
+			and improvements to the Website/APP at any time. OPERATOR makes no representation or
+			warranty as to the quality or qualification of any third party referred to you, and is not
+			responsible or liable for any acts or omissions created or performed by such third parties.
+			THE WEBSITE/APP, ITS CONTENT, AND THE PRODUCTS AND SERVICES OF
+			OPERATOR ARE PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot;. OPERATOR
+			DISCLAIMS ANY REPRESENTATION OR WARRANTY OF ANY KIND, WHETHER
+			EXPRESS OR IMPLIED, AS TO ANY MATTER WHATSOEVER RELATING TO THE
+			WEBSITE/APP, ITS CONTENT, AND THE PRODUCTS AND SERVICES OF
+			OPERATOR, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES
+			OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND
+			NONINFRINGEMENT. WE MAKE NO GUARANTEE THAT THE CONTENT OF THE
+			WEBSITE/APP IS UP-TO- DATE, ACCURATE, OR COMPLETE, AND YOU SHOULD
+			NOT RELY ON OR ASSUME ITS ACCURACY FOR ANY DECISION OR TO TAKE
+			ANY ACTION. WE HEREBY DISCLAIM ANY WARRANTY THAT THE
+			WEBSITE/APP, ITS CONTENT, OR THE PRODUCTS AND SERVICES OF
+			OPERATOR WILL BE FREE OF INTERRUPTION, OR THAT THE WEBSITE/APP IS
+			FREE OF VIRUSES, WORMS, TROJAN HORSES, OR OTHER CODE THAT
+			MANIFESTS CONTAMINATING OR DESTRUCTIVE PROPERTIES.
+			OPERATOR MAKES NO REPRESENTATIONS OR WARRANTIES, AND DISCLAIMS
+			ANY LIABILITY WITH RESPECT TO INFORMATION, PRODUCTS, OR SERVICES
+			PROVIDED BY OTHER USERS OF THE WEBSITE/APP.
+			BY YOUR USE OF THE WEBSITE/APP, ITS CONTENT, OR THE PRODUCTS OR
+			SERVICES OF OPERATOR, YOU AGREE AND ACKNOWLEDGE THAT YOUR USE
+			OF SUCH IS AT YOUR OWN RISK. NEITHER OPERATOR NOR ITS AGENTS,
+			EMPLOYEES, OFFICERS, DIRECTORS, SHAREHOLDERS, OR OTHER
+			AFFILIATES ARE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE,
+			INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR OTHER INJURY
+			ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE WEBSITE/APP, ITS
+			CONTENT, OR THE USE OF THE PRODUCTS OR SERVICES OF OPERATOR OR
+			ANY THIRD PARTY, OR WITH DELAY OR INABILITY TO USE THE
+			WEBSITE/APP, WHETHER ARISING FROM CONTRACT, TORT, STRICT
+			LIABILITY, OR ANY OTHER THEORY AND REGARDLESS OF WHETHER OR NOT
+			THE MEMBER KNOWS, SUSPECTS, OR HAS BEEN ADVISED OF THE
+			POSSIBILITY OF ANY SUCH DAMAGES.
+			YOU, ON BEHALF OF YOURSELF, YOUR PERSONAL REPRESENTATIVES AND
+			YOUR HEIRS, HEREBY VOLUNTARILY AGREE TO RELEASE, WAIVE,
+			DISCHARGE, HOLD HARMLESS, DEFEND AND INDEMNIFY OPERATOR AND ITS
+			OFFICERS, DIRECTORS, EMPLOYEES, CONSULTANTS, AGENTS, SUCCESSORS
+			AND ASSIGNS, FROM AND AGAINST ANY CLAIMS, DISPUTES, DEMANDS,
+			LIABILITIES, DAMAGES, LOSSES, AND COSTS AND EXPENSES, INCLUDING,
+			WITHOUT LIMITATION, REASONABLE LEGAL AND ACCOUNTING FEES
+			ARISING OUT OF OR IN ANY WAY CONNECTED WITH (I) YOUR ACCESS TO OR
+			USE OF THE SERVICES OR CONTENT OF OPERATOR OR YOUR USER CONTENT
+			(II) RIDE CONTRACTS OR YOUR RECEIPT OF RIDES INCLUDING, WITHOUT
+			LIMITATION, FOR BODILY INJURY, WRONGFUL DEATH, EMOTIONAL
+			DISTRESS, OR OTHER DAMAGES OR HARM, WHETHER TO YOU OR TO THIRD
+			PARTIES, WHICH MAY RESULT FROM THE PROVISION OF RIDES OR
+			PARTICIPANTS THEREIN, OR (III) VIOLATION OF THESE TERMS, INCLUDING,
+			WITHOUT LIMITATION, CLAIMS FOR BODILY INJURY, WRONGFUL DEATH,
+			EMOTIONAL DISTRESS, LOSS OF SERVICES OR OTHER DAMAGES OR HARM,
+			WHETHER TO YOU OR TO THIRD PARTIES, WHICH MAY RESULT FROM YOUR
+			USE OF THE SERVICES.
+			You waive benefit of i) California Civil Code § 1542, which provides, &quot;A general release does
+			not extend to claims which the creditor does not know or suspect to exist in his or her favor at the
+			time of executing the release, which if not known to him or her must have materially affected his
+			or her settlement with the debtor&quot; and ii) each other similar provision of applicable federal or
+			state law, if any, pertaining to general releases.
+			TO THE EXTENT THAT ANY LIMITATION OF LIABILITY SET FORTH IN THIS
+			SECTION IS UNENFORCEABLE UNDER APPLICABLE LAW, IN NO EVENT SHALL
+			OPERATOR, ITS AFFILIATES, OFFICERS, DIRECTORS, EMPLOYEES,
+			SHAREHOLDERS OR AGENTS, BE LIABLE FOR: (A) THE GREATER OF LOSSES
+			OR DAMAGES IN EXCESS OF THE AMOUNT OF FEES ACTUALLY PAID BY YOU
+			TO OPERATOR WITHIN THE TWELVE MONTHS PRIOR TO THE CLAIM OR THE
+			MINIMUM AMOUNT REQUIRED UNDER APPLICABLE LAW; OR (B) ANY
+			INDIRECT, SPECIAL, EXEMPLARY, PUNITIVE, INCIDENTAL, OR
+			CONSEQUENTIAL LOSSES OR DAMAGES.
+			XIII. Indemnification: (See also prior Section)
+			YOU AGREE THAT YOU WILL INDEMNIFY, DEFEND, AND HOLD OPERATOR
+			AND OPERATOR’S PARENTS, AFFILIATES, SUBSIDIARIES, RELATED ENTITIES,
+			OFFICERS, DIRECTORS, EMPLOYEES, SHAREHOLDERS, CONTRACTORS, AND
+			CUSTOMERS (COLLECTIVELY, THE “INDEMNIFIED PARTIES”) HARMLESS
+			FROM AND AGAINST ANY AND ALL LIABILITIES, DAMAGES, COSTS, AND
+			EXPENSES, INCLUDING ATTORNEYS’ FEES (COLLECTIVELY, “LOSSES”),
+			INCURRED BY OPERATOR AND THE INDEMNIFIED PARTIES AS A RESULT OF
+			OR ARISING FROM (A) ANY ACTUAL OR ALLEGED INFRINGEMENT OR
+			VIOLATION OF ANY THIRD PARTY INTELLECTUAL PROPERTY,
+			INTELLECTUAL PROPERTY RIGHTS, OR OTHER RIGHTS BY YOU; (B) THE
+			FAILURE OR ALLEGED FAILURE OF ANY PRODUCTS (INCLUDING BUT NOT
+			LIMITED TO PROPERTY) OR SERVICES PROVIDED OR OFFERED BY YOU
+			(INCLUDING BUT NOT LIMITED TO FAILURE TO COMPLY WITH
+			SPECIFICATIONS OR WITH ANY EXPRESS OR IMPLIED WARRANTIES); (C) THE
+			VIOLATION OR ALLEGED VIOLATION OF ANY LAW, STATUTE, OR
+			GOVERNMENTAL ORDINANCE DUE OR RELATED TO YOU; (D) ANY ACTUAL
+			OR ALLEGED UNFAIR BUSINESS PRACTICES, FALSE ADVERTISING,
+			MISREPRESENTATION, OR FRAUD RESULTING FROM YOU; (E) ANY ACTUAL
+			OR ALLEGED PERSONAL INJURY OR ACTUAL OR ALLEGED PROPERTY
+			DAMAGE ARISING FROM OR IN RELATION TO YOU; (G) ANY ACTUAL OR
+			ALLEGED BREACH BY YOU OF ANY AGREEMENT OR OBLIGATION YOU HAVE
+			WITH ANY THIRD PARTY, INCLUDING BUT NOT LIMITED TO ANY OTHER
+			USER OF THE WEBSITE/APP, AND (H) ANY BREACH OR ALLEGED BREACH OF
+			YOUR REPRESENTATIONS OR WARRANTIES OR ANY PROVISION OF THESE
+			TERMS AND CONDITIONS BY YOU. THIS SECTION WILL NOT BE CONSTRUED
+			TO LIMIT OR EXCLUDE ANY OTHER CLAIMS OR REMEDIES THAT OPERATOR
+			OR ITS RESPECTIVE AFFILIATES, SUCCESSORS, AND ASSIGNS (AND ITS AND
+			THEIR RESPECTIVE DIRECTORS, EMPLOYEES, AND AGENTS) MAY ASSERT.
+			XIV. Misc.; Binding Arbitration; Disputes:
+			a) Binding Arbitration; Disputes:
+			You agree that any claim or controversy arising out of or relating to the use of the Website/APP,
+			its content, or the products or services of OPERATOR, or to any acts or omissions for which
+			you may contend OPERATOR or its employees, agents, affiliates, officers, or directors are
+			liable, including but not limited to any claim or controversy (&quot;Dispute&quot;), shall be finally and
+			exclusively settled by arbitration in San Francisco county, California. Such arbitration shall be
+			held before one arbitrator using expedited procedures under the commercial arbitration rules of
+			the American Arbitration Association (&quot;AAA&quot;) in force at that time. The arbitrator shall be
+			selected pursuant to the AAA rules. To begin the arbitration process, a party must make a
+			written demand therefore. Any judgment upon the award rendered by the arbitrator may be
+			entered only in a state or federal court located in San Francisco county, California, and you
+			agree to submit to the jurisdiction of such court for that purpose. You and OPERATOR agree
+			that the arbitrator shall have limited authority to award damages such that the arbitrator shall not
+			have the power to award damages in excess of those permitted under these Terms and
+			Conditions and in no event more than actual compensatory damages. This Agreement to
+			arbitrate shall not be construed as an agreement or consolidation of arbitration under this
+			Agreement with arbitration of disputes or claims of any non-party, regardless of the nature of
+			the issues or disputes involved.
+			THIS AGREEMENT PROVIDES THAT ALL DISPUTES BETWEEN YOU AND
+			OPERATOR WILL BE RESOLVED BY BINDING ARBITRATION IN LOS
+			ANGELESSAN FRANCISO, CALIFORNIA; THUS, YOU GIVE UP YOUR RIGHT TO
+			GO TO COURT TO ASSERT OR DEFEND YOUR RIGHTS. YOU ALSO GIVE UP
+			YOUR RIGHT TO PARTICIPATE IN OR BRING CLASS ACTIONS AND TO SERVE
+			AS A PRIVATE ATTORNEY GENERAL OR IN ANY OTHER REPRESENTATIVE
+			CAPACITY IN CONNECTION WITH A DISPUTE. YOUR RIGHTS WILL BE
+			DETERMINED BY A NEUTRAL ARBITRATOR AND NOT A JUDGE OR JURY. YOU
+			AND OPERATOR RETAIN THE RIGHT TO PURSUE INJUNCTIVE RELIEF IN
+			COURT AND AGREE TO SUBMIT EXCLUSIVELY TO THE JURISDICTION OF
+			THE STATE OR FEDERAL COURTS LOCATED IN SAN FRANCISCO,
+			CALIFORNIA, FOR THAT PURPOSE.
+			You also acknowledge and understand that, with respect to any Dispute, in the event
+			OPERATOR incurs attorney fees or expenses in connection with the collection of sums owed to
+			us by you under this Agreement, we shall be entitled to recovery of those fees and expenses
+			from you.
+			b) Severability:
+			If any provision contained in this agreement is or becomes invalid, illegal, or unenforceable in
+			whole or in part, such invalidity, illegality, or unenforceability shall not affect the remaining
+			provisions and portions of this agreement, and the invalid, illegal, or unenforceable provision
+			shall be deemed modified so as to have the most similar result that is valid and enforceable under
+			applicable California law.
+			c) Waiver:
+			The failure of either party to require performance by the other party of any provision of this
+			agreement shall not affect in any way the first party&#39;s right to require such performance at any
+			time thereafter. Any waiver by either party of a breach of any provision in this agreement shall
+			not be taken or held by the other party to be a continuing waiver of that provision unless such
+			waiver is made in writing.
+			d) Export Control
+			You agree to comply fully with all U.S. and foreign export laws and regulations to ensure that
+			neither the APP nor any technical data related thereto nor any direct product thereof is exported
+			or re-exported directly or indirectly in violation of, or used for any purposes prohibited by, such
+			laws and regulations. You represent and warrant that: (i) you are not located in a country that is
+			subject to a U.S. Government embargo, or that has been designated by the U.S. Government as a
+			&quot;terrorist supporting&quot; country; and (ii) you are not listed on any U.S. Government list of
+			prohibited or restricted parties.
+			e) Entire Agreement:
+			This Agreement, together with anything specifically incorporated by reference, are the complete
+			and exclusive agreement between OPERATOR and you with regard to the purchase or
+			subscription to which this Agreement is associated. This Agreement supersedes all prior or
+			contemporaneous proposals, oral or written, understandings, representations, conditions,
+			warranties, and all other communications between OPERATOR and you relating to the subject
+			products and services. This agreement may not be explained or supplemented by any prior
+			course of dealings or trade by custom or usage.
+			By checking this box and pressing this button, I confirm I have read the Terms and Conditions
+			above and agree to enter into such agreement. My actions in checking this box and pressing this
+			button are my electronic signature
 		</div>
 	</div>
 
@@ -576,12 +1370,28 @@
 		</div>
 		<h2>Login</h2>
 
-		<input type="text" id="login_email" placeholder="Email" />
-		<input type="password" id="login_password" placeholder="Password" />
-		<div id="signup_errors"></div>
+		<div class="icon_input">
+			<img src="images/icon_email.svg" />
+			<input type="text" id="login_email" placeholder="Email" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_password.svg" />
+			<input type="password" id="login_password" placeholder="Password" />
+		</div>
+		<div id="login_errors"></div>
 		<input type="button" id="login_do" value="Login" />
 
-		account recovery
+		<div style="bottom:0; position: absolute; width: 100%;">
+			<div class="icon_link open_page" data-page="signup">
+				<img src="images/icon_signup.svg" style="width: 30px;" /> Signup
+			</div>
+			<!--<div class="icon_link open_page" data-page="signup">
+				<img src="images/icon_signup.svg" style="width: 30px;" /> Recover Account
+			</div>-->
+			<div class="icon_link open_page" data-page="toc">
+				<img src="images/icon_terms.svg" style="width: 30px;" /> Terms and conditions
+			</div>
+		</div>
 
 	</div>
 
@@ -593,13 +1403,61 @@
 			</div>
 		</div>
 		<h2>Signup</h2>
-		<input type="text" id="signup_email" placeholder="Email" />
-		<input type="password" id="signup_password" placeholder="Password" />
-		<input type="password" id="signup_cpassword" placeholder="Password Conformation" />
-		<input type="text" id="signup_name" placeholder="Name*" />
-		<input type="text" id="signup_phone" placeholder="Phone*" />
+		<div class="icon_input">
+			<img src="images/icon_person.svg" />
+			<input type="text" id="signup_name" placeholder="Name" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_phone.svg" />
+			<input type="text" id="signup_phone" placeholder="Phone" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_email.svg" />
+			<input type="text" id="signup_email" placeholder="Email" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_password.svg" />
+			<input type="password" id="signup_password" placeholder="Password" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_password.svg" />
+			<input type="password" id="signup_cpassword" placeholder="Password Conformation" />
+		</div>
 		<div id="signup_errors"></div>
 		<input type="button" id="signup_do" value="Signup" />
+		<div style="bottom:0; position: absolute; width: 100%;">
+			<div class="icon_link open_page" data-page="login">
+				<img src="images/icon_login.svg" style="width: 30px;" /> Login
+			</div>
+			<div class="icon_link open_page" data-page="toc">
+				<img src="images/icon_terms.svg" style="width: 30px;" /> Terms and conditions
+			</div>
+		</div>
+	</div>
+
+	<div id="verify_number" class="page form">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+		</div>
+		<h2>Phone Verification</h2>
+		<div class="icon_input">
+			<img src="images/icon_phone.svg" />
+			<input type="text" id="verify_phone" disabled="disabled" value="(555)555-5555" />
+		</div>
+		<div class="icon_input">
+			<img src="images/icon_sms.svg" />
+			<input type="text" id="verify_code" placeholder="Verification Code" />
+		</div>
+		<div id="verify_errors"></div>
+		<input type="button" id="verify_do" value="Verify" />
+		<div style="bottom:0; position: absolute; width: 100%;">
+			<div id="verify_resend" class="icon_link">
+				<img src="images/icon_resend_sms.svg" style="width: 30px;" /> Resend Code
+			</div>
+			<div class="icon_link open_page" data-page="toc">
+				<img src="images/icon_terms.svg" style="width: 30px;" /> Terms and conditions
+			</div>
+		</div>
 	</div>
 
 	<div id="geofence" class="page">
@@ -609,6 +1467,7 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
 			</div>
 		</div>
+		<h2>Limited release</h2>
 		<h2>We are sorry, we are only available to a limited test audience as of now.</h2>
 	</div>
 

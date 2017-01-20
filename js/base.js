@@ -435,7 +435,7 @@ function app_info(){
 	if (typeof AppVersion == "undefined"){
 		var AppVersion = {version:"0.0.0", build: "1"};
 	}
-	return {name: app, version: AppVersion.version, build: AppVersion.build, phone_id: uuid, device: device_info()};
+	return {name: app, version: AppVersion.version, build: AppVersion.build, phone_id: uuid, user_id: settings.get("user_id"), device: device_info()};
 }
 
 var started = false;

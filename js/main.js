@@ -11,6 +11,11 @@ var user_moved_map = false;
 var DirectionsService;
 var from_autocomplete;
 var to_autocomplete;
+var places_service;
+var autocomplete_service;
+var autocomplete_cache = {};
+var from_query_handle = false;
+var to_query_handle = false;
 var from_blur_handel = false;
 var to_blur_handel = false;
 
@@ -27,13 +32,13 @@ var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
 	if (ret == "my location" && my_loc){
-		$("#from_loc").next().show();
+		$(".from_clear").show();
 		callback({lat: my_loc.lat(), lng: my_loc.lng()}, true);
 		if ($("#to_loc").val() == ""){
 			map.panTo(my_loc);
 		}
 	} else if (ret != ""){
-		$("#from_loc").next().show();
+		$(".from_clear").show();
 		var cache = localStorage.getItem("location:"+ret);
 		if (cache){
 			console.log("Cache hit: location:"+ret);
@@ -49,7 +54,7 @@ function get_origin_geo(callback){
 			}
 		});
 	} else {
-		$("#from_loc").next().hide();
+		$(".from_clear").hide();
 		callback(false, true);
 	}
 }
@@ -57,7 +62,7 @@ function get_origin_geo(callback){
 function get_destination_geo(callback){
 	var ret = $("#to_loc").val().toLowerCase();
 	if (ret != ""){
-		$("#to_loc").next().show();
+		$(".to_clear").show();
 		var cache = localStorage.getItem("location:"+ret);
 		if (cache){
 			console.log("Cache hit: location:"+ret);
@@ -73,7 +78,7 @@ function get_destination_geo(callback){
 			}
 		});
 	} else {
-		$("#to_loc").next().hide();
+		$(".to_clear").hide();
 		callback(false);
 	}
 }
@@ -101,7 +106,7 @@ function service_google(call_num, start, stop){
 					continue;
 				msec = new Date(route.legs[0].departure_time.value).getTime() - new Date().getTime();
 				var obj = {
-					icon:'<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">',
+					icon:'<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">',
 					name:"Walk",
 					price:" ---",
 					time:"N/A"
@@ -133,8 +138,12 @@ function service_google(call_num, start, stop){
 						if (!has_name){
 							has_name = true;
 							obj.name = step.transit.line.vehicle.name+" "+step.transit.line.short_name;
+							obj.icon = '<img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg">';
 							if (step.transit.line.vehicle.name == "Train"){
 								obj.name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
+								obj.icon = '<img src="images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg">';
+							} else if (step.transit.line.vehicle.type == "TRAM"){
+								obj.icon = '<img src="images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg">';
 							}
 						}
 					}
@@ -582,18 +591,25 @@ function load_map(){
 		if (!markers.start){
 			console.log("click no start marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, true, true);
-			$("#from_loc").next().show();
+			$(".from_clear").show();
 		} else if (!markers.stop){
 			console.log("click no stop marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, false, true);
-			$("#to_loc").next().show();
+			$(".to_clear").show();
 		}
 	});
 
 	$(".page").hide();
-	$("#map").show();
+	if (settings.get("user_id")){
+		$("#map").show();
+	} else {
+		$("#menu_signup").trigger("click_event");
+	}
 
-	from_autocomplete = new google.maps.places.Autocomplete(document.getElementById("from_loc"));
+	autocomplete_service = new google.maps.places.AutocompleteService(map);
+	places_service = new google.maps.places.PlacesService(map);
+
+	/*from_autocomplete = new google.maps.places.Autocomplete(document.getElementById("from_loc"));
 	from_autocomplete.bindTo("bounds", map);
 	from_autocomplete.addListener("place_changed", function() {
 		var place = from_autocomplete.getPlace();
@@ -625,7 +641,7 @@ function load_map(){
 				addr = place.name;
 			$("#to_loc").val(addr).next().show();
 		}
-	});
+	});*/
 
 	if (navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
 		var ios_places_catch_handel = setInterval(function() {
@@ -645,6 +661,27 @@ function load_map(){
 	console.log("finish load_map");
 	
 	start_splash_remove();
+}
+
+function query_places(obj){
+	autocomplete_service.getPlacePredictions({input: obj.val(), bounds: map.getBounds()}, function (results, status){
+		if (status == google.maps.places.PlacesServiceStatus.OK) {
+			console.log(results);
+			var data = [];
+			for (var i=0;i<results.length;i++) {
+				var place = results[i];
+				autocomplete_cache[place.place_id] = place;
+				var text = place.structured_formatting.main_text;
+				for (var j=place.structured_formatting.main_text_matched_substrings.length-1;j>=0;j--){
+					var points = place.structured_formatting.main_text_matched_substrings[j];
+					text = text.substr(0, points.offset)+"<span>"+text.substring(points.offset, points.length)+"</span>"+text.substr(points.offset+points.length);
+				}
+				data.push('<div class="prediction" data-place_id="'+place.place_id+'"><span class="main_prediction">'+text+"</span> "+place.structured_formatting.secondary_text+"</div>");
+			}
+
+			obj.next().html(data.join("")+'<div>Powered By <img src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png" style="height:1em" /></div>').show();
+		}
+	});
 }
 
 function open_menu(){
@@ -721,10 +758,17 @@ function startup(){
 	}, true);
 
 	$("#from_loc").on("keyup", function (e){
+		if (from_query_handle){
+			clearTimeout(from_query_handle);
+		}
 		if (e.keyCode == 13 || e.keyCode == 9){
 			console.log("enter key from");
 			get_origin_geo(coded_location);
 			$("#to_loc").focus();
+		} else {
+			from_query_handle = setTimeout(function (){
+				query_places($("#from_loc"));
+			}, 100);
 		}
 	}).on("blur", function (){
 		from_blur_handel = setTimeout(function (){
@@ -732,24 +776,56 @@ function startup(){
 			get_origin_geo(coded_location);
 			$("#results_tab").removeClass("hidden");
 		});
+		$(this).siblings(".prediction_holder").hide();
 	}).on("focus", function (){
 		$("#results_tab").addClass("hidden");
 	});
 	$("#to_loc").on("keyup", function (e){
+		if (to_query_handle){
+			clearTimeout(to_query_handle);
+		}
 		if (e.keyCode == 13 || e.keyCode == 9){
 			console.log("enter key to");
 			get_destination_geo(coded_location);
 			$(this).blur();
+		} else {
+			to_query_handle = setTimeout(function (){
+				query_places($("#to_loc"));
+			}, 100);
 		}
 	}).on("blur", function (){
 		to_blur_handel = setTimeout(function (){
-			console.log("plur to");
+			console.log("blur to");
 			get_destination_geo(coded_location);
 			$("#results_tab").removeClass("hidden");
 		}, 100);
+		$(this).siblings(".prediction_holder").hide();
 	}).on("focus", function (){
 		$("#results_tab").addClass("hidden");
 	});
+
+	click_event(".prediction", function (e){
+		var obj = $(e.currentTarget);
+		var type = obj.parents(".loc_cont").data("type");
+		console.log("new place click "+type, obj.data("place_id"));
+		if (from_blur_handel)
+			clearTimeout(from_blur_handel);
+		if (to_blur_handel)
+			clearTimeout(to_blur_handel);
+		places_service.getDetails({placeId: obj.data("place_id")}, function (place, status){
+			console.log("new place "+type, place);
+			if (status == google.maps.places.PlacesServiceStatus.OK && place.geometry){
+				//localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+				coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, type == "from");
+				var addr = place.formatted_address;
+				if (place.address_components[0].types != "street_number")
+					addr = place.name;
+				$("#"+type+"_loc").val(addr);
+				$("."+type+"_clear").show();
+				obj.parents(".prediction_holder").hide();
+			}
+		});
+	}, true);
 
 	click_event(".from_clear", function (){
 		$("#from_loc").val("");
@@ -815,9 +891,9 @@ function startup(){
 		}
 
 		$("#transit_details").html(steps_html.join(""));
-		$("#settings_tab").addClass("transit_open");
-		$("#results_tab").addClass("transit_open");
-		$(".settings_toggle").addClass("close_transit");
+		$("#settings_tab").addClass("main_info_open");
+		$("#results_tab").addClass("main_info_open");
+		$(".settings_toggle").addClass("close_main_info");
 
 		$("#transit_details_tab").show();
 
@@ -837,16 +913,17 @@ function startup(){
 		});
 	}, true);
 
-	click_event("#transit_details_tab_handle", function (e){
+	click_event(".main_info_handle", function (e){
 		$(".settings_toggle").trigger("click_event");
 	}, true);
 
 	click_event(".settings_toggle", function (e){
-		if ($(e.currentTarget).hasClass("close_transit")){
-			$(e.currentTarget).removeClass("close_transit");
-			$("#settings_tab").removeClass("transit_open");
-			$("#results_tab").removeClass("transit_open");
+		if ($(e.currentTarget).hasClass("close_main_info")){
+			$(e.currentTarget).removeClass("close_main_info");
+			$("#settings_tab").removeClass("main_info_open");
+			$("#results_tab").removeClass("main_info_open");
 			$("#transit_details_tab").hide();
+			$("#taxi_details_tab").hide();
 		} else {
 			$(e.currentTarget).toggleClass("open");
 			if ($(e.currentTarget).hasClass("open")){
@@ -869,8 +946,16 @@ function startup(){
 	});
 
 	click_event(".back", function (e){
+		var opt = $(e.currentTarget);
 		$(".page").hide();
-		$("#"+$(e.currentTarget).data("back")).show();
+
+		if (settings.get("pre_user_id") && opt.data("back") == "map"){
+			$("#verify_number").show();
+		} else if (!settings.get("user_id") && opt.data("back") == "map"){
+			$("#signup").show();
+		} else {
+			$("#"+opt.data("back")).show();
+		}
 	}, true);
 
 	click_event("#menubutton", function (e){
@@ -916,13 +1001,20 @@ function startup(){
 	click_event(".tff_click", function (e){
 		open_modala("loading...");
 		tff_numbers(start_location, function(buss){
+			close_modala();
 			var html = "";
 			for (var i=0;i<buss.length;i++){
 				var bus = buss[i];
-				html += '<a class="no_close" style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
+				html += template("taxi_info", {phone: bus.phone, name: bus.name});
+				//html += '<a class="no_close" style="color:white;" href="tel:'+bus.phone+'">'+bus.phone+' '+bus.name+'</a><br />';
 			}
-			close_modala();
-			open_modal({title: "Taxi Companies", content: html, button1: "Close", add_class: "tff_model"});
+			$("#taxi_details").html(html);
+			$("#settings_tab").addClass("main_info_open");
+			$("#results_tab").addClass("main_info_open");
+			$(".settings_toggle").addClass("close_main_info");
+
+			$("#taxi_details_tab").show();
+			//open_modal({title: "Taxi Companies", content: html, button1: "Close", add_class: "tff_model"});
 		});
 	}, true);
 
@@ -974,7 +1066,7 @@ function startup(){
 		var backs = $(".back:visible");
 		if (backs.length > 0){
 			backs.first().trigger("click_event");
-		} else if ($(".settings_toggle").hasClass("close_transit")){
+		} else if ($(".settings_toggle").hasClass("close_main_info")){
 			$(".settings_toggle").trigger("click_event");
 		} else if ($(".settings_toggle").hasClass("open")){
 			$(".settings_toggle").trigger("click_event");
@@ -1009,6 +1101,12 @@ function startup(){
 			}
 		}, button2: true, button1: "Send", add_class: "contact_form"});
 	});
+	
+	click_event("#menu_pp", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+		$("#pp").show();
+	});
 
 	click_event("#menu_toc", function (e){
 		$("#menu-overlay").trigger("click_event");
@@ -1033,6 +1131,10 @@ function startup(){
 	});
 
 	click_event("#menu_signup", function (e){
+		window.plugins.sim.getSimInfo(function (data){
+			console.log(data);
+			$("#signup_phone").val(data.phoneNumber);
+		}, function (){});
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#signup").show();
@@ -1048,14 +1150,18 @@ function startup(){
 				for (var i=0;i<data.mess.Error.length;i++)
 					$("#signup_errors").append("<div>"+data.mess.Error[i].message+"</div>");
 			} else {
-				settings.set("user_id", data.user_id);
-				$(".logged_in").show();
-				$(".logged_out").hide();
+				settings.set("pre_user_id", data.user_id);
 				$(".page").hide();
-				$("#map").show();
+				$("#verify_phone").val($("#signup_phone").val());
+				$("#verify_number").show();
 			}
 		});
 	});
+	
+	click_event(".open_page", function (e){
+		$(".page").hide();
+		$("#"+$(e.currentTarget).data("page")).show();
+	}, true);
 
 	click_event("#menu_login", function (e){
 		$("#menu-overlay").trigger("click_event");
@@ -1065,7 +1171,7 @@ function startup(){
 
 	click_event("#login_do", function (){
 		open_modala("Loading...");
-		$("#signup_errors").html();
+		$("#login_errors").html();
 		$.postJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
 			close_modala();
 			console.log(data);
@@ -1073,11 +1179,19 @@ function startup(){
 				for (var i=0;i<data.mess.Error.length;i++)
 					$("#login_errors").append("<div>"+data.mess.Error[i].message+"</div>");
 			} else {
-				settings.set("user_id", data.user_id);
-				$(".logged_in").show();
-				$(".logged_out").hide();
-				$(".page").hide();
-				$("#map").show();
+				if (data.validate){
+					settings.set("pre_user_id", data.user_id);
+					$(".page").hide();
+					$("#verify_phone").val(data.phone);
+					$("#verify_number").show();
+				} else {
+					settings.set("user_id", data.user_id);
+					$(".logged_in").show();
+					$(".logged_out").hide();
+					$(".page").hide();
+					$("#map").show();
+					google.maps.event.trigger(map, "resize");
+				}
 			}
 		});
 	});
@@ -1087,6 +1201,41 @@ function startup(){
 		$(".logged_in").hide();
 		$(".logged_out").show();
 		settings.delete("user_id");
+		$(".page").hide();
+		$("#signup").show();
+	});
+
+	click_event("#verify_do", function (){
+		open_modala("Loading...");
+		$("#verify_errors").html();
+		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), code: $("#verify_code")}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				for (var i=0;i<data.mess.Error.length;i++)
+					$("#verify_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+			} else {
+				if (data.good){
+					settings.set("user_id", settings.get("pre_user_id"));
+					settings.delete("pre_user_id");
+					$(".page").hide();
+					$("#map").show();
+					google.maps.event.trigger(map, "resize");
+				}
+			}
+		});
+	});
+	
+	click_event("#verify_resend", function (e){
+		open_modala("Resending...");
+		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), action: "resend"}, function(data){
+			close_modala();
+			if (data.success){
+				open_modal({title: "Sent!", content:"Verification text has been resent."});
+			} else {
+				open_modal({title: "Error", content:"Error sending message."});
+			}
+		});
 	});
 	
 	if (settings.get("user_id")){

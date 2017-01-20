@@ -106,6 +106,8 @@
 	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
 	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
 
+	<gap:plugin name="cordova-plugin-sim" source="npm" />
+
 	<feature name="http://api.phonegap.com/1.0/network" />
 
 	<!--<feature name="Keyboard">
