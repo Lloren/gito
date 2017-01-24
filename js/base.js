@@ -13,7 +13,7 @@ String.prototype.ucfirst = function() {
 };
 
 function Settings(){
-	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true}');
+	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at"}');
 	
 	this.set = function (key, val){
 		this.data[key] = val;

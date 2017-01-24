@@ -113,6 +113,7 @@ function service_google(call_num, start, stop){
 				};
 				if (route.fare && route.fare.value)
 					obj.price = route.fare.value;
+				obj.arr_time = new Date(route.legs[0].arrival_time.value);
 				obj.time_sec = Math.ceil(msec / 1000);
 				var path = new google.maps.Polyline({
 					path:route.overview_path,
@@ -203,6 +204,9 @@ function service_uber(call_num, start, stop){
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
 			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var arrival = new Date();
+			arrival.setSeconds(arrival.getSeconds()+parseInt(price.time_estimate)+parseInt(price.duration));
+			obj.arr_time = arrival;
 			if (price.surge_multiplier > 1)
 				obj.show_surge = true;
 			if (price.estimate[0] == "$"){
@@ -281,6 +285,11 @@ function process_lyft(call_data){
 			var est = lyft_cost_data.cost_estimates[i];
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
 			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			if (etas[est.ride_type]){
+				var arrival = new Date();
+				arrival.setSeconds(arrival.getSeconds()+etas[est.ride_type]+est.estimated_duration_seconds);
+				obj.arr_time = arrival;
+			}
 			if (surge_multi > 1)
 				obj.show_surge = true;
 			if (est.estimated_cost_cents_max > 0){
@@ -369,11 +378,30 @@ function format_results(results){
 	var html = [];
 	for (var i=0;i<results.length;i++){
 		var result = results[i];
-		if (result.time_sec)
-			result.time = Math.ceil(result.time_sec/60) + " min";
-		if (!result.time){
-			result.time = "N/A";
-			result.time_sec = 999999;
+		if (settings.get("time_display") == "at"){//TODO: make a display setting
+			if (result.arr_time){
+				var hour = result.arr_time.getHours();
+				var period = "am";
+				if (hour > 12){
+					hour -= 12;
+					period = "pm";
+				}
+				var min = result.arr_time.getMinutes();
+				if (min < 10)
+					min = "0"+min;
+				result.time = hour+":"+min+" "+period;
+				result.time_set = result.arr_time.getTime();
+			} else {
+				result.time = "N/A";
+				result.time_sec = 99999999999999;
+			}
+		} else {
+			if (result.time_sec)
+				result.time = Math.ceil(result.time_sec/60) + " min";
+			if (!result.time){
+				result.time = "N/A";
+				result.time_sec = 999999;
+			}
 		}
 		if (result.price_min){
 			if (!result.price){
@@ -1131,10 +1159,12 @@ function startup(){
 	});
 
 	click_event("#menu_signup", function (e){
-		window.plugins.sim.getSimInfo(function (data){
-			console.log(data);
-			$("#signup_phone").val(data.phoneNumber);
-		}, function (){});
+		if (window.plugins){
+			window.plugins.sim.getSimInfo(function (data){
+				console.log(data);
+				$("#signup_phone").val(data.phoneNumber);
+			}, function (){});
+		}
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#signup").show();
@@ -1191,6 +1221,8 @@ function startup(){
 					$(".page").hide();
 					$("#map").show();
 					google.maps.event.trigger(map, "resize");
+					if (my_loc)
+						map.setCenter(my_loc);
 				}
 			}
 		});
@@ -1208,7 +1240,7 @@ function startup(){
 	click_event("#verify_do", function (){
 		open_modala("Loading...");
 		$("#verify_errors").html();
-		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), code: $("#verify_code")}, function(data){
+		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), code: $("#verify_code").val()}, function(data){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
@@ -1221,6 +1253,8 @@ function startup(){
 					$(".page").hide();
 					$("#map").show();
 					google.maps.event.trigger(map, "resize");
+					if (my_loc)
+						map.setCenter(my_loc);
 				}
 			}
 		});
