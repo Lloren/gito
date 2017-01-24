@@ -1062,7 +1062,6 @@ function startup(){
 			}
 		});
 	}
-	update_settings();
 	
 	click_event(".option", function (e){
 		var opt = $(e.currentTarget);
@@ -1289,6 +1288,11 @@ function startup(){
 	if (settings.get("full_map_settings")){
 		$("#settings_tab").removeClass("hidden");
 	}
+	if (typeof settings.get("time_display") == "undefined"){
+		settings.set("time_display", "ttd");
+	}
+
+	update_settings();
 }
 
 function one_click(type){
