@@ -63,7 +63,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	vertical-align: sub;
 }
 .icon_input input, .form select{
-	width: calc(100% - 45px);
+	width: calc(100% - 50px);
 	margin: 5px;
 }
 
