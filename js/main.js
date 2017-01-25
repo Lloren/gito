@@ -1176,8 +1176,11 @@ function startup(){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
+				var mess = "";
 				for (var i=0;i<data.mess.Error.length;i++)
-					$("#signup_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
 			} else {
 				settings.set("pre_user_id", data.user_id);
 				$(".page").hide();
@@ -1205,8 +1208,11 @@ function startup(){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
+				var mess = "";
 				for (var i=0;i<data.mess.Error.length;i++)
-					$("#login_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
 			} else {
 				if (data.validate){
 					settings.set("pre_user_id", data.user_id);
@@ -1243,8 +1249,11 @@ function startup(){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
+				var mess = "";
 				for (var i=0;i<data.mess.Error.length;i++)
-					$("#verify_errors").append("<div>"+data.mess.Error[i].message+"</div>");
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
 			} else {
 				if (data.good){
 					settings.set("user_id", settings.get("pre_user_id"));
