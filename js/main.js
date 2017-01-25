@@ -1172,7 +1172,7 @@ function startup(){
 	click_event("#signup_do", function (){
 		open_modala("Loading...");
 		$("#signup_errors").html("");
-		$.postJSON(base_url+"/ajax/signup.php?callback=?", {uuid: settings.get("uuid"), email: $("#signup_email").val(), password: $("#signup_password").val(), cpassword: $("#signup_cpassword").val(), name: $("#signup_name").val(), phone: $("#signup_phone").val()}, function(data){
+		$.getJSON(base_url+"/ajax/signup.php?callback=?", {uuid: settings.get("uuid"), email: $("#signup_email").val(), password: $("#signup_password").val(), cpassword: $("#signup_cpassword").val(), name: $("#signup_name").val(), phone: $("#signup_phone").val()}, function(data){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
@@ -1201,7 +1201,7 @@ function startup(){
 	click_event("#login_do", function (){
 		open_modala("Loading...");
 		$("#login_errors").html();
-		$.postJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
+		$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
@@ -1239,7 +1239,7 @@ function startup(){
 	click_event("#verify_do", function (){
 		open_modala("Loading...");
 		$("#verify_errors").html();
-		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), code: $("#verify_code").val()}, function(data){
+		$.getJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), code: $("#verify_code").val()}, function(data){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
@@ -1261,7 +1261,7 @@ function startup(){
 	
 	click_event("#verify_resend", function (e){
 		open_modala("Resending...");
-		$.postJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), action: "resend"}, function(data){
+		$.getJSON(base_url+"/ajax/phone_verify.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("pre_user_id"), action: "resend"}, function(data){
 			close_modala();
 			if (data.success){
 				open_modal({title: "Sent!", content:"Verification text has been resent."});
