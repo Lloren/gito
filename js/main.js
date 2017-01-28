@@ -18,6 +18,7 @@ var from_query_handle = false;
 var to_query_handle = false;
 var from_blur_handel = false;
 var to_blur_handel = false;
+var no_blur = false;
 
 var run_handel = false;
 
@@ -25,6 +26,10 @@ var transit_holder = [];
 
 var results_call = 0;
 var results_to_return = 4;
+
+var recent_locations = JSON.parse(window.localStorage.getItem("recent_locations") || "[]");
+var saved_locations = JSON.parse(window.localStorage.getItem("saved_locations") || "{}");
+var my_locations = ["My Location", "Current Location", "Here", "Me"];
 
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
@@ -616,6 +621,7 @@ function load_map(){
 	geocoder = new google.maps.Geocoder();
 
 	map.addListener("click", function (event){
+		$(".prediction_holder").hide();
 		if (!markers.start){
 			console.log("click no start marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, true, true);
@@ -692,24 +698,64 @@ function load_map(){
 }
 
 function query_places(obj){
-	autocomplete_service.getPlacePredictions({input: obj.val(), bounds: map.getBounds()}, function (results, status){
-		if (status == google.maps.places.PlacesServiceStatus.OK) {
-			console.log(results);
-			var data = [];
-			for (var i=0;i<results.length;i++) {
-				var place = results[i];
-				autocomplete_cache[place.place_id] = place;
-				var text = place.structured_formatting.main_text;
-				for (var j=place.structured_formatting.main_text_matched_substrings.length-1;j>=0;j--){
-					var points = place.structured_formatting.main_text_matched_substrings[j];
-					text = text.substr(0, points.offset)+"<span>"+text.substring(points.offset, points.length)+"</span>"+text.substr(points.offset+points.length);
-				}
-				data.push('<div class="prediction" data-place_id="'+place.place_id+'"><span class="main_prediction">'+text+"</span> "+place.structured_formatting.secondary_text+"</div>");
-			}
+	var pred = obj.parents(".input_holder").children(".prediction_holder");
+	pred.html("");
 
-			obj.next().html(data.join("")+'<div>Powered By <img src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png" style="height:1em" /></div>').show();
+	if (my_loc){
+		for (var i=0;i<my_locations.length;i++){
+			if (my_locations[i].search(new RegExp(obj.val(), "i")) !== -1){
+				var dat = {lat: my_loc.lat(), lng: my_loc.lng()};
+				dat.main = my_locations[i];
+				dat.secondary = "";
+				dat.image = "images/icons3/GPS.RO.v10.svg";
+				pred.append(template("search_prediction", dat));
+				break;
+			}
 		}
-	});
+	}
+
+	for (var key in saved_locations){
+		if (key.search(new RegExp(obj.val(), "i")) !== -1){
+			var dat = saved_locations[key];
+			dat.main = key;
+			dat.secondary = "";
+			dat.image = "images/icons3/CUSTOM_HOME.W+RO.v1.svg";
+			pred.append(template("search_prediction", dat));
+		}
+	}
+
+	for (var i=0;i<recent_locations.length;i++){
+		if (recent_locations[i][1].search(new RegExp(obj.val(), "i")) !== -1){
+			var dat = recent_locations[i][2];
+			dat.main = recent_locations[i][1];
+			dat.secondary = "";
+			dat.save_loc = true;
+			dat.image = "images/icons3/CUSTOM_RECENT_LOCATION.W+RO.v1.svg";
+			pred.append(template("search_prediction", dat));
+		}
+	}
+
+	if (obj.val() != ""){
+		autocomplete_service.getPlacePredictions({input: obj.val(), bounds: map.getBounds()}, function (results, status){
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				console.log(results);
+				var data = [];
+				for (var i=0;i<results.length;i++) {
+					var place = results[i];
+					autocomplete_cache[place.place_id] = place;
+					var text = place.structured_formatting.main_text;
+					for (var j=place.structured_formatting.main_text_matched_substrings.length-1;j>=0;j--){
+						var points = place.structured_formatting.main_text_matched_substrings[j];
+						text = text.substr(0, points.offset)+"<span>"+text.substr(points.offset, points.length)+"</span>"+text.substr(points.offset+points.length);
+					}
+					var dat = {place_id: place.place_id, main: text, secondary: place.structured_formatting.secondary_text, image: "images/icons3/CUSTOM_ACCOUNT_RECOVERY.v2.svg"};
+					data.push(template("search_prediction", dat));
+				}
+				
+				pred.append(data.join("")+'<div>Powered By <img src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png" style="height:1em" /></div>').show();
+			}
+		});
+	}
 }
 
 function open_menu(){
@@ -755,8 +801,27 @@ function get_geo_location(do_load){
 		$.getJSON("http://freegeoip.net/json/", function (data){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
-			if (do_load)
+			if (do_load){
+				if (dev){
+					markers.my_loc = true;
+				}
 				load_map();
+				if (dev){
+					var marker = new google.maps.Marker({
+						position: my_loc,
+						map: map,
+						zIndex: 30,
+						icon: {
+							url: "images/location.svg",
+							size: new google.maps.Size(3000, 3000),
+							origin: new google.maps.Point(0, 0),
+							anchor: new google.maps.Point(25, 25),
+							scaledSize: new google.maps.Size(50, 50)
+						}
+					});
+					markers.my_loc = marker;
+				}
+			}
 		}, function (err){console.log("call error", err)});
 	});
 }
@@ -799,13 +864,18 @@ function startup(){
 			}, 100);
 		}
 	}).on("blur", function (){
-		from_blur_handel = setTimeout(function (){
-			console.log("blur from");
-			get_origin_geo(coded_location);
-			$("#results_tab").removeClass("hidden");
-		});
+		console.log("blur from");
+		if (!no_blur){
+			from_blur_handel = setTimeout(function (){
+				console.log("blur from run");
+				get_origin_geo(coded_location);
+				$("#results_tab").removeClass("hidden");
+				$("#from_loc").parents(".input_holder").children(".prediction_holder").hide();
+			}, 10);
+		}
 		$(this).siblings(".prediction_holder").hide();
 	}).on("focus", function (){
+		query_places($("#from_loc"));
 		$("#results_tab").addClass("hidden");
 	});
 	$("#to_loc").on("keyup", function (e){
@@ -822,37 +892,78 @@ function startup(){
 			}, 100);
 		}
 	}).on("blur", function (){
-		to_blur_handel = setTimeout(function (){
-			console.log("blur to");
-			get_destination_geo(coded_location);
-			$("#results_tab").removeClass("hidden");
-		}, 100);
+		console.log("blur to");
+		if (!no_blur){
+			to_blur_handel = setTimeout(function (){
+				console.log("blur to run");
+				get_destination_geo(coded_location);
+				$("#results_tab").removeClass("hidden");
+				$("#to_loc").parents(".input_holder").children(".prediction_holder").hide();
+			}, 10);
+		}
 		$(this).siblings(".prediction_holder").hide();
 	}).on("focus", function (){
+		query_places($("#to_loc"));
 		$("#results_tab").addClass("hidden");
 	});
 
+	click_event(".save_location", function (e){
+		var obj = $(e.currentTarget).parents(".prediction");
+
+		open_modal({title: "Save Location", content:'Name this location: <input type="text" id="save_name" />', button2: true, callback: function (btn){
+			if (btn == "Ok"){
+				saved_locations[$("#save_name").val()] = {lat: obj.data("lat"), lng: obj.data("lng")};
+				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
+			}
+		}});
+	}, true);
+
 	click_event(".prediction", function (e){
 		var obj = $(e.currentTarget);
-		var type = obj.parents(".loc_cont").data("type");
-		console.log("new place click "+type, obj.data("place_id"));
-		if (from_blur_handel)
+		var type = obj.parents(".input_holder").data("type");
+		console.log("new place click "+type, from_blur_handel, to_blur_handel);
+		no_blur = true;
+		setTimeout(function (){
+			no_blur = false;
+		}, 200);
+		if (from_blur_handel){
+			console.log("clear from");
 			clearTimeout(from_blur_handel);
-		if (to_blur_handel)
+		}
+		if (to_blur_handel){
+			console.log("clear to");
 			clearTimeout(to_blur_handel);
-		places_service.getDetails({placeId: obj.data("place_id")}, function (place, status){
-			console.log("new place "+type, place);
-			if (status == google.maps.places.PlacesServiceStatus.OK && place.geometry){
-				//localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
-				coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, type == "from");
-				var addr = place.formatted_address;
-				if (place.address_components[0].types != "street_number")
-					addr = place.name;
-				$("#"+type+"_loc").val(addr);
-				$("."+type+"_clear").show();
-				obj.parents(".prediction_holder").hide();
-			}
-		});
+		}
+		if (obj.data("lat") && obj.data("lng")){
+			console.log("known place "+type, {lat: obj.data("lat"), lng: obj.data("lng")});
+			coded_location({lat: obj.data("lat"), lng: obj.data("lng")}, type == "from");
+			$("#"+type+"_loc").val(obj.find(".main_prediction").html());
+			$("."+type+"_clear").show();
+			obj.parents(".prediction_holder").hide();
+		} else if (obj.data("place_id")){
+			places_service.getDetails({placeId: obj.data("place_id")}, function (place, status){
+				console.log("new place "+type, place);
+				if (status == google.maps.places.PlacesServiceStatus.OK && place.geometry){
+					//localStorage.setItem("location:"+place.formatted_address, JSON.stringify(place.geometry.location));
+					coded_location({lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}, type == "from");
+					var addr = place.formatted_address;
+					if (place.address_components[0].types != "street_number")
+						addr = place.name;
+					recent_locations.unshift([obj.data("place_id"), addr, {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}]);
+					var remove = recent_locations.length > 5;
+					for (var i=1;i<recent_locations.length;i++){
+						if (recent_locations[i][0] == obj.data("place_id"))
+							recent_locations.splice(i, 1);
+					}
+					if (remove)
+						recent_locations.pop();
+					window.localStorage.setItem("recent_locations", JSON.stringify(recent_locations));
+					$("#"+type+"_loc").val(addr);
+					$("."+type+"_clear").show();
+					obj.parents(".prediction_holder").hide();
+				}
+			});
+		}
 	}, true);
 
 	click_event(".from_clear", function (){
@@ -1128,6 +1239,31 @@ function startup(){
 			}
 		}, button2: true, button1: "Send", add_class: "contact_form"});
 	});
+
+	click_event("#menu_saved_locations", function (e){
+		$("#menu-overlay").trigger("click_event");
+		$(".page").hide();
+
+		var dat = [];
+		for (var key in saved_locations){
+			dat.push('<div class="saved_location"><span>'+key+'</span><img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg" class="delete_saved_location" /></div>');
+		}
+		$("#location_list").html(dat.join(""));
+
+		$("#saved_locations").show();
+	});
+
+	click_event(".delete_saved_location", function (e){
+		var name = $(e.currentTarget).prev().html();
+
+		open_modal({title: "Remove Location", content:"Are you sure you wnat to remove the location \""+name+"\" from your saved locations?", button2: true, callback: function (btn){
+			if (btn == "Ok"){
+				delete(saved_locations[name]);
+				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
+				$("#menu_saved_locations").trigger("click_event");
+			}
+		}});
+	}, true);
 	
 	click_event("#menu_pp", function (e){
 		$("#menu-overlay").trigger("click_event");
@@ -1220,6 +1356,7 @@ function startup(){
 					$("#verify_phone").val(data.phone);
 					$("#verify_number").show();
 				} else {
+					settings.delete("pre_user_id");
 					settings.set("user_id", data.user_id);
 					$(".logged_in").show();
 					$(".logged_out").hide();

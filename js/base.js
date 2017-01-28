@@ -12,12 +12,14 @@ String.prototype.ucfirst = function() {
 	return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-function Settings(){
-	this.data = JSON.parse(window.localStorage.getItem("settings_data") || '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at"}');
+function Settings(save_key, def_data){
+	this.save_key = save_key || "settings_data";
+	
+	this.data = JSON.parse(window.localStorage.getItem(this.save_key) || def_data || "{}");
 	
 	this.set = function (key, val){
 		this.data[key] = val;
-		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
+		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
 	};
 	
 	this.get = function (key){
@@ -26,10 +28,10 @@ function Settings(){
 
 	this.delete = function (key){
 		delete this.data[key];
-		window.localStorage.setItem("settings_data", JSON.stringify(this.data));
+		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
 	};
 }
-window.settings = new Settings();
+window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at"}');
 
 var last_touch = {x: 0, y:0, trigger:""};
 function set_touch(e, trigger){
@@ -53,21 +55,29 @@ function click_event(limiter, callback, target){
 		if (target === true)
 			target = document;
 		$(target).on("touchstart", limiter, function (e){
+			e.stopPropagation();
 			set_touch(e, limiter);
+			return false;
 		});
 		$(target).on("touchend click_event", limiter, function (e){
 			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
+			e.stopPropagation();
 			callback(e);
+			return false;
 		});
 	} else {
 		$(limiter).on("touchstart", function (e){
+			e.stopPropagation();
 			set_touch(e, limiter);
+			return false;
 		});
 		$(limiter).on("touchend click_event", function (e){
 			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
+			e.stopPropagation();
 			callback(e);
+			return false;
 		});
 	}
 }
@@ -148,9 +158,9 @@ function open_modal(options){
 	
 	$("#modal h1").html(options.title);
 	if (options.overwrite || !$("#modal").is(":visible")){
-		$("#modal p").html(options.content);
+		$("#modal > div").html(options.content);
 	} else {
-		$("#modal p").append("<br />"+options.content);
+		$("#modal > div").append("<br />"+options.content);
 	}
 	$("#mbutton1").html(options.button1);
 	if (options.button2){

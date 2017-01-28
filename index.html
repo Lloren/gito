@@ -77,8 +77,18 @@
 		</div>
 	</div>
 	<div data-key="search_prediction">
-		<div class="prediction">
-			##rediction##
+		<div class="prediction" data-place_id="##place_id##"{{lat? data-lat="##lat##" data-lng="##lng##"}}>
+			<div class="image">
+				<img src="##image##" />
+			</div>
+			<div class="text">
+				<span class="main_prediction">##main##</span> ##secondary##
+			</div>
+			{{save_loc?
+			<div class="save_location">
+				<img src="images/icons3/GPS.RO.v10.svg" />
+			</div>
+			}}
 		</div>
 	</div>
 </div>
@@ -88,7 +98,7 @@
 	<div id="modal-overlay"></div>
 	<div id="modal">
 		<h1></h1>
-		<p></p>
+		<div></div>
 		<a id="mbutton1">Ok</a>
 		<a id="mbutton2">Cancel</a>
 	</div>
@@ -103,7 +113,8 @@
 			<li id="menu_signup" class="logged_out"><img src="images/icon_signup.svg"> Signup</li>
 			<li id="menu_login" class="logged_out"><img src="images/icon_login.svg"> Login</li>
 			<li id="menu_logout" class="logged_in"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Logout</li>
-			<li id="menu_rate"><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
+			<li id="menu_saved_locations" class="logged_in"><img src="images/icons3/CUSTOM_MOOKY_PERSON.v5.svg"> Saved Locations</li>
+			<li id="menu_rate" class="logged_in"><img src="images/icons3/CUSTOM%20RATE%20US%20ICON.W+RO.v1.svg"> Rate Us</li>
 			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
 			<li id="menu_pp"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Privacy Policy</li>
 			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
@@ -136,29 +147,29 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px;">
 			</div>
 			<div>
-				<div style="position: relative;">
+				<div style="position: relative;" class="input_holder" data-type="from">
 					<div style="width: 40px; display: inline-block; position: relative;">
 						<div style="width: 30px; margin: 5px auto 0px; position: relative;">
 							<img src="images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg" style="width: 30px;">
 						</div>
 					</div>
-					<div class="loc_cont" data-type="from" style="display:inline-block; width: calc(100% - 80px); position: relative;">
+					<div class="loc_cont" style="display:inline-block; width: calc(100% - 80px); position: relative;">
 						<input type="text" id="from_loc" value="" style="background: none; border: none; padding: 4px; width:100%; color: white; font-size: 16px; position: relative; top: -10px;" placeholder="Origin" />
-						<div class="prediction_holder"></div>
 					</div>
 					<img class="clearer from_clear" src="images/remove_text.svg">
+					<div class="prediction_holder"></div>
 				</div>
-				<div style="position: relative;">
+				<div style="position: relative;" class="input_holder" data-type="to">
 					<div style="width: 40px; display: inline-block;">
 						<div style="width: 30px; margin: 5px auto 0px; position: relative;">
 							<img src="images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg" style="width: 30px;">
 						</div>
 					</div>
-					<div class="loc_cont" data-type="to" style="display:inline-block; width: calc(100% - 80px); position: relative;">
+					<div class="loc_cont" style="display:inline-block; width: calc(100% - 80px); position: relative;">
 						<input type="text" id="to_loc" value="" style="background: none; border: none; padding: 4px; width: 100%; color:white; font-size: 16px; position: relative; top: -10px;" placeholder="Destination" />
-						<div class="prediction_holder"></div>
 					</div>
 					<img class="clearer to_clear" src="images/remove_text.svg">
+					<div class="prediction_holder"></div>
 				</div>
 			</div>
 			<div style="position: relative; width: 100%;">
@@ -258,6 +269,20 @@
 			</div>
 		</div>
 	</div>
+
+	<div id="saved_locations" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="height: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+		<h2>Saved Locations</h2>
+		<div id="location_list">
+
+		</div>
+	</div>
+
 	<div id="pp" class="page">
 		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
 			<img style="height: 40px;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />

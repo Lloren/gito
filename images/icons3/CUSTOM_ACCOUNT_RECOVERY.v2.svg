@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="CUSTOM_ACCOUNT_RECOVERY.v2.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM TOGGLE RIGHT ICON.W+RO.v4.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+    <linearGradient
+       gradientTransform="matrix(3.0383077,89.046472,-89.019742,3.858027,15228.194,51151.631)"
+       gradientUnits="userSpaceOnUse"
+       id="SVGID_6_-8"
+       x1="-574.47852"
+       x2="-559.6225"
+       y1="165.3053"
+       y2="165.3053">
+      <stop
+         offset="0"
+         style="stop-color:#478DEC"
+         id="stop50-3" />
+      <stop
+         offset="1"
+         style="stop-color:#205DAF"
+         id="stop52-7" />
+    </linearGradient>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.19778038"
+     inkscape:cx="610.62849"
+     inkscape:cy="1530.734"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4160"
+       originx="140.73122"
+       originy="-100.99352" />
+    <sodipodi:guide
+       position="1500.7313,1499.0064"
+       orientation="1,0"
+       id="guide4170" />
+  </sodipodi:namedview>
+  <circle
+     r="1435.8459"
+     cy="-1500"
+     cx="-1500"
+     id="path4163"
+     style="fill:#ffffff;fill-opacity:1;stroke:#e8390e;stroke-width:128.30799866;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="scale(-1,-1)"
+     inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM TERMS ICON.W+RO.v1.png"
+     inkscape:export-xdpi="1.5"
+     inkscape:export-ydpi="1.5" />
+  <g
+     id="g4170"
+     transform="translate(2719.2242,128.17099)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path54-6"
+       style="fill:#e8390e;fill-opacity:1;marker-start:none;marker-end:none"
+       d="m -1807.2392,981.74952 c 0,-74.4875 23.9678,-149.9552 71.9036,-226.5811 47.6685,-76.2696 117.611,-139.6196 209.2067,-190.1393 91.6829,-49.985 198.6928,-75.2003 321.1161,-75.2003 113.6015,0 213.92805,21.0276 300.97869,62.9936 86.96153,42.0552 154.32108,98.901 201.54404,171.161 47.57937,72.26 71.28084,150.7571 71.28084,235.6693 0,66.55768 -13.63318,124.91808 -40.54136,175.25958 -26.99728,50.1632 -59.34055,93.3767 -96.58433,129.9968 -37.06557,36.3528 -95.24782,97.7426 -191.65306,184.0804 -26.81997,24.4134 -48.11482,45.7974 -64.15282,64.3302 -16.038,18.2655 -27.9774,35.1054 -35.8182,50.4306 -7.8408,15.4142 -13.9887,30.8285 -18.2646,45.8864 -4.1877,15.4143 -10.692,42.1443 -19.5138,80.5464 -14.7014,81.7046 -61.4789,122.6015 -139.886,122.6015 -40.6295,0 -75.0221,-13.4541 -102.8213,-40.0059 -27.8883,-26.6409 -41.6988,-66.4686 -41.6988,-119.0375 0,-65.934 10.0683,-122.9579 30.3822,-171.161 20.583,-48.203 47.5803,-90.5255 81.3492,-127.1456 33.7679,-36.4419 79.1198,-79.6553 136.2329,-129.9968 50.1632,-43.9263 86.6051,-77.0714 108.9692,-99.4355 22.3641,-22.4532 32.25416,-47.3121 47.75754,-74.5767 15.23609,-27.71 23.07689,-57.55848 23.07689,-89.54538 0,-62.8154 -23.34419,-115.919 -70.12163,-159.0434 -46.6884,-43.0352 -106.9199,-64.5083 -180.5156,-64.5083 -86.3378,0 -149.8661,21.6513 -190.5847,65.2211 -40.8078,43.4808 -75.2895,107.6328 -103.5342,192.2777 -26.6409,88.74348 -77.1605,133.20438 -151.8262,133.20438 -43.6599,0 -80.7246,-15.5925 -110.9295,-46.5102 -30.2048,-31.0959 -45.3518,-64.5974 -45.3518,-100.77198 z" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path56-4"
+       style="fill:#e8390e;fill-opacity:1;marker-start:none;marker-end:none"
+       d="m -1219.2688,1900.9935 c 97.3854,0 176.417,79.0316 176.417,176.4179 0,97.3862 -79.0316,176.4178 -176.417,176.4178 -97.3862,0 -176.4178,-79.0316 -176.4178,-176.4178 0,-97.3863 79.0316,-176.4179 176.4178,-176.4179 z" />
+  </g>
+</svg>
