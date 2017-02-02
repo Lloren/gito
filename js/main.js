@@ -468,6 +468,13 @@ function coded_location(pos, start, trigger){
 		start_location = pos;
 		if (markers.start){
 			markers.start.setPosition(start_location);
+			if ($("#from_loc").val() == ""){
+				geo_location("#from_loc", start_location);
+				if (stop_location){
+					run_services();
+				}
+				$(".from_clear").show();
+			}
 		} else {
 			markers.start = new google.maps.Marker({
 				position: start_location,
@@ -496,6 +503,13 @@ function coded_location(pos, start, trigger){
 		stop_location = pos;
 		if (markers.stop){
 			markers.stop.setPosition(stop_location);
+			if ($("#to_loc").val() == ""){
+				geo_location("#to_loc", start_location);
+				if (start_location){
+					run_services();
+				}
+				$(".to_clear").show();
+			}
 		} else {
 			markers.stop = new google.maps.Marker({
 				position:stop_location,
@@ -622,11 +636,11 @@ function load_map(){
 
 	map.addListener("click", function (event){
 		$(".prediction_holder").hide();
-		if (!markers.start){
+		if (!markers.start || $("#from_loc").val() == ""){
 			console.log("click no start marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, true, true);
 			$(".from_clear").show();
-		} else if (!markers.stop){
+		} else if (!markers.stop || $("#to_loc").val() == ""){
 			console.log("click no stop marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, false, true);
 			$(".to_clear").show();
@@ -637,7 +651,7 @@ function load_map(){
 	if (settings.get("user_id")){
 		$("#map").show();
 	} else {
-		$("#menu_signup").trigger("click_event");
+		$("#menu_login").trigger("click_event");
 	}
 
 	autocomplete_service = new google.maps.places.AutocompleteService(map);
@@ -748,7 +762,7 @@ function query_places(obj){
 						var points = place.structured_formatting.main_text_matched_substrings[j];
 						text = text.substr(0, points.offset)+"<span>"+text.substr(points.offset, points.length)+"</span>"+text.substr(points.offset+points.length);
 					}
-					var dat = {place_id: place.place_id, main: text, secondary: place.structured_formatting.secondary_text, image: "images/icons3/CUSTOM_ACCOUNT_RECOVERY.v2.svg"};
+					var dat = {place_id: place.place_id, main: text, secondary: place.structured_formatting.secondary_text, image: "images/icons3/CUSTOM_RECENT_LOCATION.W+RO.v1.svg"};
 					data.push(template("search_prediction", dat));
 				}
 				
@@ -797,7 +811,8 @@ function get_geo_location(do_load){
 		get_origin_geo(coded_location);
 	}, function (error){
 		console.log("geo error", error);
-		$(".my_location").hide();
+		if (!dev)
+			$(".my_location").hide();
 		$.getJSON("http://freegeoip.net/json/", function (data){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
@@ -839,6 +854,8 @@ function startup(){
 	get_geo_location(true);
 
 	click_event(".do_lookup", function (){
+		if ($(".main_info_tab:visible").length > 0)
+			$(".settings_toggle").trigger("click_event");
 		get_services();
 		run_services();
 	});
@@ -870,10 +887,9 @@ function startup(){
 				console.log("blur from run");
 				get_origin_geo(coded_location);
 				$("#results_tab").removeClass("hidden");
-				$("#from_loc").parents(".input_holder").children(".prediction_holder").hide();
 			}, 10);
 		}
-		$(this).siblings(".prediction_holder").hide();
+		$("#from_loc").parents(".input_holder").children(".prediction_holder").hide();
 	}).on("focus", function (){
 		query_places($("#from_loc"));
 		$("#results_tab").addClass("hidden");
@@ -898,10 +914,9 @@ function startup(){
 				console.log("blur to run");
 				get_destination_geo(coded_location);
 				$("#results_tab").removeClass("hidden");
-				$("#to_loc").parents(".input_holder").children(".prediction_holder").hide();
 			}, 10);
 		}
-		$(this).siblings(".prediction_holder").hide();
+		$("#to_loc").parents(".input_holder").children(".prediction_holder").hide();
 	}).on("focus", function (){
 		query_places($("#to_loc"));
 		$("#results_tab").addClass("hidden");
@@ -916,7 +931,7 @@ function startup(){
 				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
 			}
 		}});
-	}, true);
+	}, true, true);
 
 	click_event(".prediction", function (e){
 		var obj = $(e.currentTarget);
@@ -1012,7 +1027,7 @@ function startup(){
 			var step = transit_holder[info_id].steps[i];
 			var temp = {num: i+1, time: ""};
 			if (step.transit){
-				var name = step.transit.line.short_name;
+				var name = step.transit.line.vehicle.name+" "+step.transit.line.short_name;
 				temp.icon = "images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg";
 				if (step.transit.line.vehicle.name == "Train"){
 					name = step.transit.line.agencies[0].name + " " + step.transit.line.name;
@@ -1021,7 +1036,7 @@ function startup(){
 					temp.icon = "images/icons3/CUSTOM%20LIGHTRAIL%20ICON.RO.v7.svg";
 				}
 				temp.time = step.transit.departure_time.text;
-				temp.action = "Take "+step.transit.line.vehicle.name+" "+name+" to "+step.transit.headsign;
+				temp.action = "Take "+name+" to "+step.transit.headsign;
 			} else {
 				temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
 				temp.action = step.instructions;
@@ -1091,7 +1106,7 @@ function startup(){
 		if (settings.get("pre_user_id") && opt.data("back") == "map"){
 			$("#verify_number").show();
 		} else if (!settings.get("user_id") && opt.data("back") == "map"){
-			$("#signup").show();
+			$("#login").show();
 		} else {
 			$("#"+opt.data("back")).show();
 		}
@@ -1246,7 +1261,7 @@ function startup(){
 
 		var dat = [];
 		for (var key in saved_locations){
-			dat.push('<div class="saved_location"><span>'+key+'</span><img src="images/icons3/CUSTOM%20BUS%20ICON.RO.v9.svg" class="delete_saved_location" /></div>');
+			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" class="delete_saved_location" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
 		}
 		$("#location_list").html(dat.join(""));
 
@@ -1327,6 +1342,7 @@ function startup(){
 	});
 	
 	click_event(".open_page", function (e){
+		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#"+$(e.currentTarget).data("page")).show();
 	}, true);
@@ -1375,8 +1391,9 @@ function startup(){
 		$(".logged_in").hide();
 		$(".logged_out").show();
 		settings.delete("user_id");
+		settings.delete("pre_user_id");
 		$(".page").hide();
-		$("#signup").show();
+		$("#login").show();
 	});
 
 	click_event("#verify_do", function (){

@@ -49,35 +49,44 @@ function good_touch(e, trigger){
 	return false;
 }
 
-function click_event(limiter, callback, target){
+function click_event(limiter, callback, target, no_prop){
 	target = target || false;
+	no_prop = no_prop || false;
 	if (target){
 		if (target === true)
 			target = document;
 		$(target).on("touchstart", limiter, function (e){
-			e.stopPropagation();
 			set_touch(e, limiter);
-			return false;
+			if (no_prop){
+				e.stopPropagation();
+				return false;
+			}
 		});
 		$(target).on("touchend click_event", limiter, function (e){
 			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
-			e.stopPropagation();
 			callback(e);
-			return false;
+			if (no_prop){
+				e.stopPropagation();
+				return false;
+			}
 		});
 	} else {
 		$(limiter).on("touchstart", function (e){
-			e.stopPropagation();
 			set_touch(e, limiter);
-			return false;
+			if (no_prop){
+				e.stopPropagation();
+				return false;
+			}
 		});
 		$(limiter).on("touchend click_event", function (e){
 			if (e.type != "click_event" && !good_touch(e, limiter))
 				return;
-			e.stopPropagation();
 			callback(e);
-			return false;
+			if (no_prop){
+				e.stopPropagation();
+				return false;
+			}
 		});
 	}
 }

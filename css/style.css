@@ -98,7 +98,7 @@ h2{
 #modal.loading {width:175px; height:50px; line-height:50px;}
 #modal.loading .fa {font-size:initial; position:static; color:#999;}
 #modal.loading h1 {margin:0;}
-#modal.loading p, #modal.loading a {display:none !important;}
+#modal.loading div, #modal.loading a {display:none !important;}
 
 #modal.contact_form {
 	height: 400px;
@@ -487,7 +487,7 @@ input[type="checkbox"]:checked + label span{
 }
 
 .taxi_info .phone{
-	width: 110px;
+	width: 115px;
 }
 
 .taxi_info .name{
