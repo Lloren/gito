@@ -644,6 +644,8 @@ function load_map(){
 			console.log("click no stop marker");
 			coded_location({lat: event.latLng.lat(), lng: event.latLng.lng()}, false, true);
 			$(".to_clear").show();
+		} else {
+			hide_keyboard();
 		}
 	});
 
