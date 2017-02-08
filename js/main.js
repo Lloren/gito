@@ -545,25 +545,29 @@ function run_services(){
 	if (!run_handel){
 		run_handel = setTimeout(function (){
 			console.log("runing_services", start_location, stop_location);
-			if (start_location && stop_location){
-				$("#search_animation").show();
-				$("#results_tab_handle").show();
-				++results_call;
-				bounds = new google.maps.LatLngBounds();
-				bounds.extend(new google.maps.LatLng(start_location));
-				bounds.extend(new google.maps.LatLng(stop_location));
-				map.panTo(bounds.getCenter());
-				google.maps.event.addListenerOnce(map, "idle", function() {
-					map.fitBounds(bounds);
-				});
-				$("#results").html("");
-				results_to_return = 4;
-				service_google(results_call, start_location, stop_location);
-				service_uber(results_call, start_location, stop_location);
-				service_tff(results_call, start_location, stop_location);
-				service_lyft(results_call, start_location, stop_location);
+			if (start_location.lat == stop_location.lat && start_location.lng == stop_location.lng){
+				open_modal({title: "Error", content:"Your origin and destination can not be the same location."});
 			} else {
-				open_modal({title: "error", content:"You need to enter a from and to location."});
+				if (start_location && stop_location){
+					$("#search_animation").show();
+					$("#results_tab_handle").show();
+					++results_call;
+					bounds = new google.maps.LatLngBounds();
+					bounds.extend(new google.maps.LatLng(start_location));
+					bounds.extend(new google.maps.LatLng(stop_location));
+					map.panTo(bounds.getCenter());
+					google.maps.event.addListenerOnce(map, "idle", function() {
+						map.fitBounds(bounds);
+					});
+					$("#results").html("");
+					results_to_return = 4;
+					service_google(results_call, start_location, stop_location);
+					service_uber(results_call, start_location, stop_location);
+					service_tff(results_call, start_location, stop_location);
+					service_lyft(results_call, start_location, stop_location);
+				} else {
+					open_modal({title: "Error", content:"You need to enter a from and to location."});
+				}
 			}
 			run_handel = false;
 			hide_keyboard();
@@ -1263,7 +1267,7 @@ function startup(){
 
 		var dat = [];
 		for (var key in saved_locations){
-			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" class="delete_saved_location" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
+			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
 		}
 		$("#location_list").html(dat.join(""));
 
@@ -1324,7 +1328,6 @@ function startup(){
 
 	click_event("#signup_do", function (){
 		open_modala("Loading...");
-		$("#signup_errors").html("");
 		$.getJSON(base_url+"/ajax/signup.php?callback=?", {uuid: settings.get("uuid"), email: $("#signup_email").val(), password: $("#signup_password").val(), cpassword: $("#signup_cpassword").val(), name: $("#signup_name").val(), phone: $("#signup_phone").val()}, function(data){
 			close_modala();
 			console.log(data);
@@ -1357,7 +1360,6 @@ function startup(){
 
 	click_event("#login_do", function (){
 		open_modala("Loading...");
-		$("#login_errors").html();
 		$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
 			close_modala();
 			console.log(data);
@@ -1413,6 +1415,8 @@ function startup(){
 			} else {
 				if (data.good){
 					settings.set("user_id", settings.get("pre_user_id"));
+					$(".logged_in").show();
+					$(".logged_out").hide();
 					settings.delete("pre_user_id");
 					$(".page").hide();
 					$("#map").show();
@@ -1436,6 +1440,44 @@ function startup(){
 		});
 	});
 	
+	click_event("#recover_do", function (){
+		open_modala("Loading...");
+		$.getJSON(base_url+"/ajax/recover.php?callback=?", {uuid: settings.get("uuid"), action:"send_reset", email:$("#recover_email").val(), phone:$("#recover_phone").val()}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				var mess = "";
+				for (var i=0;i<data.mess.Error.length;i++)
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+				
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
+			} else {
+				if (data.good){
+					open_modal({title: "Success", content:"Password Reset"+(data.pass?" - dev auto display pass: "+data.pass:"")});
+				}
+			}
+		});
+	});
+	
+	click_event("#settings_pass_do", function (){
+		open_modala("Loading...");
+		$.getJSON(base_url+"/ajax/settings.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("user_id"), action:"reset_pass", pass: $("#settings_pass").val(), cpass: $("#settings_cpass").val()}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				var mess = "";
+				for (var i=0;i<data.mess.Error.length;i++)
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+				
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
+			} else {
+				if (data.good){
+					open_modal({title: "Success", content:"Password Saved"});
+				}
+			}
+		});
+	});
+	
 	if (settings.get("user_id")){
 		$(".logged_in").show();
 		$(".logged_out").hide();
@@ -1444,10 +1486,12 @@ function startup(){
 		$(".logged_out").show();
 	}
 
-	var device = device_info();
-	$(".version").html(device.version);
 	if (typeof AppVersion != "undefined"){
+		$(".version").html("("+AppVersion.version+")");
 		$(".build").html(AppVersion.build);
+	} else {
+		var device = device_info();
+		$(".version").html(device.version);
 	}
 
 	if (settings.get("full_map_settings")){

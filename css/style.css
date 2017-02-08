@@ -9,6 +9,8 @@
 * {box-sizing:border-box; -webkit-box-sizing:border-box; font-family: "lucida grande", tahoma, verdana, arial, sans-serif;/*user-select:none; -webkit-user-select:none;*/}
 html {text-size-adjust:100%; -webkit-text-size-adjust:100%;}
 body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%; background: #e8390e; position: absolute;}
+img {width: 30px;}
+a {text-decoration: underline; color: inherit;}
 *::-webkit-input-placeholder{
 	color: #414141;
 }
@@ -294,19 +296,19 @@ input[type="checkbox"]:checked + label span{
 	float: left;
 	margin-right: 5px;
 }
-#settings{
+#map_settings{
 	max-height: 160px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
-#settings::-webkit-scrollbar{
+#map_settings::-webkit-scrollbar{
 	width: 4px;
 }
-#settings::-webkit-scrollbar-track{
+#map_settings::-webkit-scrollbar-track{
 	background: rgba(255, 255, 255, 0.5);
 }
 
-#settings::-webkit-scrollbar-thumb{
+#map_settings::-webkit-scrollbar-thumb{
 	background: rgba(0, 0, 0, 0.5);
 }
 
@@ -505,8 +507,14 @@ input[type="checkbox"]:checked + label span{
 	margin-top: 10px;
 }
 
+.saved_location{
+	border-bottom: 1px dashed #c13917;
+}
+
 .delete_saved_location{
 	width: 30px;
+	right: 5px;
+	position: absolute;
 }
 
 /*TODO: merge with "settings" values*/
