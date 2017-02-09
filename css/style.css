@@ -11,6 +11,7 @@ html {text-size-adjust:100%; -webkit-text-size-adjust:100%;}
 body {font-smoothing:antialiased;-webkit-font-smoothing:antialiased; z-index: 0; margin:0; width: 100%; height: 100%; background: #e8390e; position: absolute;}
 img {width: 30px;}
 a {text-decoration: underline; color: inherit;}
+h3 {text-align: center;}
 *::-webkit-input-placeholder{
 	color: #414141;
 }
@@ -103,13 +104,9 @@ h2{
 #modal.loading div, #modal.loading a {display:none !important;}
 
 #modal.contact_form {
-	height: 400px;
+	height: 320px;
 	width: 300px;
-	margin-top: 50px;
-}
-#modal.tff_modal{
-	height: 250px;
-	width: 300px;
+	margin-top: -50px;
 }
 
 input[type="checkbox"] {
@@ -489,11 +486,11 @@ input[type="checkbox"]:checked + label span{
 }
 
 .taxi_info .phone{
-	width: 115px;
+	width: 120px;
 }
 
 .taxi_info .name{
-	width: calc(100% - 150px);
+	width: calc(100% - 160px);
 }
 
 .about_head{
@@ -509,6 +506,9 @@ input[type="checkbox"]:checked + label span{
 
 .saved_location{
 	border-bottom: 1px dashed #c13917;
+}
+.saved_location span{
+	padding-left: 5px;
 }
 
 .delete_saved_location{
@@ -526,20 +526,6 @@ input[type="checkbox"]:checked + label span{
 }
 .settings_toggle.close_main_info img{
 	transform: rotate(90deg);
-}
-#map_settings{
-	position: fixed;
-	z-index: 10;
-	transition: 200ms;
-	transform: translate3d(0, 0, 0);
-	top: 0;
-	bottom: 0;
-	padding-top: 44px;
-	width: 100%;
-	background: linear-gradient(to bottom, #e8390e 1%,#ff8806 100%); -webkit-linear-gradient(top, #e8390e 1%,#ff8806 100%);
-}
-#map_settings.hidden{
-	transform: translate3d(100%, 0, 0);
 }
 
 .selection_container{

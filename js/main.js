@@ -1044,6 +1044,7 @@ function startup(){
 				temp.time = step.transit.departure_time.text;
 				temp.action = "Take "+name+" to "+step.transit.headsign;
 			} else {
+				temp.time = step.duration.text;
 				temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
 				temp.action = step.instructions;
 			}
@@ -1269,7 +1270,11 @@ function startup(){
 		for (var key in saved_locations){
 			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
 		}
-		$("#location_list").html(dat.join(""));
+		if (dat.length == 0 || true){
+			$("#location_list").html("<h3>No saved locations</h3>");
+		} else {
+			$("#location_list").html(dat.join(""));
+		}
 
 		$("#saved_locations").show();
 	});
@@ -1350,7 +1355,7 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#"+$(e.currentTarget).data("page")).show();
-	}, true);
+	}, true, true);
 
 	click_event("#menu_login", function (e){
 		$("#menu-overlay").trigger("click_event");
@@ -1493,6 +1498,10 @@ function startup(){
 		var device = device_info();
 		$(".version").html(device.version);
 	}
+
+	$(".prepend_url").each(function (){
+		$(this).attr("src", base_url + $(this).attr("src"));
+	});
 
 	if (settings.get("full_map_settings")){
 		$("#settings_tab").removeClass("hidden");
