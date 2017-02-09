@@ -393,7 +393,7 @@ input[type="checkbox"]:checked + label span{
 	display: none;
 }
 .sub_results .result, #results > .result {
-	 margin-left: 22px;
+	 margin-left: 24px;
 	 padding-left: 6px;
 	 width: calc(100% - 20px)
 }
@@ -412,12 +412,12 @@ input[type="checkbox"]:checked + label span{
 }
 
 .result .icon img{
-	height: 18px;
+	width: 18px;
 	vertical-align: middle;
 }
 
 .result img.img_toggle{
-	height: 25px;
+	width: 25px;
 	position: absolute;
 	left: -1px;
 	top: -1px;
@@ -472,7 +472,7 @@ input[type="checkbox"]:checked + label span{
 
 
 .taxi_info{
-	padding-left: 2px;
+	padding-left: 4px;
 }
 .taxi_info a{
 	text-decoration: none;
@@ -481,8 +481,6 @@ input[type="checkbox"]:checked + label span{
 .taxi_info a > div{
 	display: inline-block;
 	overflow: hidden;
-	padding: 0 2px;
-	vertical-align: top;
 }
 
 .taxi_info .phone{
