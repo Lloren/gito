@@ -1237,7 +1237,7 @@ function startup(){
 
 	click_event("#menu_contact", function (e){
 		$("#menu-overlay").trigger("click_event");
-		open_modal({title: "Contact us!", content: '<p>Send us a message, we\'d love to hear from you!</p><textarea id="message_text" class="touch_focus" placeholder="Contact us about bugs, requests, feedback, ideas, or just to say hi. :)" style="height: 150px; width:100%;"></textarea><input type="text" id="message_email" class="touch_focus" placeholder="Your email (for replies)" />', callback: function (btn) {
+		open_modal({title: "Contact us!", content: '<p>Send us a message, we\'d love to hear from you!</p><textarea id="message_text" class="touch_focus" placeholder="Contact us about bugs, requests, feedback, ideas, or just to say hi. :)" style="height: 100px; width:100%;"></textarea><input type="text" id="message_email" class="touch_focus" placeholder="Your email (for replies)" />', callback: function (btn) {
 			if (btn == "Send"){
 				var text = $("#message_text").val();
 				var email = $("#message_email").val();
@@ -1270,7 +1270,7 @@ function startup(){
 		for (var key in saved_locations){
 			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
 		}
-		if (dat.length == 0 || true){
+		if (dat.length == 0){
 			$("#location_list").html("<h3>No saved locations</h3>");
 		} else {
 			$("#location_list").html(dat.join(""));
