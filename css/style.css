@@ -110,6 +110,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 .share_modal div.share_button .fa.share_inactive::after {content: "*"; position:absolute; font-size:0.4em; top:0; right:-10px;}
 #modal .share_modal .fa {
 	position: relative;
+	right: 0px;
 }
 #modal .share_modal .fa-facebook-square {color:#3A5795;}
 #modal .share_modal .fa-twitter-square {color:#28A8E0;}
