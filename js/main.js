@@ -77,7 +77,7 @@ var shares = [{name:"Facebook", tag:"fa-facebook-square", android:"facebook", io
 		window.plugins.socialsharing.shareViaSMS({message: link+" "+share_messages.join(" "), subject:null, image:img}, null, function(e){dump(e)}, function(e){dump(e)});
 		//window.plugins.socialsharing.shareVia(this[thePlatform], msg, " ", img, link);
 	} else {
-		window.plugins.socialsharing.shareVia(this[thePlatform], msg, " ", img, link);
+		window.plugins.socialsharing.shareVia(this[thePlatform], link+" "+share_messages.join(" "), " ", img);
 	}
 }}, {name:"Email", tag:"fa-envelope-square", android:"email", ios:"email", can:function(callback, img, link){
 	var t = this;
@@ -115,7 +115,7 @@ function open_share(){
 				} else {
 					open_modal({title: "Share <span class='drawerings'>MOOKY!</span>", content:'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.'});
 					$(".share_button").on("touchstart", function (){
-						shares[parseInt($(this).data("share"))].share(you, img, link);
+						shares[parseInt($(this).data("share"))].share(img, link);
 						track("Share", "share "+shares[parseInt($(this).data("share"))].name, "share");
 						console.log("do share "+shares[parseInt($(this).data("share"))].name);
 						$("#mbutton1").trigger("touchend");
