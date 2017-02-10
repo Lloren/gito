@@ -463,6 +463,11 @@ var stop_location = false;
 function coded_location(pos, start, trigger){
 	console.log("coded location", pos, start, trigger);
 	if (!pos){
+		if (start){
+			start_location = false;
+		} else {
+			stop_location = false;
+		}
 		return;
 	} else if (start){
 		start_location = pos;
