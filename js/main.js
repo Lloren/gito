@@ -111,14 +111,14 @@ function open_share(){
 			if (num <= 0){
 				close_modala();
 				if (active == 0){
-					open_modal("Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", 'Sorry, we cannot detect any sharing apps setup on this device.', false, false, "Close");
+					open_modal({title: "Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", content: "Sorry, we cannot detect any sharing apps setup on this device.");
 				} else {
-					open_modal("Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", 'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.', false, false, "Close");
+					open_modal({title: "Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", content:'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.'});
 					$(".share_modal .share_active").on("touchend", function (){
 						shares[parseInt($(this).data("share"))].share(you, img, link);
 						track("Share", "share "+shares[parseInt($(this).data("share"))].name, "share");
 						console.log("do share "+shares[parseInt($(this).data("share"))].name);
-						$("#mbutton1").trigger("touchstart");
+						$("#mbutton1").trigger("touchend");
 					});
 				}
 			}
