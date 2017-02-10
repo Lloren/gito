@@ -34,6 +34,98 @@ var my_locations = ["My Location", "Current Location", "Here", "Me"];
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
 var backup_links = {"lyft": {"android": "market://details?id=me.lyft.android", "android_package": "me.lyft.android", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id529379082"}, "uber": {"android": "market://details?id=com.ubercab", "android_package": "com.ubercab", "ios": "https://itunes.apple.com/us/app/lyft-taxi-bus-app-alternative/id368677368"}};
 
+var share_messages = ["You need the mooky app!", "Compare rides.", "Save money.", "Save time.", "Travel Smarter."];
+var shares = [{name:"Facebook", tag:"fa-facebook-square", android:"facebook", ios:"com.apple.social.facebook", can:function(callback, img, link){
+	var t = this;
+	if (thePlatform == "non-gap"){
+		callback(true, t);
+		return;
+	}
+	window.plugins.socialsharing.canShareVia(this[thePlatform], "msg", null, null, link, function(e){callback(true, t)}, function(e){callback(false, t)});
+}, share:function(img, link){
+	var msg = share_messages.join("\r\n");
+	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
+	if (thePlatform == "ios"){
+		window.plugins.socialsharing.shareViaFacebook(msg, null, link);
+	} else {
+		window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(msg, null, link, "Use the paste tool!");
+	}
+}}, {name:"Google+", tag:"fa-google-plus-square", android:"talk", ios:"talk", can:function(callback, img, link){
+	var t = this;
+	if (thePlatform == "ios"){
+		callback(-1, t);
+		return;
+	}
+	if (thePlatform == "non-gap"){
+		callback(true, t);
+		return;
+	}
+	window.plugins.socialsharing.canShareVia(this[thePlatform], "msg", null, null, null, function(e){callback(true, t)}, function(e){callback(false, t)});
+}, share:function(img, link){
+	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
+	window.plugins.socialsharing.shareVia(this[thePlatform], share_messages.join("\r\n"), " ", img, link);
+}}, {name:"Text", tag:"fa-mobile", android:"mms", ios:"sms", can:function(callback, img, link){
+	var t = this;
+	if (thePlatform == "non-gap"){
+		callback(false, t);
+		return;
+	}
+	window.plugins.socialsharing.canShareVia(this[thePlatform], "msg", null, img, link, function(e){callback(true, t)}, function(e){callback(false, t)});
+}, share:function(img, link){
+	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
+	if (thePlatform == "ios"){
+		window.plugins.socialsharing.shareViaSMS({message: link+" "+share_messages.join(" "), subject:null, image:img}, null, function(e){dump(e)}, function(e){dump(e)});
+		//window.plugins.socialsharing.shareVia(this[thePlatform], msg, " ", img, link);
+	} else {
+		window.plugins.socialsharing.shareVia(this[thePlatform], msg, " ", img, link);
+	}
+}}, {name:"Email", tag:"fa-envelope-square", android:"email", ios:"email", can:function(callback, img, link){
+	var t = this;
+	callback(true, t);
+	//window.plugins.socialsharing.canShareViaEmail(function(e){callback(true, t)}, function(e){callback(false, t)});
+}, share:function(img, link){
+	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
+	window.plugins.socialsharing.shareViaEmail(link+"\r\n"+share_messages.join("\r\n"), "Check out the mooky app!", null, null, null, img);
+}}];
+for (var i=0;i<shares.length;i++){
+	shares[i].key = i;
+}
+
+function open_share(){
+	console.log("open share");
+	open_modala("Checking Shares <i class='fa fa-spinner fa-spin'></i>");
+	var out_str = "";
+	var link = "http://www.mookyapp.com";
+	var img = null;
+	var num = shares.length;
+	var active = shares.length;
+	track("Share", "open", "open");
+	for(var i=0;i<shares.length;i++){
+		shares[i].can(function (can, share){
+			--num;
+			if (can !== -1){
+				if (!can)
+					--active;
+				out_str += '<div class="share_button"><i class="fa '+share.tag+' '+(can?'share_active':'share_inactive')+'" data-share="'+share.key+'"></i><span>'+share.name+'</span></div>';
+			}
+			if (num <= 0){
+				close_modala();
+				if (active == 0){
+					open_modal("Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", 'Sorry, we cannot detect any sharing apps setup on this device.', false, false, "Close");
+				} else {
+					open_modal("Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", 'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.', false, false, "Close");
+					$(".share_modal .share_active").on("touchend", function (){
+						shares[parseInt($(this).data("share"))].share(you, img, link);
+						track("Share", "share "+shares[parseInt($(this).data("share"))].name, "share");
+						console.log("do share "+shares[parseInt($(this).data("share"))].name);
+						$("#mbutton1").trigger("touchstart");
+					});
+				}
+			}
+		}, img, link);
+	}
+}
+
 function get_origin_geo(callback){
 	var ret = $("#from_loc").val().toLowerCase();
 	if (ret == "my location" && my_loc){
@@ -1273,7 +1365,7 @@ function startup(){
 
 		var dat = [];
 		for (var key in saved_locations){
-			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" /><span>'+key+'</span><img src="images/close.svg" class="delete_saved_location" /></div>');
+			dat.push('<div class="saved_location"><img src="images/icons3/CUSTOM_HOME.W+RO.v1.svg" /><div>'+key+'</div><img src="images/close.svg" class="delete_saved_location" /></div>');
 		}
 		if (dat.length == 0){
 			$("#location_list").html("<h3>No saved locations</h3>");
@@ -1486,6 +1578,11 @@ function startup(){
 				}
 			}
 		});
+	});
+
+	click_event("#menu_share", function (e){
+		$("#menu-overlay").trigger("click_event");
+		open_share();
 	});
 	
 	if (settings.get("user_id")){
