@@ -81,8 +81,8 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	margin: 5px;
 }
 .icon_link img{
-	width: 30px;
-	vertical-align: sub;
+	position: relative;
+	top: 7px;
 }
 
 #modal-overlay {position:absolute; pointer-events:none; opacity:0; background-color:#222; width:100%; height:100%; -webkit-transition: opacity 200ms ease-out, background-color 200ms ease-out; -webkit-transform: translate3d(0, 0, 0); -webkit-backface-visibility: hidden; -webkit-perspective: 1000; z-index:999;}
