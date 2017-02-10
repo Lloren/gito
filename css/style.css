@@ -108,11 +108,14 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 .share_modal div.share_button .fa {position:relative; font-size:66px;}
 .share_modal div.share_button .fa.share_inactive {opacity:0.2;}
 .share_modal div.share_button .fa.share_inactive::after {content: "*"; position:absolute; font-size:0.4em; top:0; right:-10px;}
-.share_modal .fa-facebook-square {color:#3A5795;}
-.share_modal .fa-twitter-square {color:#28A8E0;}
-.share_modal .fa-google-plus-square{color:#D34231;}
-.share_modal .fa-mobile {}
-.share_modal .fa-envelope-square {color:#27ADB9; /*content: "Email";*/}
+#modal .share_modal .fa {
+	position: relative;
+}
+#modal .share_modal .fa-facebook-square {color:#3A5795;}
+#modal .share_modal .fa-twitter-square {color:#28A8E0;}
+#modal .share_modal .fa-google-plus-square{color:#D34231;}
+#modal .share_modal .fa-mobile {}
+#modal .share_modal .fa-envelope-square {color:#27ADB9; /*content: "Email";*/}
 
 #modal.contact_form {
 	height: 280px;

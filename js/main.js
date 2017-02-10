@@ -111,9 +111,9 @@ function open_share(){
 			if (num <= 0){
 				close_modala();
 				if (active == 0){
-					open_modal({title: "Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", content: "Sorry, we cannot detect any sharing apps setup on this device."});
+					open_modal({title: "Share <span class='drawerings'>MOOKY!</span>", content: "Sorry, we cannot detect any sharing apps setup on this device."});
 				} else {
-					open_modal({title: "Share <span class='drawerings'>MOOKY!</span><i class='fa fa-share-alt'></i>", content:'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.'});
+					open_modal({title: "Share <span class='drawerings'>MOOKY!</span>", content:'Click highlighted buttons to share.<div class="share_modal">'+out_str+'<div class="clear"></div>*Install or connect more social apps on your device to share.'});
 					$(".share_modal .share_active").on("touchend", function (){
 						shares[parseInt($(this).data("share"))].share(you, img, link);
 						track("Share", "share "+shares[parseInt($(this).data("share"))].name, "share");
