@@ -111,6 +111,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 #modal .share_modal .fa {
 	position: relative;
 	right: 0px;
+	font-size: 4em;
 }
 #modal .share_modal .fa-facebook-square {color:#3A5795;}
 #modal .share_modal .fa-twitter-square {color:#28A8E0;}

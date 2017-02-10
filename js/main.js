@@ -106,7 +106,7 @@ function open_share(){
 			if (can !== -1){
 				if (!can)
 					--active;
-				out_str += '<div class="share_button"><i class="fa '+share.tag+' '+(can?'share_active':'share_inactive')+'" data-share="'+share.key+'"></i><span>'+share.name+'</span></div>';
+				out_str += '<div class="share_button" data-share="'+share.key+'"><i class="fa '+share.tag+' '+(can?'share_active':'share_inactive')+'"></i><span>'+share.name+'</span></div>';
 			}
 			if (num <= 0){
 				close_modala();
