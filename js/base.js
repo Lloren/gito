@@ -18,20 +18,28 @@ function Settings(save_key, def_data){
 	this.data = JSON.parse(window.localStorage.getItem(this.save_key) || def_data || "{}");
 	
 	this.set = function (key, val){
-		this.data[key] = val;
-		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
+		if (this.data[key] != val){
+			this.data[key] = val;
+			this.save();
+		}
 	};
 	
 	this.get = function (key){
 		return this.data[key];
 	};
-
+	
 	this.delete = function (key){
 		delete this.data[key];
+		this.save();
+	};
+	
+	this.save = function (local_only){
 		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
+		if (!local_only)
+			save_settings();
 	};
 }
-window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at"}');
+window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at","extra_rout":""}');
 
 var last_touch = {x: 0, y:0, trigger:""};
 function set_touch(e, trigger){

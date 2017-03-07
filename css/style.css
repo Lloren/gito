@@ -364,6 +364,7 @@ input[type="checkbox"]:checked + label span{
 
 #results{
 	max-height: 300px;
+	height: 300px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -394,8 +395,15 @@ input[type="checkbox"]:checked + label span{
 	border-top-left-radius: 20px;
 	background: #fff;
 }
+#results .result {
+	position: absolute;
+}
+.result_group{
+	position: absolute;
+	width: 100%;
+}
 .result_group > .result {
-	 background: #ffebd0;
+	background: #ffebd0;
 }
 .result > div{
 	display: inline-block;
@@ -497,6 +505,7 @@ input[type="checkbox"]:checked + label span{
 .taxi_info a > div{
 	display: inline-block;
 	overflow: hidden;
+	vertical-align: top;
 }
 
 .taxi_info .phone{

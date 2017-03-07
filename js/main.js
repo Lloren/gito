@@ -22,6 +22,8 @@ var no_blur = false;
 
 var run_handel = false;
 
+var rolidex;
+
 var transit_holder = [];
 
 var results_call = 0;
@@ -285,11 +287,45 @@ function service_google(call_num, start, stop){
 				open_modal({title: "error", content:"No driving rout between locations."});
 			}
 			map.panTo(bounds.getCenter());
-			google.maps.event.addListenerOnce(map, 'idle', function() {
+			google.maps.event.addListenerOnce(map, "idle", function() {
 				map.fitBounds(bounds);
 			});
 			full_bounds = bounds;
 		});
+		if (settings.get("extra_rout")){
+			DirectionsService.route({origin: start, destination: stop, travelMode:settings.get("extra_rout")}, function (response, status){
+				console.log("google extra route results", status, response);
+				var bounds = new google.maps.LatLngBounds();
+				if (status == "OK"){
+					for (var i=0;i<response.routes.length;i++){
+						var route = response.routes[i];
+						var path = new google.maps.Polyline({
+							path:route.overview_path,
+							geodesic:true,
+							strokeColor:"#ff000",
+							strokeOpacity:1.0,
+							strokeWeight:6,
+							map:map,
+							zIndex:1
+						});
+						markers.google_routs.push(path);
+						route.overview_path.forEach(function(e){
+							bounds.extend(e);
+						});
+						break;
+					}
+				} else {
+					bounds.extend(start);
+					bounds.extend(stop);
+					open_modal({title: "error", content:"No "+settings.get("extra_rout")+" rout between locations."});
+				}
+				map.panTo(bounds.getCenter());
+				google.maps.event.addListenerOnce(map, "idle", function() {
+					map.fitBounds(bounds);
+				});
+				full_bounds = bounds;
+			});
+		}
 	});
 }
 
@@ -538,6 +574,7 @@ function sort_results(){
 		return $(a).data(sorter) - $(b).data(sorter);
 	});
 	$("#results").append(result);
+	rolidex.set_spacing();
 }
 
 function geo_location(id, geo){
@@ -888,7 +925,11 @@ function close_menu(){
 function get_geo_location(do_load){
 	console.log("request geolocation");
 	var do_load = do_load;
+	var no_resp_timeout = setTimeout(function (){
+		get_geo_location_geo(do_load);
+	});
 	navigator.geolocation.getCurrentPosition(function (pos){
+		clearTimeout(no_resp_timeout);
 		var loc = pos.coords;
 		console.log("geopos", loc.latitude, loc.longitude);
 		my_loc = new google.maps.LatLng(loc.latitude, loc.longitude);
@@ -913,9 +954,16 @@ function get_geo_location(do_load){
 		console.log("Current location");
 		get_origin_geo(coded_location);
 	}, function (error){
+		clearTimeout(no_resp_timeout);
 		console.log("geo error", error);
-		if (!dev)
-			$(".my_location").hide();
+		get_geo_location_geo(do_load);
+	});
+}
+
+function get_geo_location_geo(do_load){
+	if (!dev)
+		$(".my_location").hide();
+	if (!markers.my_loc){
 		$.getJSON("http://freegeoip.net/json/", function (data){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
@@ -941,7 +989,7 @@ function get_geo_location(do_load){
 				}
 			}
 		}, function (err){console.log("call error", err)});
-	});
+	}
 }
 
 function startup(){
@@ -1115,10 +1163,12 @@ function startup(){
 	});
 
 	click_event(".result_expander .expander", function (e){
-		$(e.currentTarget).parent().removeClass("result_expander").addClass("result_contractor").next(".sub_results").slideDown(200);
+		$(e.currentTarget).parent().removeClass("result_expander").addClass("result_contractor").next(".sub_results").show();
+		rolidex.set_spacing();
 	}, true);
 	click_event(".result_contractor .expander", function (e){
-		$(e.currentTarget).parent().removeClass("result_contractor").addClass("result_expander").next(".sub_results").slideUp(200);
+		$(e.currentTarget).parent().removeClass("result_contractor").addClass("result_expander").next(".sub_results").hide();
+		rolidex.set_spacing();
 	}, true);
 
 	click_event(".transit_info", function (e){
@@ -1191,6 +1241,7 @@ function startup(){
 				$("#settings_tab").addClass("open");
 				$("#results_tab").addClass("settings_open");
 			}
+			rolidex.set_spacing();
 		}
 	});
 
@@ -1584,7 +1635,19 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		open_share();
 	});
-	
+
+	$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
+		if (data.data && data.data != ""){
+			saved_locations = data.data.saved_locations;
+			window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
+			delete data.data.saved_locations;
+			settings.data = data.data;
+			settings.save(true);
+		}
+	});
+
+	rolidex = new Rolidex();
+
 	if (settings.get("user_id")){
 		$(".logged_in").show();
 		$(".logged_out").hide();
@@ -1613,6 +1676,14 @@ function startup(){
 	}
 
 	update_settings();
+}
+
+
+function save_settings(){
+	var settings_data = Object.create(settings.data);
+	settings_data.saved_locations = saved_locations;
+	$.post(base_url+"/ajax/settings.php?action=save&uuid="+settings.get("uuid")+"&user_id="+settings.get("user_id"), {data: settings_data}, function (data){
+	});
 }
 
 function one_click(type){
@@ -1661,6 +1732,100 @@ function open_intent(intent, fallback){
 			} else {
 				window.location = fallback;
 			}
+		});
+	}
+}
+
+
+
+function Rolidex(){
+	var scope = this;
+	this.pre_pos = 0;
+	this.pos = 0;
+	this.last_pos = 0;
+	this.height = 30;
+	this.height_div = 25;
+	this.range = 30;
+	this.range_size = 3 * this.height;
+	this.touch_start = false;
+	
+	this.main_div = $("#results");
+	this.sub_div = ".result";
+	
+	this.main_div.on("touchstart", function (e){
+		scope.touch_start = e.originalEvent.touches[0];
+	});
+	this.main_div.on("touchmove", function (e){
+		if (scope.touch_start){
+			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
+			scope.pos = scope.last_pos - delt;
+			scope.set_spacing();
+		}
+	});
+	this.main_div.on("touchend", function (e){
+		scope.touch_start = false;
+		scope.last_pos = scope.pos;
+	});
+	
+	this.set_spacing = function(){
+		var items = $(this.sub_div+":visible");
+		var total_height = items.length * this.height;
+		this.main_div.css("height", total_height);
+		var cont_height = this.main_div.height();
+		var scroll_height = total_height - cont_height - 5;
+
+		var full_height = scroll_height < 0;
+
+		var prev_group_z = false;
+
+		console.log(this.pos, cont_height, items.length, scroll_height);
+		
+		if (this.pos > scroll_height)
+			this.pos = scroll_height;
+		if (this.pos < 0)
+			this.pos = 0;
+		var curr_pos = -this.pos;
+		var z = 0;
+		var a = 1;
+		var scope = this;
+		$.each(items, function (){
+			var parent = $(this).parent();
+			var mod_top = -1;
+			if (parent.hasClass("sub_results"))
+				mod_top = parent.parent().css("top").slice(0, -2);
+			var npos = curr_pos;
+			if (npos < scope.range && z != 0){
+				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
+			}
+			if (npos < 0)
+				npos = 0;
+			if (npos > cont_height - scope.range - scope.height && a != items.length){
+				npos = cont_height - (scope.range - Math.tanh((npos - (cont_height - scope.range - scope.height))/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
+				if (prev_group_z != false){
+					z = prev_group_z;
+					prev_group_z = false;
+				}
+				z--;
+			} else {
+				z++;
+			}
+			if (npos > cont_height - scope.height)
+				npos = cont_height - scope.height;
+			a++;
+			//console.log(npos, mod_top);
+			if (mod_top == -1){
+				if (parent.hasClass("para_scroll")){
+					z -= 2;
+					$(this).css({top: npos, "z-index":z});
+				} else {
+					prev_group_z = z;
+					parent.css({top: npos, "z-index":z});
+					parent.children(".result").css({"z-index":z});
+				}
+			} else {
+				$(this).css({top: npos - mod_top, "z-index":z});
+			}
+			curr_pos += scope.height;
 		});
 	}
 }
