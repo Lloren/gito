@@ -1565,8 +1565,15 @@ function startup(){
 	});
 
 	click_event(".fb_login", function (){
-		facebookConnectPlugin.login("email", function (obj){
+		facebookConnectPlugin.login(["public_profile,email"], function (obj){
 			console.log("fb login", obj);
+			facebookConnectPlugin.api("me/?access_token="+obj.accessToken, ["public_profile,email"],
+				function onSuccess (result) {
+					console.log("Result: ", result);
+				}, function onError (error) {
+					console.error("Failed: ", error);
+				}
+			);
 		}, function (e){
 			console.log("fb login error", e);
 		});
