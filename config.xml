@@ -108,6 +108,14 @@
 	<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<gap:plugin name="cordova-plugin-sim" source="npm" />
 
+	<gap:plugin name="cordova-plugin-facebook4" source="npm">
+		<param name="APP_ID" value="266665110442328" />
+		<param name="APP_NAME" value="Mooky" />
+	</gap:plugin>
+	<gap:plugin name="cordova-plugin-googleplus" source="npm">
+		<param name="REVERSED_CLIENT_ID" value="myreversedclientid" />
+	</gap:plugin>
+
 	<feature name="http://api.phonegap.com/1.0/network" />
 
 	<!--<feature name="Keyboard">

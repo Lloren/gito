@@ -25,6 +25,7 @@ var run_handel = false;
 var rolidex;
 
 var transit_holder = [];
+var extra_rout_holder = false;
 
 var results_call = 0;
 var results_to_return = 4;
@@ -293,39 +294,58 @@ function service_google(call_num, start, stop){
 			full_bounds = bounds;
 		});
 		if (settings.get("extra_rout")){
-			DirectionsService.route({origin: start, destination: stop, travelMode:settings.get("extra_rout")}, function (response, status){
-				console.log("google extra route results", status, response);
-				var bounds = new google.maps.LatLngBounds();
-				if (status == "OK"){
-					for (var i=0;i<response.routes.length;i++){
-						var route = response.routes[i];
-						var path = new google.maps.Polyline({
-							path:route.overview_path,
-							geodesic:true,
-							strokeColor:"#ff000",
-							strokeOpacity:1.0,
-							strokeWeight:6,
-							map:map,
-							zIndex:1
-						});
-						markers.google_routs.push(path);
-						route.overview_path.forEach(function(e){
-							bounds.extend(e);
-						});
-						break;
-					}
-				} else {
-					bounds.extend(start);
-					bounds.extend(stop);
-					open_modal({title: "error", content:"No "+settings.get("extra_rout")+" rout between locations."});
-				}
-				map.panTo(bounds.getCenter());
-				google.maps.event.addListenerOnce(map, "idle", function() {
-					map.fitBounds(bounds);
-				});
-				full_bounds = bounds;
-			});
+			var icon = '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">';
+			if (settings.get("extra_rout") == "BICYCLING")
+				icon = '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">';
+			additional_google_rout(start, stop, settings.get("extra_rout"), icon);
+		} else if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_location), new google.maps.LatLng(stop_location)) < 1000){
+			additional_google_rout(start, stop, "WALKING", '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">');
 		}
+	});
+}
+
+function additional_google_rout(start, stop, mode, icon){
+	DirectionsService.route({origin: start, destination: stop, travelMode:mode}, function (response, status){
+		console.log("google "+mode+" results", status, response);
+		var bounds = new google.maps.LatLngBounds();
+		var results = [];
+		if (status == "OK"){
+			var obj = {
+				icon:icon,
+				name:mode.toLowerCase().ucfirst(),
+				price:" ---",
+				time:"N/A"
+			};
+			for (var i=0;i<response.routes.length;i++){
+				var route = response.routes[i];
+				extra_rout_holder = route.legs[0];
+				obj.time_sec = route.legs[0].duration.value;
+				var path = new google.maps.Polyline({
+					path:route.overview_path,
+					geodesic:true,
+					strokeColor:"#ff0000",
+					strokeOpacity:1.0,
+					strokeWeight:6,
+					map:map,
+					zIndex:1
+				});
+				markers.google_routs.push(path);
+				route.overview_path.forEach(function(e){
+					bounds.extend(e);
+				});
+				break;
+			}
+			results.push(obj);
+		} else {
+			bounds.extend(start);
+			bounds.extend(stop);
+		}
+		map.panTo(bounds.getCenter());
+		google.maps.event.addListenerOnce(map, "idle", function() {
+			map.fitBounds(bounds);
+		});
+		full_bounds = bounds;
+		returned_results(results, "Walking");
 	});
 }
 
@@ -678,6 +698,7 @@ function run_services(){
 	console.log("run_services", run_handel);
 	if (!run_handel){
 		run_handel = setTimeout(function (){
+			extra_rout_holder = false;
 			console.log("runing_services", start_location, stop_location);
 			if (start_location.lat == stop_location.lat && start_location.lng == stop_location.lng){
 				open_modal({title: "Error", content:"Your origin and destination can not be the same location."});
@@ -1540,6 +1561,14 @@ function startup(){
 						map.setCenter(my_loc);
 				}
 			}
+		});
+	});
+
+	click_event(".fb_login", function (){
+		facebookConnectPlugin.login("email", function (obj){
+			console.log("fb login", obj);
+		}, function (e){
+			console.log("fb login error", e);
 		});
 	});
 
