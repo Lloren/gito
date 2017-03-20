@@ -1565,9 +1565,9 @@ function startup(){
 	});
 
 	click_event(".fb_login", function (){
-		facebookConnectPlugin.login(["public_profile,email"], function (obj){
+		facebookConnectPlugin.login(["public_profile","email"], function (obj){
 			console.log("fb login", obj);
-			facebookConnectPlugin.api("me/?access_token="+obj.accessToken, ["public_profile,email"],
+			facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.accessToken, [],
 				function onSuccess (result) {
 					console.log("Result: ", result);
 				}, function onError (error) {
@@ -1577,6 +1577,15 @@ function startup(){
 		}, function (e){
 			console.log("fb login error", e);
 		});
+	});
+
+	click_event(".google_login", function (){
+		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': '593153139133-9993mcioj3kd5629pcm7ih1ifr75g15m.apps.googleusercontent.com', 'offline': true}, function (obj) {
+				console.log(obj); // do something useful instead of alerting
+			}, function (msg) {
+				console.log('error: ' + msg);
+			}
+		);
 	});
 
 	click_event("#menu_logout", function (e){

@@ -113,7 +113,7 @@
 		<param name="APP_NAME" value="Mooky" />
 	</gap:plugin>
 	<gap:plugin name="cordova-plugin-googleplus" source="npm">
-		<param name="REVERSED_CLIENT_ID" value="myreversedclientid" />
+		<param name="REVERSED_CLIENT_ID" value="593153139133-9993mcioj3kd5629pcm7ih1ifr75g15m.apps.googleusercontent.com" />
 	</gap:plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
