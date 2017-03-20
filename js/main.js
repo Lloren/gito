@@ -1567,15 +1567,18 @@ function startup(){
 	click_event(".fb_login", function (){
 		facebookConnectPlugin.login(["public_profile","email"], function (obj){
 			console.log("fb login", obj);
-			facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.accessToken, [], function onSuccess (result) {
-					$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: result}, function(data){
+			$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
+				console.log("Result: ", data);
+			});
+			/*facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.authResponse.accessToken, [], function onSuccess (result) {
+					$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
 						console.log("Result: ", data);
 					});
 					console.log("Result: ", result);
 				}, function onError (error) {
 					console.error("Failed: ", error);
 				}
-			);
+			);*/
 		}, function (e){
 			console.log("fb login error", e);
 		});
