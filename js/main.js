@@ -1580,7 +1580,7 @@ function startup(){
 	});
 
 	click_event(".google_login", function (){
-		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': '593153139133-9993mcioj3kd5629pcm7ih1ifr75g15m.apps.googleusercontent.com', 'offline': true}, function (obj) {
+		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': '593153139133-s91ovtdo1ipv4vd1078mr2omho6k3lqe.apps.googleusercontent.com', 'offline': true}, function (obj) {
 				alert(JSON.stringify(obj)); // do something useful instead of alerting
 			}, function (msg) {
 				alert('error: ' + msg);
