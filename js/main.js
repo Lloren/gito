@@ -1581,9 +1581,9 @@ function startup(){
 
 	click_event(".google_login", function (){
 		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': '593153139133-9993mcioj3kd5629pcm7ih1ifr75g15m.apps.googleusercontent.com', 'offline': true}, function (obj) {
-				console.log(obj); // do something useful instead of alerting
+				alert(JSON.stringify(obj)); // do something useful instead of alerting
 			}, function (msg) {
-				console.log('error: ' + msg);
+				alert('error: ' + msg);
 			}
 		);
 	});
