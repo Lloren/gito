@@ -1567,8 +1567,10 @@ function startup(){
 	click_event(".fb_login", function (){
 		facebookConnectPlugin.login(["public_profile","email"], function (obj){
 			console.log("fb login", obj);
-			facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.accessToken, [],
-				function onSuccess (result) {
+			facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.accessToken, [], function onSuccess (result) {
+					$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: result}, function(data){
+						console.log("Result: ", data);
+					});
 					console.log("Result: ", result);
 				}, function onError (error) {
 					console.error("Failed: ", error);
@@ -1580,7 +1582,10 @@ function startup(){
 	});
 
 	click_event(".google_login", function (){
-		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': '593153139133-s91ovtdo1ipv4vd1078mr2omho6k3lqe.apps.googleusercontent.com', 'offline': true}, function (obj) {
+		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': google_web_code, 'offline': true}, function (obj) {
+				$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), google_info: obj}, function(data){
+					alert(JSON.stringify(data));
+				});
 				alert(JSON.stringify(obj)); // do something useful instead of alerting
 			}, function (msg) {
 				alert('error: ' + msg);
