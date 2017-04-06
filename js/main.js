@@ -817,7 +817,7 @@ function load_map(){
 	});
 
 	$(".page").hide();
-	if (settings.get("user_id")){
+	if (settings.get("user_id") > 0){
 		$("#map").show();
 	} else {
 		$("#menu_login").trigger("click_event");
@@ -1604,6 +1604,7 @@ function startup(){
 
 	click_event(".fb_login", function (){
 		facebookConnectPlugin.login(["public_profile","email"], function (obj){
+			open_modal({title: "Login Error", content:e});
 			console.log("fb login", obj);
 			$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
 				login_responce(data);
@@ -1721,20 +1722,22 @@ function startup(){
 		open_share();
 	});
 
-	$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
-		if (data.data && data.data != ""){
-			saved_locations = data.data.saved_locations;
-			window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
-			delete data.data.saved_locations;
-			settings.data = data.data;
-			settings.save(true);
-		}
-	});
+	if (settings.get("user_id") > 0){
+		$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
+			if (data.data && data.data != ""){
+				saved_locations = data.data.saved_locations;
+				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
+				delete data.data.saved_locations;
+				settings.data = data.data;
+				settings.save(true);
+			}
+		});
+	}
 
 	rolidex = new Rolidex();
 	rolidex2 = new Rolidex2();
 
-	if (settings.get("user_id")){
+	if (settings.get("user_id") > 0){
 		$(".logged_in").show();
 		$(".logged_out").hide();
 	} else {
@@ -1768,8 +1771,10 @@ function startup(){
 function save_settings(){
 	var settings_data = Object.create(settings.data);
 	settings_data.saved_locations = saved_locations;
-	$.post(base_url+"/ajax/settings.php?action=save&uuid="+settings.get("uuid")+"&user_id="+settings.get("user_id"), {data: settings_data}, function (data){
-	});
+	if (settings.get("user_id") > 0){
+		$.post(base_url+"/ajax/settings.php?action=save&uuid="+settings.get("uuid")+"&user_id="+settings.get("user_id"), {data: settings_data}, function (data){
+		});
+	}
 }
 
 function one_click(type){
