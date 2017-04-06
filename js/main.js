@@ -23,6 +23,7 @@ var no_blur = false;
 var run_handel = false;
 
 var rolidex;
+var rolidex2;
 
 var transit_holder = [];
 var extra_rout_holder = false;
@@ -516,6 +517,13 @@ function returned_results(results, over_name){
 	if (results){
 		if (results.length > 1){
 			var over_result = {};
+			if (settings.get("expanded_results")){
+				over_result.result_class = "result_contractor";
+				over_result.sub_result_display = "block";
+			} else {
+				over_result.result_class = "result_expander";
+				over_result.sub_result_display = "none";
+			}
 			over_result.sub_results = format_results(results);
 			over_result.name = over_name + " ("+results.length+")";
 			over_result.icon = '<img src="images/'+over_name.toLowerCase()+'_logo.svg">';
@@ -1013,6 +1021,30 @@ function get_geo_location_geo(do_load){
 	}
 }
 
+function login_responce(data){
+	if (data.get_phone){
+		settings.set("get_phone_user_id", data.user_id);
+		$(".page").hide();
+		$("#get_number").show();
+	} else if (data.validate){
+		settings.delete("get_phone_user_id");
+		settings.set("pre_user_id", data.user_id);
+		$(".page").hide();
+		$("#verify_phone").val(data.phone);
+		$("#verify_number").show();
+	} else if (data.user_id){
+		settings.delete("pre_user_id");
+		settings.set("user_id", data.user_id);
+		$(".logged_in").show();
+		$(".logged_out").hide();
+		$(".page").hide();
+		$("#map").show();
+		google.maps.event.trigger(map, "resize");
+		if (my_loc)
+			map.setCenter(my_loc);
+	}
+}
+
 function startup(){
 	console.log("startup");
 	if (!dev)
@@ -1254,6 +1286,7 @@ function startup(){
 			$("#transit_details_tab").hide();
 			$("#taxi_details_tab").hide();
 		} else {
+			rolidex2.set_spacing();
 			$(e.currentTarget).toggleClass("open");
 			if ($(e.currentTarget).hasClass("open")){
 				$("#settings_tab").removeClass("open");
@@ -1273,13 +1306,16 @@ function startup(){
 		} else {
 			$(e.currentTarget).next(".options").slideUp(200);
 		}
+		rolidex2.set_spacing();
 	});
 
 	click_event(".back", function (e){
 		var opt = $(e.currentTarget);
 		$(".page").hide();
 
-		if (settings.get("pre_user_id") && opt.data("back") == "map"){
+		if (settings.get("get_phone_user_id") && opt.data("back") == "map"){
+			$("#get_number").show();
+		} else if (settings.get("pre_user_id") && opt.data("back") == "map"){
 			$("#verify_number").show();
 		} else if (!settings.get("user_id") && opt.data("back") == "map"){
 			$("#login").show();
@@ -1531,7 +1567,7 @@ function startup(){
 		$(".page").hide();
 		$("#login").show();
 	});
-
+	
 	click_event("#login_do", function (){
 		open_modala("Loading...");
 		$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), email: $("#login_email").val(), password: $("#login_password").val()}, function(data){
@@ -1541,25 +1577,27 @@ function startup(){
 				var mess = "";
 				for (var i=0;i<data.mess.Error.length;i++)
 					mess += "<div>"+data.mess.Error[i].message+"</div>";
-
+				
 				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
 			} else {
-				if (data.validate){
-					settings.set("pre_user_id", data.user_id);
-					$(".page").hide();
-					$("#verify_phone").val(data.phone);
-					$("#verify_number").show();
-				} else {
-					settings.delete("pre_user_id");
-					settings.set("user_id", data.user_id);
-					$(".logged_in").show();
-					$(".logged_out").hide();
-					$(".page").hide();
-					$("#map").show();
-					google.maps.event.trigger(map, "resize");
-					if (my_loc)
-						map.setCenter(my_loc);
-				}
+				login_responce(data);
+			}
+		});
+	});
+	
+	click_event("#number_do", function (){
+		open_modala("Loading...");
+		$.getJSON(base_url+"/ajax/settings.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("get_phone_user_id"), action:"change_phone"}, function(data){
+			close_modala();
+			console.log(data);
+			if (data.mess.Error){
+				var mess = "";
+				for (var i=0;i<data.mess.Error.length;i++)
+					mess += "<div>"+data.mess.Error[i].message+"</div>";
+				
+				open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
+			} else {
+				login_responce(data);
 			}
 		});
 	});
@@ -1568,30 +1606,23 @@ function startup(){
 		facebookConnectPlugin.login(["public_profile","email"], function (obj){
 			console.log("fb login", obj);
 			$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
-				console.log("Result: ", data);
+				login_responce(data);
+				console.log("fb Result: ", data);
 			});
-			/*facebookConnectPlugin.api("me/?fields=id,name,email&access_token="+obj.authResponse.accessToken, [], function onSuccess (result) {
-					$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
-						console.log("Result: ", data);
-					});
-					console.log("Result: ", result);
-				}, function onError (error) {
-					console.error("Failed: ", error);
-				}
-			);*/
 		}, function (e){
-			console.log("fb login error", e);
+			open_modal({title: "Login Error", content:e});
 		});
 	});
 
 	click_event(".google_login", function (){
 		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': google_web_code, 'offline': true}, function (obj) {
 				$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), google_info: obj}, function(data){
+					login_responce(data);
 					alert(JSON.stringify(data));
 				});
 				alert(JSON.stringify(obj)); // do something useful instead of alerting
 			}, function (msg) {
-				alert('error: ' + msg);
+				open_modal({title: "Login Error", content:msg});
 			}
 		);
 	});
@@ -1602,6 +1633,7 @@ function startup(){
 		$(".logged_out").show();
 		settings.delete("user_id");
 		settings.delete("pre_user_id");
+		settings.delete("get_phone_user_id");
 		$(".page").hide();
 		$("#login").show();
 	});
@@ -1700,6 +1732,7 @@ function startup(){
 	});
 
 	rolidex = new Rolidex();
+	rolidex2 = new Rolidex2();
 
 	if (settings.get("user_id")){
 		$(".logged_in").show();
@@ -1874,6 +1907,101 @@ function Rolidex(){
 					prev_group_z = z;
 					parent.css({top: npos, "z-index":z});
 					parent.children(".result").css({"z-index":z});
+				}
+			} else {
+				$(this).css({top: npos - mod_top, "z-index":z});
+			}
+			curr_pos += scope.height;
+		});
+	}
+}
+
+function Rolidex2(){
+	var scope = this;
+	this.pre_pos = 0;
+	this.pos = 0;
+	this.last_pos = 0;
+	this.height = 30;
+	this.height_div = 25;
+	this.range = 30;
+	this.range_size = 2 * this.height;
+	this.touch_start = false;
+
+	this.main_div = $("#map_settings");
+	this.sub_div = ".toggler:visible, .options>.option:visible";
+
+	this.main_div.on("touchstart", function (e){
+		scope.touch_start = e.originalEvent.touches[0];
+	});
+	this.main_div.on("touchmove", function (e){
+		if (scope.touch_start){
+			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
+			scope.pos = scope.last_pos - delt;
+			scope.set_spacing();
+		}
+	});
+	this.main_div.on("touchend", function (e){
+		scope.touch_start = false;
+		scope.last_pos = scope.pos;
+	});
+
+	this.set_spacing = function(){
+		var items = $(this.sub_div);
+		var total_height = items.length * this.height;
+		this.main_div.css("height", total_height);
+		var cont_height = this.main_div.height();
+		var scroll_height = total_height - cont_height - 5;
+
+		var full_height = scroll_height < 0;
+
+		var prev_group_z = false;
+
+		console.log(this.pos, cont_height, items.length, scroll_height);
+
+		if (this.pos > scroll_height)
+			this.pos = scroll_height;
+		if (this.pos < 0)
+			this.pos = 0;
+		var curr_pos = -this.pos;
+		var z = 0;
+		var a = 1;
+		var scope = this;
+		$.each(items, function (){
+			var parent = $(this).parent();
+			var mod_top = -1;
+			if (parent.hasClass("options"))
+				mod_top = parent.parent().css("top").slice(0, -2);
+			var npos = curr_pos;
+			if (npos < scope.range && z != 0){
+				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
+			}
+			if (npos < 0)
+				npos = 0;
+			if (npos > cont_height - scope.range - scope.height && a != items.length){
+				npos = cont_height - (scope.range - Math.tanh((npos - (cont_height - scope.range - scope.height))/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
+				if (prev_group_z != false){
+					z = prev_group_z;
+					prev_group_z = false;
+				}
+				z--;
+			} else if (a != items.length){
+				z++;
+			} else {
+				z--;
+			}
+			if (npos > cont_height - scope.height)
+				npos = cont_height - scope.height;
+			a++;
+			//console.log(npos, mod_top);
+			if (mod_top == -1){
+				if (parent.hasClass("para_scroll")){
+					z -= 2;
+					$(this).css({top: npos, "z-index":z});
+				} else {
+					prev_group_z = z;
+					$(this).css({"z-index":z});
+					parent.css({top: npos, "z-index":z});
+					parent.children(".option").css({"z-index":z});
 				}
 			} else {
 				$(this).css({top: npos - mod_top, "z-index":z});

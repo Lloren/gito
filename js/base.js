@@ -39,7 +39,7 @@ function Settings(save_key, def_data){
 			save_settings();
 	};
 }
-window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at","extra_rout":""}');
+window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at","extra_rout":"","expanded_results":true}');
 
 var last_touch = {x: 0, y:0, trigger:""};
 function set_touch(e, trigger){

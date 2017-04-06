@@ -20,7 +20,7 @@
 		var app = "Mooky Dev";
 		var base_url = "http://gito.notomono.onnix.net";
 		var ga_code = "UA-89570885-2";
-		var google_web_code = "593153139133-s91ovtdo1ipv4vd1078mr2omho6k3lqe.apps.googleusercontent.com";
+		var google_web_code = "593153139133-s91ovtdo1ipv4vd1078mr2omho6k3lqe.apps.googleusercontent.com";//609429263818-fcrehqf3al0q9pvtjhbkddbu6cc2p0oc.apps.googleusercontent.com
 		var admob_code = "";
 		var admob_code_droid = "";
 		var fb_app_id = false;
@@ -52,13 +52,13 @@
 	</div>
 	<div data-key="overload_result">
 		<div class="result_group">
-			<div class="result result_expander">
+			<div class="result ##result_class##">
 				<div class="icon expander"><img class="img_toggle" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg"> ##icon##</div>
 				<div class="name expander">##name##</div>
 				<div class="price expander">##price##</div>
 				<div class="time expander">##time##</div>
 			</div>
-			<div class="sub_results">##sub_results##</div>
+			<div class="sub_results" style="display: ##sub_result_display##;">##sub_results##</div>
 		</div>
 	</div>
 	<div data-key="transit_step">
@@ -190,7 +190,7 @@
 			<div id="settings_tab_handle">
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.W+RO.v4.svg" />
 			</div>
-			<div id="map_settings">
+			<div id="map_settings" class="para_scroll">
 				<div class="settings_container" data-trigger="one_click">
 					<div class="toggler open">
 						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
@@ -231,6 +231,20 @@
 						</div>
 						<div class="option" data-key="ttd">
 							<img class="settings_icon" src="images/icons3/CUSTOM WAIT ICON.W+RO.v1.svg" > Time Till Depart
+						</div>
+					</div>
+				</div>
+				<div class="settings_container" data-key="expanded_results">
+					<div class="toggler">
+						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<span class="option selected"></span>
+					</div>
+					<div class="options">
+						<div class="option" data-key="true">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.SHOW.W+RO.v4.svg" > Results Expanded
+						</div>
+						<div class="option" data-key="false">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20EXTERNAL%20APP%20ICON.HIDE.W+RO.v3.svg" > Results Condensed
 						</div>
 					</div>
 				</div>
@@ -970,6 +984,23 @@
 			</div>
 			<div class="icon_link open_page" data-page="toc">
 				<img src="images/icon_terms.svg" /> Terms and conditions
+			</div>
+		</div>
+	</div>
+
+	<div id="get_number" class="page form">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px; width: inherit;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+		</div>
+		<h2>Phone Number</h2>
+		<div class="icon_input">
+			<img src="images/icon_phone.svg" />
+			<input type="tel" id="number_phone" placeholder="Phone" />
+		</div>
+		<input type="button" id="number_do" value="Submit" />
+		<div style="bottom:0; position: absolute; width: 100%;">
+			<div class="icon_link open_page" data-page="toc">
+				<img src="images/icon_terms.svg" style="width: 30px;" /> Terms and conditions
 			</div>
 		</div>
 	</div>

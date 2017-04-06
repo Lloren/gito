@@ -268,8 +268,13 @@ input[type="checkbox"]:checked + label span{
 	transition: 200ms;
 }
 
+.settings_container{
+	position: absolute;
+	width:100%;
+}
+
 #settings_tab .toggler, #settings_tab .options>div{
-	position: relative;
+	position: absolute;
 	height: 25px;
 	overflow: hidden;
 	margin-bottom: 5px;
