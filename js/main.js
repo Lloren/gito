@@ -1763,6 +1763,12 @@ function startup(){
 	if (typeof settings.get("time_display") == "undefined"){
 		settings.set("time_display", "ttd");
 	}
+	if (typeof settings.get("extra_rout") == "undefined"){
+		settings.set("extra_rout", "");
+	}
+	if (typeof settings.get("expanded_results") == "undefined"){
+		settings.set("expanded_results", true);
+	}
 
 	update_settings();
 }
