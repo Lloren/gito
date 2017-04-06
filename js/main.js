@@ -1587,7 +1587,7 @@ function startup(){
 	
 	click_event("#number_do", function (){
 		open_modala("Loading...");
-		$.getJSON(base_url+"/ajax/settings.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("get_phone_user_id"), action:"change_phone"}, function(data){
+		$.getJSON(base_url+"/ajax/settings.php?callback=?", {uuid: settings.get("uuid"), user_id: settings.get("get_phone_user_id"), phone: $("#number_phone").val(), action:"change_phone"}, function(data){
 			close_modala();
 			console.log(data);
 			if (data.mess.Error){
