@@ -36,6 +36,8 @@
 	<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key=AIzaSyAmU39uI5FDOZs8beBgV4v-1Zm1Udlp1eE"></script>
 	<script src="js/jquery-3.1.0.min.js"></script>
 	<script src="js/fastclick.min.js"></script>
+	<script src="js/morphsvgplugin-0.6.0.min.js"></script>
+	<script src="js/tweenmax-1.19.1.min.js"></script>
 	<script src="js/base.js"></script>
 	<script src="js/main.js"></script>
 </head>
@@ -43,7 +45,7 @@
 
 <div id="templates" style="display: none;">
 	<div data-key="result">
-		<div class="result{{transit_info? transit_info}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
+		<div class="result{{transit_info? transit_info}}{{extra_info? extra_info}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
 			<div class="icon">##icon##</div>
 			<div class="name">##name##</div>
 			<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
@@ -149,9 +151,49 @@
 			<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
 				<img style="height: 40px; width: inherit;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
 			</div>
-			<div class="settings_toggle open" style="position: absolute; right:5px; top:2px; z-index: 20;">
-				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="width: 40px;">
+			<div class="settings_toggle open" style="position: absolute; right:5px; top:5px; z-index: 20;">
+				<!--<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="width: 40px;">-->
+				<svg id="switcher" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 250 250" style="width: 40px;">
+					<path id="gear" d="M78.70226,123.79905c-0.26775,25.2445,20.35263,45.59713,45.59712,45.86488c24.95867,0,45.86489-20.62038,45.86489-45.59714
+	c0-24.95865-20.62401-45.31128-45.59713-45.5935C99.32265,78.22001,78.70226,98.57264,78.70226,123.79905z M151.43623,2.77236
+	c1.0891,8.40879,2.44594,16.54985,3.5314,24.6909c0,0.82136,0,1.35684,0.27138,2.17819
+	c0.81772,2.71368,14.38614,7.31972,16.8176,5.42737c5.96286-4.33827,11.94383-8.68017,17.63895-13.30067
+	c2.17819-1.89235,3.80278-1.35684,5.69513,0c13.03291,8.9624,23.88765,20.08488,32.83195,33.0997
+	c1.35684,1.89597,1.35684,3.25281,0,5.15963c-4.60603,5.69511-8.95877,11.94382-13.29706,17.63895
+	c-1.35684,1.89596-1.89595,3.53502-0.53911,5.69511c0.82133,1.35684,1.62457,2.71368,1.89595,4.07053
+	c1.08546,6.24872,4.88826,8.14105,10.58337,8.41243c5.69873,0.26775,11.39384,1.6246,16.82121,2.17457
+	c2.44594,0.26774,3.24919,1.08909,3.80278,3.2528c2.17456,11.39023,2.71368,23.06631,1.62459,34.45654
+	c-0.26775,4.33829-1.08908,8.9624-1.89595,13.30067c-0.26776,1.0891-1.6246,2.44594-2.71368,2.71368
+	c-7.31972,1.35684-14.92526,2.44594-22.24498,3.24919c-2.44592,0.27136-3.80276,1.08908-4.33827,3.53502
+	c-0.26775,1.35684-0.82133,2.98143-1.62459,4.33827c-3.80278,5.15962-2.17819,9.49789,1.89233,13.83618
+	c3.80278,4.34189,7.05196,8.96239,10.31923,13.56842c0.81775,1.08908,0.81775,3.53502,0.26776,4.60963
+	c-8.96239,13.30067-20.08488,24.42316-33.38554,33.65331c-1.89235,1.35684-3.24919,1.08548-5.15964-0.27136
+	c-5.6951-4.60603-11.9402-8.95879-17.63895-13.29706c-1.62457-1.35684-3.24918-1.89597-5.15599-0.53912
+	c-1.35684,0.82135-2.98506,1.6246-4.60963,1.89597c-6.2451,1.08548-7.87331,5.15601-8.14105,10.85474
+	c-0.26776,5.69511-1.35684,11.67245-2.44594,17.36758c-0.26775,1.08908-1.62459,2.71368-2.98143,2.98505
+	c-16.01436,3.24919-31.74288,3.24919-47.75723,0.26775c-2.17818-0.26775-2.98144-1.35684-3.24919-3.53502
+	c-0.82133-7.31972-2.17818-14.65752-2.98505-21.97722c-0.26775-2.44594-1.08548-3.80278-3.53141-4.33829
+	c-1.08909-0.26775-2.44593-0.82133-3.53503-1.35684c-5.42737-3.80276-10.03339-2.71368-14.92526,1.89235
+	c-3.80277,3.80278-8.67655,6.51646-13.0293,10.037c-1.89596,1.6246-3.2528,1.6246-5.15961,0.26776
+	c-13.30067-9.23015-24.42316-20.35263-33.6533-33.65331c-1.35684-1.89233-1.08909-3.24918,0.26775-5.15961
+	c4.60964-5.69513,8.96239-11.94022,13.30067-17.63895c1.35684-1.6246,1.89596-3.24919,0.53912-5.15601
+	c-0.82134-1.0891-1.62822-2.44594-1.62822-3.80278c-1.08547-7.32332-5.96287-8.68016-12.47932-9.23015
+	c-5.42737-0.26775-10.85474-1.35684-16.01435-2.44592c-1.08547-0.26776-2.71369-1.89235-2.98143-2.98145
+	c-3.24918-16.01434-3.24918-31.74648,0-47.75721c0.26775-1.0891,1.89596-2.71368,2.98143-2.71368
+	c7.60555-1.35684,15.19663-2.17819,22.79856-3.53503c1.35684-0.26775,2.44593-1.6246,3.53502-2.71368
+	c0.26775-0.26775,0.26775-1.08909,0.5355-1.6246c5.42737-7.60555,3.2528-14.10753-2.71369-20.35263
+	c-2.98143-3.24918-5.69512-7.05195-8.14105-10.58698c-0.81772-1.08909-0.81772-3.24918-0.26775-4.33828
+	c8.95877-13.56842,20.35263-24.6909,33.6533-33.92105c1.89235-1.35684,2.98144-1.08907,4.60603,0.26777
+	c5.69511,4.60962,11.94383,8.96239,17.63895,13.30065c1.89596,1.35684,3.53502,1.89235,5.42737,0.53551
+	c1.35684-0.81773,2.98143-1.6246,4.60964-1.89235c6.24509-1.08908,7.60194-5.1596,7.86968-10.58697
+	c0.27137-5.69514,1.62821-11.39025,2.17818-17.09985c0.26775-2.71368,1.35684-3.53502,3.80277-3.80276
+	C118.05069-0.76266,134.60054-0.76266,151.43623,2.77236z"/>
+					<path id="x" style="display:none;" d="M125,250C55.96333,250,0,194.03667,0,125S55.96333,0,125,0s125,55.96334,125,125S194.03667,250,125,250z
+	 M189.38667,83.98334l-23.38335-23.37001L125,101.62666L83.98333,60.61333l-23.37,23.37001L101.62667,125l-41.01334,41.01668
+	l23.37,23.37L125,148.37334l41.01666,41.01334l23.38333-23.37L148.37334,125L189.38667,83.98334z"/>
+				</svg>
 			</div>
+
 			<div>
 				<div style="position: relative;" class="input_holder" data-type="from">
 					<div style="width: 40px; display: inline-block; position: relative;">
@@ -182,7 +224,7 @@
 				<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 			</div>
 			<div class="my_location" style="position: absolute; z-index: 2; top: 145px; left: 5px;">
-				<img src="images/icons3/GPS.RO.v10.svg" style="width: 30px;">
+				<img src="images/current_location.svg" style="width: 30px;">
 			</div>
 		</div>
 		<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
@@ -928,16 +970,25 @@
 			<input type="password" id="login_password" placeholder="Password" />
 		</div>
 		<input type="button" id="login_do" value="Login" />
+		<div style="margin:10px;">
+			<div class="google_login" style="width:49%; float:left; padding-right:10px; text-align:right;">
+				<img src="images/google_icon.svg" /> google
+			</div>
+			<div class="fb_login" style="width:49%; float:right; padding-left:10px;">
+				<img src="images/fb_icon.svg" /> fb
+			</div>
+			<div class="clear"></div>
+		</div>
 		<div class="icon_link open_page" data-page="signup" style="position: relative; text-align: center; background: white; border-radius: 100px; color: #ff8806; padding: 5px; width: 200px; margin: 20px auto; box-shadow: 3px 3px #f59d87;">
 			<img src="images/icon_signup.svg" style="width: 24px; position: absolute; margin-left: -32px; top: 3px;" /> Signup
 		</div>
 
 		<div style="bottom:10px; position: absolute; width: 100%;">
 			<div class="icon_link google_login dev">
-				<img src="images/icons3/CUSTOM_ACCOUNT_RECOVERY.v2.svg" /> google_login (dev)
+				<img src="images/google_icon.svg" /> google_login (dev)
 			</div>
 			<div class="icon_link fb_login dev">
-				<img src="images/icons3/CUSTOM_ACCOUNT_RECOVERY.v2.svg" /> fb_login (dev)
+				<img src="images/fb_icon.svg" /> fb_login (dev)
 			</div>
 			<div class="icon_link open_page" data-page="recover">
 				<img src="images/icons3/CUSTOM_ACCOUNT_RECOVERY.v2.svg" /> Forgot Password

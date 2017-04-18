@@ -315,10 +315,11 @@ function additional_google_rout(start, stop, mode, icon){
 				icon:icon,
 				name:mode.toLowerCase().ucfirst(),
 				price:" ---",
-				time:"N/A"
+				time:"N/A",
+				extra_info: true
 			};
 			for (var i=0;i<response.routes.length;i++){
-				var route = response.routes[i];
+				var route = response.routes[0];
 				extra_rout_holder = route.legs[0];
 				obj.time_sec = route.legs[0].duration.value;
 				var path = new google.maps.Polyline({
@@ -656,6 +657,7 @@ function coded_location(pos, start, trigger){
 				if (stop_location){
 					run_services();
 				}
+				$(".from_clear").show();
 			});
 			if (trigger){
 				geo_location("#from_loc", start_location);
@@ -691,6 +693,7 @@ function coded_location(pos, start, trigger){
 				if (start_location){
 					run_services();
 				}
+				$(".to_clear").show();
 			});
 			if (trigger){
 				geo_location("#to_loc", stop_location);
@@ -1090,9 +1093,9 @@ function startup(){
 			from_blur_handel = setTimeout(function (){
 				console.log("blur from run");
 				get_origin_geo(coded_location);
-				$("#results_tab").removeClass("hidden");
 			}, 10);
 		}
+		$("#results_tab").removeClass("hidden");
 		$("#from_loc").parents(".input_holder").children(".prediction_holder").hide();
 	}).on("focus", function (){
 		query_places($("#from_loc"));
@@ -1117,9 +1120,9 @@ function startup(){
 			to_blur_handel = setTimeout(function (){
 				console.log("blur to run");
 				get_destination_geo(coded_location);
-				$("#results_tab").removeClass("hidden");
 			}, 10);
 		}
+		$("#results_tab").removeClass("hidden");
 		$("#to_loc").parents(".input_holder").children(".prediction_holder").hide();
 	}).on("focus", function (){
 		query_places($("#to_loc"));
@@ -1255,6 +1258,44 @@ function startup(){
 		$("#settings_tab").addClass("main_info_open");
 		$("#results_tab").addClass("main_info_open");
 		$(".settings_toggle").addClass("close_main_info");
+		morph.play();
+
+		$("#transit_details_tab").show();
+
+		$(".transit_step .action").each(function (){
+			var wid = $(window).width();
+			if ($(this).width() > wid - 125){
+				var sec = "";
+				while ($(this).width() > wid - 140){
+					var cont = $(this).html().split(" ");
+					sec = cont.pop() + " " + sec;
+					$(this).html(cont.join(" "));
+				}
+				if (sec != ""){
+					$(this).parents(".transit_step").after(template("transit_step", {sec_line: true, action: sec.trim()}));
+				}
+			}
+		});
+	}, true);
+
+	click_event(".extra_info", function (e){
+		console.log("trasit info", extra_rout_holder);
+
+		var steps_html = [];
+		for (var i=0;i<extra_rout_holder.steps.length;i++){
+			var step = extra_rout_holder.steps[i];
+			var temp = {num: i+1, time: ""};
+			temp.time = step.duration.text;
+			temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
+			temp.action = step.instructions.replace(/<\/?[^>]+(>|$)/g, " ").replace(/  /g, " ").replace(/will be on the/g, "on");
+			steps_html.push(template("transit_step", temp));
+		}
+
+		$("#transit_details").html(steps_html.join(""));
+		$("#settings_tab").addClass("main_info_open");
+		$("#results_tab").addClass("main_info_open");
+		$(".settings_toggle").addClass("close_main_info");
+		morph.play();
 
 		$("#transit_details_tab").show();
 
@@ -1278,6 +1319,16 @@ function startup(){
 		$(".settings_toggle").trigger("click_event");
 	}, true);
 
+	var morph = new TimelineMax({paused:true});
+	morph.to("#gear", 0.2, { morphSVG: "#x", ease:Power1.easeInOut });
+
+	/*$("#switcher").on("click", function() {
+		if (morph.progress() === 0) { //if it's at the beginning, start playing
+			morph.play();
+		} else { //otherwise toggle the direction on-the-fly
+			morph.reversed( !morph.reversed() );
+		}
+	});*/
 	click_event(".settings_toggle", function (e){
 		if ($(e.currentTarget).hasClass("close_main_info")){
 			$(e.currentTarget).removeClass("close_main_info");
@@ -1285,16 +1336,20 @@ function startup(){
 			$("#results_tab").removeClass("main_info_open");
 			$("#transit_details_tab").hide();
 			$("#taxi_details_tab").hide();
+			if ($(e.currentTarget).hasClass("open"))
+				morph.reverse();
 		} else {
-			rolidex2.set_spacing();
 			$(e.currentTarget).toggleClass("open");
 			if ($(e.currentTarget).hasClass("open")){
 				$("#settings_tab").removeClass("open");
 				$("#results_tab").removeClass("settings_open");
+				morph.reverse();
 			} else {
+				morph.play();
 				$("#settings_tab").addClass("open");
 				$("#results_tab").addClass("settings_open");
 			}
+			rolidex2.set_spacing();
 			rolidex.set_spacing();
 		}
 	});
@@ -1378,6 +1433,7 @@ function startup(){
 			$("#settings_tab").addClass("main_info_open");
 			$("#results_tab").addClass("main_info_open");
 			$(".settings_toggle").addClass("close_main_info");
+			morph.play();
 
 			$("#taxi_details_tab").show();
 			//open_modal({title: "Taxi Companies", content: html, button1: "Close", add_class: "tff_model"});
@@ -1604,7 +1660,6 @@ function startup(){
 
 	click_event(".fb_login", function (){
 		facebookConnectPlugin.login(["public_profile","email"], function (obj){
-			open_modal({title: "Login Error", content:e});
 			console.log("fb login", obj);
 			$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), fb_info: obj.authResponse}, function(data){
 				login_responce(data);
@@ -1875,7 +1930,7 @@ function Rolidex(){
 
 		var prev_group_z = false;
 
-		console.log(this.pos, cont_height, items.length, scroll_height);
+		//console.log(this.pos, cont_height, items.length, scroll_height);
 		
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
@@ -1967,7 +2022,7 @@ function Rolidex2(){
 
 		var prev_group_z = false;
 
-		console.log(this.pos, cont_height, items.length, scroll_height);
+		//console.log(this.pos, cont_height, items.length, scroll_height);
 
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
