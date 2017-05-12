@@ -314,6 +314,10 @@ input[type="checkbox"]:checked + label span{
 	float: left;
 	margin-right: 5px;
 }
+#settings_tab .option_toggle.active {
+	background: #ff8806;
+}
+
 #map_settings{
 	max-height: 160px;
 	overflow-y: auto;

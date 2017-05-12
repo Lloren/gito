@@ -25,6 +25,8 @@ var run_handel = false;
 var rolidex;
 var rolidex2;
 
+var ride_types = {"rideshare": ["lyft_line", "POOL"], "4person": ["lyft", "uberX", "SELECT", "BLACK"], "6person": ["lyft_plus", "uberXL", "SUV"], "special": ["WAV", "ASSIST"]};
+
 var transit_holder = [];
 var extra_rout_holder = false;
 
@@ -318,6 +320,8 @@ function additional_google_rout(start, stop, mode, icon){
 				time:"N/A",
 				extra_info: true
 			};
+			if (obj.name == "Bicycling")
+				obj.bike = true;
 			for (var i=0;i<response.routes.length;i++){
 				var route = response.routes[0];
 				extra_rout_holder = route.legs[0];
@@ -356,8 +360,12 @@ function service_uber(call_num, start, stop){
 		if (results_call > call_num)
 			return;
 		var results = [];
+		var options = get_ride_filters();
 		for (var i=0;i<data.length;i++){
 			var price = data[i];
+			if (options !== true && options.indexOf(price.display_name) == -1){
+				continue;
+			}
 			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
 			var arrival = new Date();
 			arrival.setSeconds(arrival.getSeconds()+parseInt(price.time_estimate)+parseInt(price.duration));
@@ -436,8 +444,14 @@ function process_lyft(call_data){
 			etas[eta.ride_type] = eta.eta_seconds;
 		}
 		var results = [];
+		var options = get_ride_filters();
 		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
 			var est = lyft_cost_data.cost_estimates[i];
+
+			if (options !== true && options.indexOf(est.ride_type) == -1){
+				continue;
+			}
+
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
 			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
 			if (etas[est.ride_type]){
@@ -820,6 +834,12 @@ function load_map(){
 	});
 
 	$(".page").hide();
+	console.log(window.localStorage.getItem("seen_full_settings"));
+	if (!window.localStorage.getItem("seen_full_settings")){
+		setTimeout(function (){
+			$(".settings_toggle").trigger("click_event");
+		}, 300);
+	}
 	if (settings.get("user_id") > 0){
 		$("#map").show();
 	} else {
@@ -959,7 +979,7 @@ function get_geo_location(do_load){
 	var do_load = do_load;
 	var no_resp_timeout = setTimeout(function (){
 		get_geo_location_geo(do_load);
-	});
+	}, 8000);
 	navigator.geolocation.getCurrentPosition(function (pos){
 		clearTimeout(no_resp_timeout);
 		var loc = pos.coords;
@@ -1025,6 +1045,13 @@ function get_geo_location_geo(do_load){
 }
 
 function login_responce(data){
+	if (data.mess.Error){
+		var mess = "";
+		for (var i=0;i<data.mess.Error.length;i++)
+			mess += "<div>"+data.mess.Error[i].message+"</div>";
+
+		open_modal({title: "Error"+(data.mess.Error.length > 1?"s":""), content:mess});
+	}
 	if (data.get_phone){
 		settings.set("get_phone_user_id", data.user_id);
 		$(".page").hide();
@@ -1046,6 +1073,19 @@ function login_responce(data){
 		if (my_loc)
 			map.setCenter(my_loc);
 	}
+}
+
+function get_ride_filters(){
+	var filters = JSON.parse(settings.get("search_filters"));
+	console.log(filters);
+	if (filters.length == Object.keys(ride_types).length || filters.length == 0)
+		return true;
+	var options = [];
+	for (var i=0;i<filters.length;i++){
+		console.log(ride_types[filters[i]]);
+		options = $.merge(options, ride_types[filters[i]]);
+	}
+	return options;
 }
 
 function startup(){
@@ -1210,6 +1250,7 @@ function startup(){
 	});
 
 	click_event("#settings_tab_handle", function (){
+		window.localStorage.setItem("seen_full_settings", true);
 		$("#settings_tab").toggleClass("hidden");
 		if ($("#results_tab").hasClass("hidden")){
 			settings.set("full_map_settings", true);
@@ -1280,6 +1321,7 @@ function startup(){
 
 	click_event(".extra_info", function (e){
 		console.log("trasit info", extra_rout_holder);
+		var is_bike = $(e.currentTarget).hasClass("bike");
 
 		var steps_html = [];
 		for (var i=0;i<extra_rout_holder.steps.length;i++){
@@ -1287,6 +1329,8 @@ function startup(){
 			var temp = {num: i+1, time: ""};
 			temp.time = step.duration.text;
 			temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
+			if (is_bike)
+				temp.icon = "images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg";
 			temp.action = step.instructions.replace(/<\/?[^>]+(>|$)/g, " ").replace(/  /g, " ").replace(/will be on the/g, "on");
 			steps_html.push(template("transit_step", temp));
 		}
@@ -1330,6 +1374,7 @@ function startup(){
 		}
 	});*/
 	click_event(".settings_toggle", function (e){
+		window.localStorage.setItem("seen_full_settings", true);
 		if ($(e.currentTarget).hasClass("close_main_info")){
 			$(e.currentTarget).removeClass("close_main_info");
 			$("#settings_tab").removeClass("main_info_open");
@@ -1357,9 +1402,9 @@ function startup(){
 	click_event(".toggler", function (e){
 		$(e.currentTarget).toggleClass("open");
 		if ($(e.currentTarget).hasClass("open")){
-			$(e.currentTarget).next(".options").slideDown(200);
+			$(e.currentTarget).next(".options").show();
 		} else {
-			$(e.currentTarget).next(".options").slideUp(200);
+			$(e.currentTarget).next(".options").hide();
 		}
 		rolidex2.set_spacing();
 	});
@@ -1444,13 +1489,20 @@ function startup(){
 		$(".settings_container").each(function (){
 			var key = $(this).data("key");
 			if (key){
-				var opt = $(this).find("[data-key='"+settings.get(key)+"']");
-				$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
-				if (opt.data("icon")){
-					$(this).find(".toggler .settings_icon").attr("src", opt.data("icon"));
-					$(this).find(".option.selected .settings_icon").hide();
+				if ($(this).hasClass("settings_toggler")){
+					var toggles = JSON.parse(settings.get(key));
+					for (var i=0;i<toggles.length;i++){
+						var opt = $(this).find("[data-key='"+toggles[i]+"']").addClass("active");
+					}
+				} else {
+						var opt = $(this).find("[data-key='"+settings.get(key)+"']");
+						$(this).find(".option.selected").html(opt.html()).data("key", opt.data("key"));
+						if (opt.data("icon")){
+							$(this).find(".toggler .settings_icon").attr("src", opt.data("icon"));
+							$(this).find(".option.selected .settings_icon").hide();
+						}
+						opt.hide();
 				}
-				opt.hide();
 			} else {
 				$(this).find(".options").show();
 			}
@@ -1473,6 +1525,23 @@ function startup(){
 			opt.hide();
 			cont.find(".toggler").removeClass("open");
 			cont.find(".options").slideUp(200);
+			setTimeout(function (){rolidex2.set_spacing();}, 10);
+		}
+		if (jQuery.isFunction(window[cont.data("trigger")]))
+			window[cont.data("trigger")](opt.data("key"));
+	});
+	
+	click_event(".option_toggle", function (e){
+		var opt = $(e.currentTarget);
+		opt.toggleClass("active");
+		var cont = opt.parents(".settings_container");
+		if (cont.data("key")){
+			var opts = opt.parents(".options");
+			var toggles = [];
+			opts.find(".option_toggle.active").each(function (){
+				toggles.push($(this).data("key"));
+			});
+			settings.set(cont.data("key"), JSON.stringify(toggles));
 		}
 		if (jQuery.isFunction(window[cont.data("trigger")]))
 			window[cont.data("trigger")](opt.data("key"));
@@ -1671,12 +1740,12 @@ function startup(){
 	});
 
 	click_event(".google_login", function (){
-		window.plugins.googleplus.login({'scopes': 'profile email', 'webClientId': google_web_code, 'offline': true}, function (obj) {
+		window.plugins.googleplus.login({"scopes": "profile email", "webClientId": google_web_code, "offline": true}, function (obj) {
 				$.getJSON(base_url+"/ajax/login.php?callback=?", {uuid: settings.get("uuid"), google_info: obj}, function(data){
 					login_responce(data);
-					alert(JSON.stringify(data));
+					//alert(JSON.stringify(data));
 				});
-				alert(JSON.stringify(obj)); // do something useful instead of alerting
+				//alert(JSON.stringify(obj)); // do something useful instead of alerting
 			}, function (msg) {
 				open_modal({title: "Login Error", content:msg});
 			}
@@ -1748,6 +1817,8 @@ function startup(){
 			} else {
 				if (data.good){
 					open_modal({title: "Success", content:"Password Reset"+(data.pass?" - dev auto display pass: "+data.pass:"")});
+					$(".page").hide();
+					$("#login").show();
 				}
 			}
 		});
@@ -1812,6 +1883,9 @@ function startup(){
 		$(this).attr("src", base_url + $(this).attr("src"));
 	});
 
+	if (typeof settings.get("search_filters") == "undefined"){
+		settings.set("search_filters", JSON.stringify(Object.keys(ride_types)));
+	}
 	if (settings.get("full_map_settings")){
 		$("#settings_tab").removeClass("hidden");
 	}
@@ -1994,7 +2068,7 @@ function Rolidex2(){
 	this.touch_start = false;
 
 	this.main_div = $("#map_settings");
-	this.sub_div = ".toggler:visible, .options>.option:visible";
+	this.sub_div = ".toggler:visible, .options>.option:visible, .options>.option_toggle:visible";
 
 	this.main_div.on("touchstart", function (e){
 		scope.touch_start = e.originalEvent.touches[0];
@@ -2016,7 +2090,7 @@ function Rolidex2(){
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
 		var cont_height = this.main_div.height();
-		var scroll_height = total_height - cont_height - 5;
+		var scroll_height = total_height - cont_height;
 
 		var full_height = scroll_height < 0;
 

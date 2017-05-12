@@ -45,7 +45,7 @@
 
 <div id="templates" style="display: none;">
 	<div data-key="result">
-		<div class="result{{transit_info? transit_info}}{{extra_info? extra_info}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
+		<div class="result{{transit_info? transit_info}}{{extra_info? extra_info}}{{bike? bike}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
 			<div class="icon">##icon##</div>
 			<div class="name">##name##</div>
 			<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
@@ -224,7 +224,7 @@
 				<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 			</div>
 			<div class="my_location" style="position: absolute; z-index: 2; top: 145px; left: 5px;">
-				<img src="images/current_location.svg" style="width: 30px;">
+				<img src="images/icons3/GPS.RO.v10.svg" style="width: 30px;">
 			</div>
 		</div>
 		<div id="map-canvas" style="top :140px; height: calc(100% - 140px); width: 100%;"></div>
@@ -259,6 +259,26 @@
 						</div>
 						<div class="option" data-key="time">
 							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Sort by Time
+						</div>
+					</div>
+				</div>
+				<div class="settings_container settings_toggler" data-key="search_filters">
+					<div class="toggler">
+						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
+						<span class="option selected">Filters</span>
+					</div>
+					<div class="options">
+						<div class="option_toggle" data-key="rideshare">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Rideshare(2 person) Options
+						</div>
+						<div class="option_toggle" data-key="4person">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> 4 Person Options
+						</div>
+						<div class="option_toggle" data-key="6person">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> 6 Person Options
+						</div>
+						<div class="option_toggle" data-key="special">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Special Options
 						</div>
 					</div>
 				</div>
