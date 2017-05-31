@@ -14,6 +14,7 @@ String.prototype.ucfirst = function() {
 
 function Settings(save_key, def_data){
 	this.save_key = save_key || "settings_data";
+	this.save_handle = false;
 	
 	this.data = JSON.parse(window.localStorage.getItem(this.save_key) || def_data || "{}");
 	
@@ -35,8 +36,13 @@ function Settings(save_key, def_data){
 	
 	this.save = function (local_only){
 		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
-		if (!local_only)
-			save_settings();
+		if (!local_only){
+			if (this.save_handle)
+				clearTimeout(this.save_handle);
+			this.save_handle = setTimeout(function (){
+				save_settings();
+			}, 10);
+		}
 	};
 }
 window.settings = new Settings(false, '{"sort":"price","show_external_conf":true,"full_map_settings":true,"time_display":"at","extra_rout":"","expanded_results":true}');

@@ -273,14 +273,14 @@ input[type="checkbox"]:checked + label span{
 	width:100%;
 }
 
-#settings_tab .toggler, #settings_tab .options>div{
+#settings_tab .toggler, #settings_tab .options>div, #settings_tab .option_toggle>div{
 	position: absolute;
 	height: 25px;
 	overflow: hidden;
 	margin-bottom: 5px;
 	width: 100%;
 	margin-left: 1%;
-	border: 1px solid #ff8806;
+	border: 1px solid #e8390e;
 	border-bottom-left-radius: 20px;
 	border-top-left-radius: 20px;
 	background: #fff;
@@ -289,7 +289,7 @@ input[type="checkbox"]:checked + label span{
 #settings_tab .options{
 	padding-left: 20px;
 }
-#settings_tab .options .option{
+#settings_tab .options .option, #settings_tab .options .option_toggle{
 	padding-left:5px;
 }
 #settings_tab .option{
@@ -315,7 +315,8 @@ input[type="checkbox"]:checked + label span{
 	margin-right: 5px;
 }
 #settings_tab .option_toggle.active {
-	background: #ff8806;
+	background: #e8390e;
+	color: white;
 }
 
 #map_settings{
@@ -398,7 +399,7 @@ input[type="checkbox"]:checked + label span{
 	padding-left: 25px;
 	width: 100%;
 	margin-left: 1%;
-	border: 1px solid #ff8806;
+	border: 1px solid #e8390e;
 	border-bottom-left-radius: 20px;
 	border-top-left-radius: 20px;
 	background: #fff;

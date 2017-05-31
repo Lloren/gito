@@ -193,12 +193,6 @@ function service_google(call_num, start, stop){
 		//console.log(JSON.stringify(response));
 		console.log("google transit route results", status, response);
 		var results = [];
-		if (markers.google_routs){
-			for (var i=0;i<markers.google_routs.length;i++){
-				markers.google_routs[i].setMap(null);
-			}
-		}
-		markers.google_routs = [];
 		transit_holder = [];
 		var bounds = new google.maps.LatLngBounds();
 		if (status == "OK"){
@@ -264,51 +258,64 @@ function service_google(call_num, start, stop){
 			});
 			returned_results(results, "Transit");
 		}
-		DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
-			console.log("google driving route results", status, response);
-			var bounds = new google.maps.LatLngBounds();
-			if (status == "OK"){
-				for (var i=0;i<response.routes.length;i++){
-					var route = response.routes[i];
-					var path = new google.maps.Polyline({
-						path:route.overview_path,
-						geodesic:true,
-						strokeColor:"#777777",
-						strokeOpacity:1.0,
-						strokeWeight:8,
-						map:map,
-						zIndex:1
-					});
-					markers.google_routs.push(path);
-					route.overview_path.forEach(function(e){
-						bounds.extend(e);
-					});
-					break;
-				}
-			} else {
-				bounds.extend(start);
-				bounds.extend(stop);
-				open_modal({title: "error", content:"No driving rout between locations."});
-			}
-			map.panTo(bounds.getCenter());
-			google.maps.event.addListenerOnce(map, "idle", function() {
-				map.fitBounds(bounds);
-			});
-			full_bounds = bounds;
-		});
-		if (settings.get("extra_rout")){
-			var icon = '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">';
-			if (settings.get("extra_rout") == "BICYCLING")
-				icon = '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">';
-			additional_google_rout(start, stop, settings.get("extra_rout"), icon);
-		} else if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_location), new google.maps.LatLng(stop_location)) < 1000){
-			additional_google_rout(start, stop, "WALKING", '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">');
-		}
 	});
 }
 
-function additional_google_rout(start, stop, mode, icon){
+function google_rout(call_num, start, stop){
+	if (markers.google_routs){
+		for (var i=0;i<markers.google_routs.length;i++){
+			markers.google_routs[i].setMap(null);
+		}
+	}
+	markers.google_routs = [];
+	DirectionsService.route({origin: start, destination: stop, travelMode:"DRIVING"}, function (response, status){
+		if (results_call > call_num)
+			return;
+		console.log("google driving route results", status, response);
+		var bounds = new google.maps.LatLngBounds();
+		if (status == "OK"){
+			for (var i=0;i<response.routes.length;i++){
+				var route = response.routes[i];
+				var path = new google.maps.Polyline({
+					path:route.overview_path,
+					geodesic:true,
+					strokeColor:"#777777",
+					strokeOpacity:1.0,
+					strokeWeight:8,
+					map:map,
+					zIndex:1
+				});
+				markers.google_routs.push(path);
+				route.overview_path.forEach(function(e){
+					bounds.extend(e);
+				});
+				break;
+			}
+		} else {
+			bounds.extend(start);
+			bounds.extend(stop);
+			open_modal({title: "error", content:"No driving rout between locations."});
+		}
+		map.panTo(bounds.getCenter());
+		google.maps.event.addListenerOnce(map, "idle", function() {
+			map.fitBounds(bounds);
+		});
+		full_bounds = bounds;
+	});
+	if (settings.get("extra_rout")){
+		var icon = '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">';
+		if (settings.get("extra_rout") == "BICYCLING")
+			icon = '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">';
+		additional_google_rout(call_num, start, stop, settings.get("extra_rout"), icon);
+	} else if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_location), new google.maps.LatLng(stop_location)) < 1000){
+		additional_google_rout(call_num, start, stop, "WALKING", '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">');
+	}
+}
+
+function additional_google_rout(call_num, start, stop, mode, icon){
 	DirectionsService.route({origin: start, destination: stop, travelMode:mode}, function (response, status){
+		if (results_call > call_num)
+			return;
 		console.log("google "+mode+" results", status, response);
 		var bounds = new google.maps.LatLngBounds();
 		var results = [];
@@ -366,7 +373,7 @@ function service_uber(call_num, start, stop){
 			if (options !== true && options.indexOf(price.display_name) == -1){
 				continue;
 			}
-			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate};
+			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate, ride_type:get_ride_type(price.display_name)};
 			var arrival = new Date();
 			arrival.setSeconds(arrival.getSeconds()+parseInt(price.time_estimate)+parseInt(price.duration));
 			obj.arr_time = arrival;
@@ -453,7 +460,7 @@ function process_lyft(call_data){
 			}
 
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi};
+			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi, ride_type:get_ride_type(est.ride_type)};
 			if (etas[est.ride_type]){
 				var arrival = new Date();
 				arrival.setSeconds(arrival.getSeconds()+etas[est.ride_type]+est.estimated_duration_seconds);
@@ -741,10 +748,18 @@ function run_services(){
 					});
 					$("#results").html("");
 					results_to_return = 4;
-					service_google(results_call, start_location, stop_location);
-					service_uber(results_call, start_location, stop_location);
-					service_tff(results_call, start_location, stop_location);
-					service_lyft(results_call, start_location, stop_location);
+
+					var services = JSON.parse(settings.get("search_services"));
+
+					if (services === true || services.indexOf("transit") != -1)
+						service_google(results_call, start_location, stop_location);
+					if (services === true || services.indexOf("uber") != -1)
+						service_uber(results_call, start_location, stop_location);
+					if (services === true || services.indexOf("taxi") != -1)
+						service_tff(results_call, start_location, stop_location);
+					if (services === true || services.indexOf("lyft") != -1)
+						service_lyft(results_call, start_location, stop_location);
+					google_rout(results_call, start_location, stop_location);
 				} else {
 					open_modal({title: "Error", content:"You need to enter a from and to location."});
 				}
@@ -842,6 +857,7 @@ function load_map(){
 	}
 	if (settings.get("user_id") > 0){
 		$("#map").show();
+		rolidex2.set_spacing();
 	} else {
 		$("#menu_login").trigger("click_event");
 	}
@@ -1069,9 +1085,18 @@ function login_responce(data){
 		$(".logged_out").hide();
 		$(".page").hide();
 		$("#map").show();
+		rolidex2.set_spacing();
 		google.maps.event.trigger(map, "resize");
 		if (my_loc)
 			map.setCenter(my_loc);
+	}
+}
+
+function get_ride_type(type){
+	for (var i in ride_types){
+		if (ride_types[i].indexOf(type) > -1){
+			return i;
+		}
 	}
 }
 
@@ -1364,6 +1389,7 @@ function startup(){
 	}, true);
 
 	var morph = new TimelineMax({paused:true});
+	//morph.to("#gear", 0.2, { morphSVG: "#head", ease:Power1.easeInOut });
 	morph.to("#gear", 0.2, { morphSVG: "#x", ease:Power1.easeInOut });
 
 	/*$("#switcher").on("click", function() {
@@ -1450,7 +1476,36 @@ function startup(){
 			var add = "";
 			if (["a", "e", "i", "o", "u"].indexOf(name.charAt(0).toLowerCase()) != -1)
 				add = "n";
-			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app").ucfirst()+" app for a"+add+" "+name+" now? <br /><br /><input type='checkbox' id='dont_show_external_conf' name='cc'><label for='dont_show_external_conf'><span><img src='images/radio_off.svg'><img src='images/radio_on.svg'></span></label>  Do not show me this message again.", button2: true, callback: function (btn){
+
+			var value_message = "", similar = $(".type_"+result.data("ride_type"));
+			if (similar.length > 1){
+				var min_time = {val:99999999, app:"", good:false};
+				var min_price = {val:99999999, app:"", good:false};
+				similar.each(function (i, obj){
+					if (obj != result[0]){
+						obj = $(obj);
+						if (obj.data("time") < min_time.val && min_time.app != obj.attr("app")){
+							min_time.val = obj.data("time");
+							min_time.app = obj.attr("app");
+							if (obj.data("time") - result.data("time") > 60)
+								min_time.good = true;
+						}
+						if (obj.data("price") < min_price.val && min_price.app != obj.attr("app")){
+							min_price.val = obj.data("price");
+							min_price.app = obj.attr("app");
+							min_price.good = true;
+						}
+					}
+				});
+				console.log(min_price, result.data("price"), min_time, result.data("time"));
+				if (min_price.app != "" && min_price.val > result.data("price")/* && (min_time.good && !min_price.good)*/){
+					value_message = "<br /><br />Mooky saved you $"+(min_price.val - result.data("price"))+" over "+min_price.app;
+				} else if (min_time.app != "" && min_time.val > result.data("time")){
+					value_message = "<br /><br />Mooky saved you "+Math.ceil((min_time.val - result.data("time"))/60)+" minutes over "+min_price.app;
+				}
+			}
+
+			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app").ucfirst()+" app for a"+add+" "+name+" now? "+value_message+"<br /><br /><input type='checkbox' id='dont_show_external_conf' name='cc'><label for='dont_show_external_conf'><span><img src='images/radio_off.svg'><img src='images/radio_on.svg'></span></label>  Do not show me this message again.", button2: true, callback: function (btn){
 				if ($("#dont_show_external_conf").prop("checked")){
 					settings.set("show_external_conf", false);
 					update_settings();
@@ -1783,6 +1838,7 @@ function startup(){
 					settings.delete("pre_user_id");
 					$(".page").hide();
 					$("#map").show();
+					rolidex2.set_spacing();
 					google.maps.event.trigger(map, "resize");
 					if (my_loc)
 						map.setCenter(my_loc);
@@ -1882,12 +1938,16 @@ function startup(){
 	$(".prepend_url").each(function (){
 		$(this).attr("src", base_url + $(this).attr("src"));
 	});
-
+	
 	if (typeof settings.get("search_filters") == "undefined"){
 		settings.set("search_filters", JSON.stringify(Object.keys(ride_types)));
 	}
+	if (typeof settings.get("search_services") == "undefined"){
+		settings.set("search_services", "true");
+	}
 	if (settings.get("full_map_settings")){
 		$("#settings_tab").removeClass("hidden");
+		rolidex2.set_spacing();
 	}
 	if (typeof settings.get("time_display") == "undefined"){
 		settings.set("time_display", "ttd");
