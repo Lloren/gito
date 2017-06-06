@@ -850,11 +850,11 @@ function load_map(){
 
 	$(".page").hide();
 	console.log(window.localStorage.getItem("seen_full_settings"));
-	if (!window.localStorage.getItem("seen_full_settings")){
+	/*if (!window.localStorage.getItem("seen_full_settings")){
 		setTimeout(function (){
 			$(".settings_toggle").trigger("click_event");
 		}, 300);
-	}
+	}*/
 	if (settings.get("user_id") > 0){
 		$("#map").show();
 		rolidex2.set_spacing();
@@ -1390,7 +1390,8 @@ function startup(){
 
 	var morph = new TimelineMax({paused:true});
 	//morph.to("#gear", 0.2, { morphSVG: "#head", ease:Power1.easeInOut });
-	morph.to("#gear", 0.2, { morphSVG: "#x", ease:Power1.easeInOut });
+	//morph.to("#gear", 0.2, { morphSVG: "#x", ease:Power1.easeInOut });
+	morph.to("#gear", 0.2, { morphSVG: "#gear_close", ease:Power1.easeInOut });
 
 	/*$("#switcher").on("click", function() {
 		if (morph.progress() === 0) { //if it's at the beginning, start playing
@@ -1469,41 +1470,13 @@ function startup(){
 		}
 	}
 
-	click_event(".confirm_link", function (e){
-		var result = $(e.currentTarget);
+	function confirm_link(result, value_message){
+		$("#value_screen").fadeOut();
 		if (settings.get("show_external_conf")){
 			var name = result.find(".name").html();
 			var add = "";
 			if (["a", "e", "i", "o", "u"].indexOf(name.charAt(0).toLowerCase()) != -1)
 				add = "n";
-
-			var value_message = "", similar = $(".type_"+result.data("ride_type"));
-			if (similar.length > 1){
-				var min_time = {val:99999999, app:"", good:false};
-				var min_price = {val:99999999, app:"", good:false};
-				similar.each(function (i, obj){
-					if (obj != result[0]){
-						obj = $(obj);
-						if (obj.data("time") < min_time.val && min_time.app != obj.attr("app")){
-							min_time.val = obj.data("time");
-							min_time.app = obj.attr("app");
-							if (obj.data("time") - result.data("time") > 60)
-								min_time.good = true;
-						}
-						if (obj.data("price") < min_price.val && min_price.app != obj.attr("app")){
-							min_price.val = obj.data("price");
-							min_price.app = obj.attr("app");
-							min_price.good = true;
-						}
-					}
-				});
-				console.log(min_price, result.data("price"), min_time, result.data("time"));
-				if (min_price.app != "" && min_price.val > result.data("price")/* && (min_time.good && !min_price.good)*/){
-					value_message = "<br /><br />Mooky saved you $"+(min_price.val - result.data("price"))+" over "+min_price.app;
-				} else if (min_time.app != "" && min_time.val > result.data("time")){
-					value_message = "<br /><br />Mooky saved you "+Math.ceil((min_time.val - result.data("time"))/60)+" minutes over "+min_price.app;
-				}
-			}
 
 			open_modal({title: "External App", content:"Do you want to open the "+result.attr("app").ucfirst()+" app for a"+add+" "+name+" now? "+value_message+"<br /><br /><input type='checkbox' id='dont_show_external_conf' name='cc'><label for='dont_show_external_conf'><span><img src='images/radio_off.svg'><img src='images/radio_on.svg'></span></label>  Do not show me this message again.", button2: true, callback: function (btn){
 				if ($("#dont_show_external_conf").prop("checked")){
@@ -1517,6 +1490,64 @@ function startup(){
 		} else {
 			open_external(result);
 		}
+	}
+
+	var confirm_handle, confirm_result, value_message;
+	click_event(".confirm_link", function (e){
+		confirm_result = $(e.currentTarget);
+
+		value_message = "";
+		var value_item = "", similar = $(".type_"+confirm_result.data("ride_type"));
+		if (similar.length > 1){
+			var min_time = {val:99999999, app:"", good:false};
+			var min_price = {val:99999999, app:"", good:false};
+			similar.each(function (i, obj){
+				if (obj != confirm_result[0]){
+					obj = $(obj);
+					if (obj.data("time") < min_time.val && min_time.app != obj.attr("app")){
+						min_time.val = obj.data("time");
+						min_time.app = obj.attr("app");
+						if (obj.data("time") - confirm_result.data("time") > 60)
+							min_time.good = true;
+					}
+					if (obj.data("price") < min_price.val && min_price.app != obj.attr("app")){
+						min_price.val = obj.data("price");
+						min_price.app = obj.attr("app");
+						min_price.good = true;
+					}
+				}
+			});
+			console.log(min_price, confirm_result.data("price"), min_time, confirm_result.data("time"));
+			if (min_price.app != "" && min_price.val > confirm_result.data("price")/* && (min_time.good && !min_price.good)*/){
+				value_message = "<br /><br />Mooky saved you $"+(min_price.val - confirm_result.data("price"))+" over "+min_price.app;
+				value_item = "$"+(min_price.val - confirm_result.data("price"));
+			}
+			if (min_time.app != "" && min_time.val > confirm_result.data("time")){
+				if (value_item == ""){
+					value_message = "<br /><br />Mooky saved you "+Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes over "+min_price.app;
+				} else {
+					value_item += "<br />";
+				}
+				value_item += Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes";
+			}
+		}
+
+		if (value_item){
+			$("#value_prop").html(value_item);
+		} else {
+			$("#value_prop").html("Time and stuff");
+		}
+		$("#value_screen").show();
+
+		confirm_handle = setTimeout(function (){
+			confirm_link(confirm_result, value_message);
+		}, 3000);
+	}, true);
+
+	click_event("#value_screen_close", function (e){
+		if (confirm_handle)
+			clearTimeout(confirm_handle);
+		confirm_link(confirm_result, value_message);
 	}, true);
 
 	click_event(".tff_click", function (e){
