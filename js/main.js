@@ -1519,12 +1519,12 @@ function startup(){
 			});
 			console.log(min_price, confirm_result.data("price"), min_time, confirm_result.data("time"));
 			if (min_price.app != "" && min_price.val > confirm_result.data("price")/* && (min_time.good && !min_price.good)*/){
-				value_message = "<br /><br />Mooky saved you $"+(min_price.val - confirm_result.data("price"))+" over "+min_price.app;
+				value_message = "<br /><br /><span style='color:white;'>Mooky saved you $"+(min_price.val - confirm_result.data("price"))+" over "+min_price.app+"</span>";
 				value_item = "$"+(min_price.val - confirm_result.data("price"));
 			}
 			if (min_time.app != "" && min_time.val > confirm_result.data("time")){
 				if (value_item == ""){
-					value_message = "<br /><br />Mooky saved you "+Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes over "+min_price.app;
+					value_message = "<br /><br /><span style='color:white;'>Mooky saved you "+Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes over "+min_price.app+"</span>";
 				} else {
 					value_item += "<br />";
 				}
@@ -1541,7 +1541,7 @@ function startup(){
 
 		confirm_handle = setTimeout(function (){
 			confirm_link(confirm_result, value_message);
-		}, 3000);
+		}, 3500);
 	}, true);
 
 	click_event("#value_screen_close", function (e){

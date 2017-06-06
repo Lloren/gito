@@ -638,10 +638,10 @@ input[type="checkbox"]:checked + label span{
 
 #monkey_car{
 	position: absolute;
-	animation: car_animation 3s linear 1;
-	width: 400px;
-	margin-left: -200px;
-	top: calc(100% - 270px);
+	animation: car_animation 2s linear 1;
+	width: 300px;
+	margin-left: -150px;
+	top: calc(100% - 430px);
 }
 
 @keyframes car_animation {
@@ -650,15 +650,20 @@ input[type="checkbox"]:checked + label span{
 		margin-left: -20px;
 		top: -40px;
 	}
-	50% {
+	40% {
 		width: 100px;
 		margin-left: -50px;
-		top: 50%;
+		top: 30%;
+	}
+	70% {
+		width: 200px;
+		margin-left: -100px;
+		top: 45%;
 	}
 	100% {
-		width: 400px;
-		margin-left: -200px;
-		top: calc(100% - 270px);
+		width: 300px;
+		margin-left: -150px;
+		top: calc(100% - 430px);
 	}
 }
 
