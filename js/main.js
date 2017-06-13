@@ -25,7 +25,7 @@ var run_handel = false;
 var rolidex;
 var rolidex2;
 
-var ride_types = {"rideshare": ["lyft_line", "POOL"], "4person": ["lyft", "uberX", "SELECT", "BLACK"], "6person": ["lyft_plus", "uberXL", "SUV"], "special": ["WAV", "ASSIST"]};
+var ride_types = {"rideshare": ["lyft_line", "POOL"], "4person": ["lyft", "lyft_lux", "lyft_premier", "uberX", "SELECT", "BLACK"], "6person": ["lyft_plus", "lyft_luxsuv", "uberXL", "SUV"], "special": ["WAV", "ASSIST"]};
 
 var transit_holder = [];
 var extra_rout_holder = false;
@@ -1137,6 +1137,9 @@ function startup(){
 		$("#from_loc").val("My Location");
 		console.log("My location click");
 		get_origin_geo(coded_location);
+		if ($("#to_loc").val() == ""){
+			$("#to_loc").focus();
+		}
 	}, true);
 
 	$("#from_loc").on("keyup", function (e){
@@ -1842,6 +1845,7 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		$(".logged_in").hide();
 		$(".logged_out").show();
+		$("input type['text'], input type['email'], input type['password']").val("");
 		settings.delete("user_id");
 		settings.delete("pre_user_id");
 		settings.delete("get_phone_user_id");

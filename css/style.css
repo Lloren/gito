@@ -63,6 +63,17 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	padding: 10px;
 	box-shadow: 3px 3px #f59d87;
 }
+.div_button{
+	position: relative;
+	text-align: center;
+	background: white;
+	border-radius: 100px;
+	color: #ff8806;
+	padding: 5px;
+	width: 200px;
+	margin: 20px auto !important;
+	box-shadow: 3px 3px #f59d87;
+}
 
 .icon_input{
 	width: calc(100% - 20px);

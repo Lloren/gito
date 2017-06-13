@@ -37,11 +37,13 @@ function Settings(save_key, def_data){
 	this.save = function (local_only){
 		window.localStorage.setItem(this.save_key, JSON.stringify(this.data));
 		if (!local_only){
-			if (this.save_handle)
-				clearTimeout(this.save_handle);
-			this.save_handle = setTimeout(function (){
-				save_settings();
-			}, 10);
+			if (save_settings){
+				if (this.save_handle)
+					clearTimeout(this.save_handle);
+				this.save_handle = setTimeout(function (){
+					save_settings();
+				}, 10);
+			}
 		}
 	};
 }
