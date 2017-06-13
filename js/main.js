@@ -1845,7 +1845,7 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		$(".logged_in").hide();
 		$(".logged_out").show();
-		$("input type['text'], input type['email'], input type['password']").val("");
+		$('input[type="text"], input[type="email"], input[type="password"]').val("");
 		settings.delete("user_id");
 		settings.delete("pre_user_id");
 		settings.delete("get_phone_user_id");
