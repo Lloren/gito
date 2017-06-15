@@ -61,7 +61,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	color: #ff8806;
 	font-size: 1.5em;
 	padding: 10px;
-	box-shadow: 3px 3px #f59d87;
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
 .div_button{
 	position: relative;
@@ -72,7 +72,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 	padding: 5px;
 	width: 200px;
 	margin: 20px auto !important;
-	box-shadow: 3px 3px #f59d87;
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.4);
 }
 
 .icon_input{
@@ -644,7 +644,7 @@ input[type="checkbox"]:checked + label span{
 
 #value_prop{
 	color: white;
-	margin:70px 0;
+	margin:40px 0;
 }
 
 #monkey_car{
