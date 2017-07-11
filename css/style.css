@@ -652,7 +652,7 @@ input[type="checkbox"]:checked + label span{
 	animation: car_animation 2s linear 1;
 	width: 300px;
 	margin-left: -150px;
-	top: calc(100% - 430px);
+	top: calc(100% - 150px);
 }
 
 @keyframes car_animation {
@@ -674,7 +674,7 @@ input[type="checkbox"]:checked + label span{
 	100% {
 		width: 300px;
 		margin-left: -150px;
-		top: calc(100% - 430px);
+		top: calc(100% - 150px);
 	}
 }
 

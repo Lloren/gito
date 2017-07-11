@@ -109,11 +109,11 @@
 	<gap:plugin name="cordova-plugin-sim" source="npm" />
 
 	<gap:plugin name="cordova-plugin-facebook4" source="npm">
-		<param name="APP_ID" value="268789876896518" /><!--266665110442328-->
+		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
 	</gap:plugin>
 	<gap:plugin name="cordova-plugin-googleplus" source="npm">
-		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.22718745656-vcmpb0suf2dfn4ffs0832ghc3vbfh6ao" /><!--com.googleusercontent.apps.22718745656-gvbu7n3rqhsi16a5ubljd73heh3rvt4a-->
+		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
 	</gap:plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />

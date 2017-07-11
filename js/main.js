@@ -1538,7 +1538,7 @@ function startup(){
 		if (value_item){
 			$("#value_prop").html(value_item);
 		} else {
-			$("#value_prop").html("Time and stuff");
+			$("#value_prop").html("Helping you compare");
 		}
 		$("#value_screen").show();
 
