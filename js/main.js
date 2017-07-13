@@ -56,6 +56,17 @@ var shares = [{name:"Facebook", tag:"fa-facebook-square", android:"facebook", io
 	} else {
 		window.plugins.socialsharing.shareViaFacebookWithPasteMessageHint(msg, null, link, "Use the paste tool!");
 	}
+}}, {name:"WhatsApp", tag:"fa-whatsapp", android:"whatsapp", ios:"whatsapp", can:function(callback, img, link){
+	var t = this;
+	if (thePlatform == "non-gap"){
+		callback(true, t);
+		return;
+	}
+	window.plugins.socialsharing.canShareVia(this[thePlatform], "msg", null, null, null, function(e){callback(true, t)}, function(e){callback(false, t)});
+}, share:function(img, link){
+	var msg = share_messages.join("\r\n");
+	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
+	window.plugins.socialsharing.shareViaWhatsApp("msg", null, link);
 }}, {name:"Google+", tag:"fa-google-plus-square", android:"talk", ios:"talk", can:function(callback, img, link){
 	var t = this;
 	if (thePlatform == "ios"){
@@ -1522,12 +1533,12 @@ function startup(){
 			});
 			console.log(min_price, confirm_result.data("price"), min_time, confirm_result.data("time"));
 			if (min_price.app != "" && min_price.val > confirm_result.data("price")/* && (min_time.good && !min_price.good)*/){
-				value_message = "<br /><br /><span style='color:white;'>Mooky saved you $"+(min_price.val - confirm_result.data("price")).toFixed(2)+" over "+min_price.app+"</span>";
+				value_message = "<br /><br /><span style='color:white;'>Mooky saved you $"+(min_price.val - confirm_result.data("price")).toFixed(2)+" over "+min_price.app.ucfirst()+"</span>";
 				value_item = "$"+(min_price.val - confirm_result.data("price")).toFixed(2);
 			}
 			if (min_time.app != "" && min_time.val > confirm_result.data("time")){
 				if (value_item == ""){
-					value_message = "<br /><br /><span style='color:white;'>Mooky saved you "+Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes over "+min_price.app+"</span>";
+					value_message = "<br /><br /><span style='color:white;'>Mooky saved you "+Math.ceil((min_time.val - confirm_result.data("time"))/60)+" minutes over "+min_price.app.ucfirst()+"</span>";
 				} else {
 					value_item += "<br />";
 				}
@@ -1536,8 +1547,10 @@ function startup(){
 		}
 
 		if (value_item){
+			$(".value_dyn").show();
 			$("#value_prop").html(value_item);
 		} else {
+			$(".value_dyn").hide();
 			$("#value_prop").html("Helping you compare");
 		}
 		$("#value_screen").show();

@@ -542,6 +542,15 @@ input[type="checkbox"]:checked + label span{
 	font-weight: bold;
 }
 
+.about_box{
+	width: 49%;
+	float: left;
+}
+
+.about_box span{
+	font-size: 10px;
+}
+
 .about_img{
 	width: 50px;
 	margin-top: 10px;
