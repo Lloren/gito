@@ -66,7 +66,7 @@ var shares = [{name:"Facebook", tag:"fa-facebook-square", android:"facebook", io
 }, share:function(img, link){
 	var msg = share_messages.join("\r\n");
 	open_modala("Loading <i class='fa fa-spinner fa-spin'></i>");
-	window.plugins.socialsharing.shareViaWhatsApp("msg", null, link);
+	window.plugins.socialsharing.shareViaWhatsApp(msg, null, link);
 }}, {name:"Google+", tag:"fa-google-plus-square", android:"talk", ios:"talk", can:function(callback, img, link){
 	var t = this;
 	if (thePlatform == "ios"){
