@@ -1,7 +1,7 @@
 "use strict";
 
 var storage_location = "";
-var modala_handle = "";
+var modala_handle = false;
 var has_internet = false;
 var uuid = "comp";
 var ad_manager = false;
@@ -180,7 +180,8 @@ function open_modal(options){
 	options = $.extend({}, {content: "", title: "", callback: false, button1: "Ok", button2: false, overwrite: true, add_class: ""}, options || {});
 	if (options.button2 === true)
 		options.button2 = "Cancel";
-	
+
+	clearTimeout(modala_handle);
 	$("#modal h1").html(options.title);
 	if (options.overwrite || !$("#modal").is(":visible")){
 		$("#modal > div").html(options.content);
@@ -210,12 +211,15 @@ function open_modal(options){
 function open_modala(text, dismiss, time){
 	dismiss = dismiss || false;
 	time = time || 10000;
+	clearTimeout(modala_handle);
 	$("#modal h1").html(text);
 	$("#modal").addClass("loading").css("display", "table");
 	$("#modal-overlay").off().addClass("enabled");
-	modala_handle = setTimeout(function (){
-		close_modala();
-	}, time);
+	if (time != 0){
+		modala_handle = setTimeout(function (){
+			close_modala();
+		}, time);
+	}
 	if (dismiss){
 		$("#disable-overlay").on("touchend", function(e){
 			$("#modal").hide();

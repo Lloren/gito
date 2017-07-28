@@ -933,10 +933,11 @@ function load_map(){
 function query_places(obj){
 	var pred = obj.parents(".input_holder").children(".prediction_holder");
 	pred.html("");
+	var val = obj.val();
 
 	if (my_loc){
 		for (var i=0;i<my_locations.length;i++){
-			if (my_locations[i].search(new RegExp(obj.val(), "i")) !== -1){
+			if (my_locations[i].search(new RegExp(val, "i")) !== -1){
 				var dat = {lat: my_loc.lat(), lng: my_loc.lng()};
 				dat.main = my_locations[i];
 				dat.secondary = "";
@@ -948,7 +949,7 @@ function query_places(obj){
 	}
 
 	for (var key in saved_locations){
-		if (key.search(new RegExp(obj.val(), "i")) !== -1){
+		if (key.search(new RegExp(val, "i")) !== -1){
 			var dat = saved_locations[key];
 			dat.main = key;
 			dat.secondary = "";
@@ -958,7 +959,7 @@ function query_places(obj){
 	}
 
 	for (var i=0;i<recent_locations.length;i++){
-		if (recent_locations[i][1].search(new RegExp(obj.val(), "i")) !== -1){
+		if (recent_locations[i][1].search(new RegExp(val, "i")) !== -1){
 			var dat = recent_locations[i][2];
 			dat.main = recent_locations[i][1];
 			dat.secondary = "";
@@ -968,8 +969,8 @@ function query_places(obj){
 		}
 	}
 
-	if (obj.val() != ""){
-		autocomplete_service.getPlacePredictions({input: obj.val(), bounds: map.getBounds()}, function (results, status){
+	if (val != ""){
+		autocomplete_service.getPlacePredictions({input: val, bounds: map.getBounds()}, function (results, status){
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				console.log(results);
 				var data = [];
@@ -988,6 +989,8 @@ function query_places(obj){
 				pred.append(data.join("")+'<div>Powered By <img src="https://maps.gstatic.com/mapfiles/api-3/images/google4_hdpi.png" style="height:1em" /></div>').show();
 			}
 		});
+	} else {
+		pred.show();
 	}
 }
 
@@ -1177,6 +1180,13 @@ function startup(){
 		$("#results_tab").removeClass("hidden");
 		$("#from_loc").parents(".input_holder").children(".prediction_holder").hide();
 	}).on("focus", function (){
+		var val = $("#from_loc").val();
+		for (var i=0;i<my_locations.length;i++){
+			if (my_locations[i] == val){
+				$("#from_loc").val("");
+				break;
+			}
+		}
 		query_places($("#from_loc"));
 		$("#results_tab").addClass("hidden");
 	});
