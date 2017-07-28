@@ -664,6 +664,15 @@ input[type="checkbox"]:checked + label span{
 	top: calc(100% - 150px);
 }
 
+#vid{
+	left: 0;
+	right: 0;
+	max-height: calc(100% - 40px);
+	max-width: 100%;
+	margin: auto;
+	position: fixed;
+}
+
 @keyframes car_animation {
 	0% {
 		width: 40px;

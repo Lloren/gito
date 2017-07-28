@@ -124,6 +124,7 @@
 			<li id="menu_settings" class="open_page logged_in" data-page="settings"><img src="images/icons3/CUSTOM%20APP%20SETTINGS%20ICON.W+RO.v1.svg"> Settings</li>
 			<li id="menu_promotions" class="open_page" data-page="promotions"><img src="images/icons3/CUSTOM%20OFFERS%20ICON.W+RO.v3.svg"> Promotions</li>
 			<li id="menu_notifications" class="open_page" data-page="notifications"><img src="images/icons3/CUSTOM%20NOTIFICATION%20ICON.W+RO.v2.svg"> Notifications</li>
+			<li id="menu_walkthough"><img src="images/icons3/CUSTOM%20NOTIFICATION%20ICON.W+RO.v2.svg"> Walkthough/Tutorial</li>
 			<li id="menu_toc"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Terms and conditions</li>
 			<li id="menu_pp"><img src="images/icons3/CUSTOM%20TERMS%20ICON.W+RO.v1.svg"> Privacy Policy</li>
 			<li id="menu_contact"><img src="images/icons3/CUSTOM%20CONTACT%20US%20ICON.W+RO.v1.svg"> Contact Us</li>
@@ -249,7 +250,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="settings_container settings_toggler" data-key="search_filters">
+				<div class="settings_container settings_toggler" data-key="search_filters" data-trigger="run_services">
 					<div class="toggler">
 						<img class="toggle_image" src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB+RO.v4.svg">
 						<span class="option selected"><img class="settings_icon" src="images/icons3/CUSTOM%20FILTER%20ICON.RO.v4.svg"> Filters</span>
@@ -386,6 +387,21 @@
 		<h2>Saved Locations</h2>
 		<div id="location_list">
 
+		</div>
+	</div>
+
+	<div id="walkthough_vid" class="page">
+		<div style="height: 40px; text-align: center; margin:2px; position: relative; z-index: 20;">
+			<img style="height: 40px; width: inherit;" src="images/MOOKY_LOGOTYPE_WITH%20O%20EYES.png" />
+			<div class="back" data-back="map" style="position: absolute; right:5px; top:-2px; font-size:45px;">
+				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="width: 40px; transform: rotate(90deg)">
+			</div>
+		</div>
+		<div>
+			<video id="vid" style="width: 100%; height: 100%;">
+				<source src="vids/tutorial.mp4" type="video/mp4">
+				There is an issue display this video
+			</video>
 		</div>
 	</div>
 

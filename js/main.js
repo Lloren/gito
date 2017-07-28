@@ -761,15 +761,31 @@ function run_services(){
 					results_to_return = 4;
 
 					var services = JSON.parse(settings.get("search_services"));
+					var count = 4;
 
-					if (services === true || services.indexOf("transit") != -1)
+					if (services === true || services.indexOf("transit") != -1){
+						if (services.indexOf("transit") != -1)
+							--count;
 						service_google(results_call, start_location, stop_location);
-					if (services === true || services.indexOf("uber") != -1)
+					}
+					if (services === true || services.indexOf("uber") != -1){
+						if (services.indexOf("uber") != -1)
+							--count;
 						service_uber(results_call, start_location, stop_location);
-					if (services === true || services.indexOf("taxi") != -1)
+					}
+					if (services === true || services.indexOf("taxi") != -1){
+						if (services.indexOf("taxi") != -1)
+							--count;
 						service_tff(results_call, start_location, stop_location);
-					if (services === true || services.indexOf("lyft") != -1)
+					}
+					if (services === true || services.indexOf("lyft") != -1){
+						if (services.indexOf("lyft") != -1)
+							--count;
 						service_lyft(results_call, start_location, stop_location);
+					}
+					if (count == 0){
+						settings.set("search_services", "true");
+					}
 					google_rout(results_call, start_location, stop_location);
 				} else {
 					open_modal({title: "Error", content:"You need to enter a from and to location."});
@@ -1603,8 +1619,12 @@ function startup(){
 			if (key){
 				if ($(this).hasClass("settings_toggler")){
 					var toggles = JSON.parse(settings.get(key));
-					for (var i=0;i<toggles.length;i++){
-						var opt = $(this).find("[data-key='"+toggles[i]+"']").addClass("active");
+					if (toggles === true){
+						$(this).find(".option_toggle").addClass("active")
+					} else {
+						for (var i=0;i<toggles.length;i++){
+							var opt = $(this).find("[data-key='"+toggles[i]+"']").addClass("active");
+						}
 					}
 				} else {
 						var opt = $(this).find("[data-key='"+settings.get(key)+"']");
@@ -1803,6 +1823,17 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
 		$("#login").show();
+	});
+
+	click_event("#menu_walkthough", function (e){
+		$("#menu-overlay").trigger("click_event");
+
+		var vid = document.getElementById("vid");
+		vid.currentTime = 0;
+		vid.play();
+
+		$(".page").hide();
+		$("#walkthough_vid").show();
 	});
 	
 	click_event("#login_do", function (){
