@@ -763,25 +763,28 @@ function run_services(){
 					var services = JSON.parse(settings.get("search_services"));
 					var count = 4;
 
-					if (services === true || services.indexOf("transit") != -1){
-						if (services.indexOf("transit") != -1)
-							--count;
+					if (services === true){
 						service_google(results_call, start_location, stop_location);
-					}
-					if (services === true || services.indexOf("uber") != -1){
-						if (services.indexOf("uber") != -1)
-							--count;
 						service_uber(results_call, start_location, stop_location);
-					}
-					if (services === true || services.indexOf("taxi") != -1){
-						if (services.indexOf("taxi") != -1)
-							--count;
 						service_tff(results_call, start_location, stop_location);
-					}
-					if (services === true || services.indexOf("lyft") != -1){
-						if (services.indexOf("lyft") != -1)
-							--count;
 						service_lyft(results_call, start_location, stop_location);
+					} else {
+						if (services.indexOf("transit") != -1){
+							--count;
+							service_google(results_call, start_location, stop_location);
+						}
+						if (services.indexOf("uber") != -1){
+							--count;
+							service_uber(results_call, start_location, stop_location);
+						}
+						if (services.indexOf("taxi") != -1){
+							--count;
+							service_tff(results_call, start_location, stop_location);
+						}
+						if (services.indexOf("lyft") != -1){
+							--count;
+							service_lyft(results_call, start_location, stop_location);
+						}
 					}
 					if (count == 0){
 						settings.set("search_services", "true");
@@ -1831,6 +1834,9 @@ function startup(){
 		var vid = document.getElementById("vid");
 		vid.currentTime = 0;
 		vid.play();
+		vid.ended = function (){
+			
+		};
 
 		$(".page").hide();
 		$("#walkthough_vid").show();
