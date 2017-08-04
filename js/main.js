@@ -1834,9 +1834,9 @@ function startup(){
 		var vid = document.getElementById("vid");
 		vid.currentTime = 0;
 		vid.play();
-		vid.ended = function (){
+		/*vid.ended = function (){
 			
-		};
+		};*/
 
 		$(".page").hide();
 		$("#walkthough_vid").show();
