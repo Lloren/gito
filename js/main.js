@@ -1834,6 +1834,9 @@ function startup(){
 		var vid = document.getElementById("vid");
 		vid.currentTime = 0;
 		vid.play();
+		$("#vid").on("ended", function (){
+			console.log("ended");
+		});
 		/*vid.ended = function (){
 			
 		};*/
