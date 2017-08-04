@@ -1146,6 +1146,19 @@ function get_ride_filters(){
 	return options;
 }
 
+function load_vid_page(){
+	var vid = document.getElementById("vid");
+	vid.currentTime = 0;
+	vid.play();
+	$("#vid").on("ended", function (){
+		$(".page").hide();
+		$("#map").show();
+	});
+
+	$(".page").hide();
+	$("#walkthough_vid").show();
+}
+
 function startup(){
 	console.log("startup");
 	if (!dev)
@@ -1831,18 +1844,7 @@ function startup(){
 	click_event("#menu_walkthough", function (e){
 		$("#menu-overlay").trigger("click_event");
 
-		var vid = document.getElementById("vid");
-		vid.currentTime = 0;
-		vid.play();
-		$("#vid").on("ended", function (){
-			console.log("ended");
-		});
-		/*vid.ended = function (){
-			
-		};*/
-
-		$(".page").hide();
-		$("#walkthough_vid").show();
+		load_vid_page();
 	});
 	
 	click_event("#login_do", function (){
@@ -1940,6 +1942,7 @@ function startup(){
 					google.maps.event.trigger(map, "resize");
 					if (my_loc)
 						map.setCenter(my_loc);
+					load_vid_page();
 				}
 			}
 		});
