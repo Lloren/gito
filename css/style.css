@@ -126,6 +126,7 @@ input, select {/*-webkit-appearance:none; border-radius:0; user-select:initial; 
 }
 #modal .share_modal .fa-facebook-square {color:#3A5795;}
 #modal .share_modal .fa-twitter-square {color:#28A8E0;}
+#modal .share_modal .fa-whatsapp{color:#25D366;}
 #modal .share_modal .fa-google-plus-square{color:#D34231;}
 #modal .share_modal .fa-mobile {}
 #modal .share_modal .fa-envelope-square {color:#27ADB9; /*content: "Email";*/}

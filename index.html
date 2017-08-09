@@ -133,9 +133,12 @@
 		</ul>
 		<ul class="dev">
 			<li style="background: black;">Dev</li>
+			<li id="pop_overlay">Show overlay</li>
 			<li id="clear_cache">Clear cache</li>
 		</ul>
 	</div>
+
+	<div id="mask_overlay" style="pointer-events: none; width: 100%; background: #222; opacity:0.9; height: 100%; position: fixed; z-index: 100; display:none;"></div>
 
 	<div id="header">
 		<div id="menubutton" style="color: black;">
@@ -257,7 +260,7 @@
 					</div>
 					<div class="options">
 						<div class="option_toggle" data-key="rideshare">
-							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Rideshare(2 person) Options
+							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> Rideshare (2 person) Options
 						</div>
 						<div class="option_toggle" data-key="4person">
 							<img class="settings_icon" src="images/icons3/CUSTOM%20SORT%20LIST%20FORMAT.TIME.RO.v11.svg"> 4 Person Options
@@ -412,7 +415,7 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="width: 40px; transform: rotate(90deg)">
 			</div>
 		</div>
-		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 85px); padding: 5px 5px 30px 5px; color: white; width: 100%; overflow-x: hidden;">
+		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 45px); padding: 5px 5px 30px 5px; color: white; width: 100%; overflow-x: hidden;">
 			<div class="row">
 				<div class="col-twelve tab-full">
 					<h1>PRIVACY POLICY</h1>
@@ -715,7 +718,7 @@
 				<img src="images/icons3/CUSTOM%20TOGGLE%20DOWN%20ICON.NB.v4.svg" style="width: 40px; transform: rotate(90deg)">
 			</div>
 		</div>
-		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 85px); padding: 5px 5px 30px 5px; color: white; width: 100%; overflow-x: hidden;">
+		<div style="overflow-y: scroll; -webkit-overflow-scrolling: touch; height: calc(100% - 45px); padding: 5px 5px 30px 5px; color: white; width: 100%; overflow-x: hidden;">
 			<div class="row">
 				<div class="col-twelve tab-full">
 					<h1>Terms and Conditions</h1>

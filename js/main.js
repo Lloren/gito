@@ -384,7 +384,7 @@ function service_uber(call_num, start, stop){
 			if (options !== true && options.indexOf(price.display_name) == -1){
 				continue;
 			}
-			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate, ride_type:get_ride_type(price.display_name)};
+			var obj = {app: "uber", icon: '<img src="images/uber_'+price.localized_display_name.toLowerCase().replace(/ /g, "_")+'.svg" onError="this.onerror=null;this.src='+"'images/uber_logo.svg'"+';">', name: price.localized_display_name, price_multiply: price.surge_multiplier, time_sec: price.time_estimate, ride_type:get_ride_type(price.display_name)};
 			var arrival = new Date();
 			arrival.setSeconds(arrival.getSeconds()+parseInt(price.time_estimate)+parseInt(price.duration));
 			obj.arr_time = arrival;
@@ -471,7 +471,7 @@ function process_lyft(call_data){
 			}
 
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(" ", "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi, ride_type:get_ride_type(est.ride_type)};
+			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(/ /g, "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi, ride_type:get_ride_type(est.ride_type)};
 			if (etas[est.ride_type]){
 				var arrival = new Date();
 				arrival.setSeconds(arrival.getSeconds()+etas[est.ride_type]+est.estimated_duration_seconds);
@@ -2003,6 +2003,10 @@ function startup(){
 	click_event("#menu_share", function (e){
 		$("#menu-overlay").trigger("click_event");
 		open_share();
+	});
+
+	click_event("#pop_overlay", function (e){
+		$("#mask_overlay").toggle();
 	});
 
 	if (settings.get("user_id") > 0){
