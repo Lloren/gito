@@ -169,6 +169,7 @@ function get_origin_geo(callback){
 		});
 	} else {
 		$(".from_clear").hide();
+		//start_location = false;
 		callback(false, true);
 	}
 }
@@ -193,6 +194,7 @@ function get_destination_geo(callback){
 		});
 	} else {
 		$(".to_clear").hide();
+		//stop_location = false;
 		callback(false);
 	}
 }
@@ -305,7 +307,7 @@ function google_rout(call_num, start, stop){
 		} else {
 			bounds.extend(start);
 			bounds.extend(stop);
-			open_modal({title: "error", content:"No driving rout between locations."});
+			open_modal({title: "error", content:"No driving route between locations."});
 		}
 		map.panTo(bounds.getCenter());
 		google.maps.event.addListenerOnce(map, "idle", function() {
@@ -700,7 +702,7 @@ function coded_location(pos, start, trigger){
 		if (markers.stop){
 			markers.stop.setPosition(stop_location);
 			if ($("#to_loc").val() == ""){
-				geo_location("#to_loc", start_location);
+				geo_location("#to_loc", stop_location);
 				if (start_location){
 					run_services();
 				}
@@ -1768,17 +1770,11 @@ function startup(){
 			}
 		}});
 	}, true);
-	
-	click_event("#menu_pp", function (e){
-		$("#menu-overlay").trigger("click_event");
-		$(".page").hide();
-		$("#pp").show();
-	});
 
-	click_event("#menu_toc", function (e){
+	click_event("#menu_toc_pp", function (e){
 		$("#menu-overlay").trigger("click_event");
 		$(".page").hide();
-		$("#toc").show();
+		$("#toc_pp").show();
 	});
 
 	click_event("#menu_about", function (e){
