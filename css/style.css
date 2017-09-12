@@ -182,6 +182,8 @@ input[type="checkbox"]:checked + label span{
 }
 
 .prediction_holder{
+	margin-top: -4px;
+	padding-top: 2px;
 	font-size: 0.6em;
 	position: absolute;
 	z-index: 10;
@@ -189,6 +191,7 @@ input[type="checkbox"]:checked + label span{
 	width: 100%;
 	overflow: hidden;
 	color: #c3c3c3;
+	display: none;
 }
 
 .prediction:hover{
@@ -208,6 +211,7 @@ input[type="checkbox"]:checked + label span{
 
 .prediction .image {
 	display: inline-block;
+	padding-left: 3px;
 }
 
 .prediction .text {
@@ -251,7 +255,7 @@ input[type="checkbox"]:checked + label span{
 	transform: translate3d(0, 0, 0);
 	transition: 200ms;
 	position: absolute;
-	top: 200px;
+	top: 190px;
 	width: 100%;
 }
 #settings_tab.open.hidden{
@@ -332,7 +336,7 @@ input[type="checkbox"]:checked + label span{
 }
 
 #map_settings{
-	max-height: 160px;
+	max-height: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -390,7 +394,7 @@ input[type="checkbox"]:checked + label span{
 	overflow-x: hidden;
 }
 .settings_open #results{
-	max-height: 165px;
+	max-height: 145px;
 }
 #results::-webkit-scrollbar{
 	width: 4px;
@@ -437,7 +441,7 @@ input[type="checkbox"]:checked + label span{
 	width: 100%;
 	display: none;
 }
-.sub_results .result, #results > .result {
+.sub_results .result/*, #results > .result*/ {
 	 margin-left: 24px;
 	 padding-left: 6px;
 	 width: calc(100% - 20px)

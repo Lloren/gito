@@ -70,9 +70,9 @@
 	<preference name="UIWebViewBounce" value="false" />
 	<preference name="DisallowOverscroll" value="true" />
 
-	<preference name="BackgroundColor" value="0xff333333"/>
+	<preference name="BackgroundColor" value="0xff333333" />
 	<preference name="HideKeyboardFormAccessoryBar" value="true" />
-	<preference name="EnableViewportScale" value="true"/>
+	<preference name="EnableViewportScale" value="true" />
 
 	<preference name="StatusBarOverlaysWebView" value="true" />
 	<preference name="StatusBarBackgroundColor" value="#e8390e" />
@@ -134,12 +134,12 @@
 	<icon src="res/icon.png" />
 	<gap:splash src="res/splash.png" /> <!-- ??? *Breaks iOS build/preferences sometimes ??? -->
 
-	<icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png"/>
-	<icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png"/>
-	<icon platform="android" qualifier="hdpi" src="res/icons/android/icon-72-hdpi.png"/>
-	<icon platform="android" qualifier="xhdpi" src="res/icons/android/icon-96-xhdpi.png"/>
-	<icon platform="android" qualifier="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png"/>
-	<icon platform="android" qualifier="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png"/>
+	<icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
+	<icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />
+	<icon platform="android" qualifier="hdpi" src="res/icons/android/icon-72-hdpi.png" />
+	<icon platform="android" qualifier="xhdpi" src="res/icons/android/icon-96-xhdpi.png" />
+	<icon platform="android" qualifier="xxhdpi" src="res/icons/android/icon-144-xxhdpi.png" />
+	<icon platform="android" qualifier="xxxhdpi" src="res/icons/android/icon-192-xxxhdpi.png" />
 
 	<splash platform="android" qualifier="mdpi" src="res/screens/android/screen-mdpi-portrait.png" />
 	<splash platform="android" qualifier="hdpi" src="res/screens/android/screen-hdpi-portrait.png" />

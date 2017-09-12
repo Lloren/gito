@@ -28,7 +28,7 @@ var rolidex2;
 var ride_types = {"rideshare": ["lyft_line", "POOL"], "4person": ["lyft", "lyft_lux", "lyft_premier", "uberX", "SELECT", "BLACK"], "6person": ["lyft_plus", "lyft_luxsuv", "uberXL", "SUV"], "special": ["WAV", "ASSIST"]};
 
 var transit_holder = [];
-var extra_rout_holder = false;
+var extra_routs_holder = [];
 
 var results_call = 0;
 var results_to_return = 4;
@@ -316,10 +316,15 @@ function google_rout(call_num, start, stop){
 		full_bounds = bounds;
 	});
 	if (settings.get("extra_rout")){
-		var icon = '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">';
-		if (settings.get("extra_rout") == "BICYCLING")
-			icon = '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">';
-		additional_google_rout(call_num, start, stop, settings.get("extra_rout"), icon);
+		if (settings.get("extra_rout") == "BOTH"){
+			additional_google_rout(call_num, start, stop, "BICYCLING", '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">');
+			additional_google_rout(call_num, start, stop, "WALKING", '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">');
+		} else {
+			var icon = '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">';
+			if (settings.get("extra_rout") == "BICYCLING")
+				icon = '<img src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg">';
+			additional_google_rout(call_num, start, stop, settings.get("extra_rout"), icon);
+		}
 	} else if (google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(start_location), new google.maps.LatLng(stop_location)) < 1000){
 		additional_google_rout(call_num, start, stop, "WALKING", '<img src="images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg">');
 	}
@@ -338,14 +343,18 @@ function additional_google_rout(call_num, start, stop, mode, icon){
 				name:mode.toLowerCase().ucfirst(),
 				price:" ---",
 				time:"N/A",
+				spri:1,
 				extra_info: true
 			};
-			if (obj.name == "Bicycling")
+			if (obj.name == "Bicycling"){
+				obj.spri = 2;
 				obj.bike = true;
+			}
 			for (var i=0;i<response.routes.length;i++){
 				var route = response.routes[0];
-				extra_rout_holder = route.legs[0];
+				extra_routs_holder[obj.bike?"bike":"walk"] = route.legs[0];
 				obj.time_sec = route.legs[0].duration.value;
+				console.log("added_roupt time", obj.time_sec);
 				var path = new google.maps.Polyline({
 					path:route.overview_path,
 					geodesic:true,
@@ -371,7 +380,7 @@ function additional_google_rout(call_num, start, stop, mode, icon){
 			map.fitBounds(bounds);
 		});
 		full_bounds = bounds;
-		returned_results(results, "Walking");
+		returned_results(results, obj.name);
 	});
 }
 
@@ -634,6 +643,11 @@ function sort_results(){
 	});
 
 	var result = $("#results > .result, #results > .result_group").sort(function (a, b){
+		if ($(a).data("spri") || $(b).data("spri")){
+			var a1 = $(a).data("spri") || 999999;
+			var b1 = $(b).data("spri") || 999999;
+			return a1 - b1;
+		}
 		return $(a).data(sorter) - $(b).data(sorter);
 	});
 	$("#results").append(result);
@@ -743,7 +757,7 @@ function run_services(){
 	console.log("run_services", run_handel);
 	if (!run_handel){
 		run_handel = setTimeout(function (){
-			extra_rout_holder = false;
+			extra_routs_holder = [];
 			console.log("runing_services", start_location, stop_location);
 			if (start_location.lat == stop_location.lat && start_location.lng == stop_location.lng){
 				open_modal({title: "Error", content:"Your origin and destination can not be the same location."});
@@ -1403,17 +1417,19 @@ function startup(){
 	}, true);
 
 	click_event(".extra_info", function (e){
-		console.log("trasit info", extra_rout_holder);
+		console.log("trasit info", extra_routs_holder);
 		var is_bike = $(e.currentTarget).hasClass("bike");
+		var holder = extra_routs_holder[is_bike?"bike":"walk"];
 
 		var steps_html = [];
-		for (var i=0;i<extra_rout_holder.steps.length;i++){
-			var step = extra_rout_holder.steps[i];
+		for (var i=0;i<holder.steps.length;i++){
+			var step = holder.steps[i];
 			var temp = {num: i+1, time: ""};
 			temp.time = step.duration.text;
 			temp.icon = "images/icons3/CUSTOM%20WALKING%20ICON.RO.v3.svg";
-			if (is_bike)
+			if (is_bike){
 				temp.icon = "images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg";
+			}
 			temp.action = step.instructions.replace(/<\/?[^>]+(>|$)/g, " ").replace(/  /g, " ").replace(/will be on the/g, "on");
 			steps_html.push(template("transit_step", temp));
 		}

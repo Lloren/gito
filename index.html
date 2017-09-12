@@ -46,7 +46,7 @@
 
 <div id="templates" style="display: none;">
 	<div data-key="result">
-		<div class="result type_##ride_type##{{transit_info? transit_info}}{{extra_info? extra_info}}{{bike? bike}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-ride_type="##ride_type##" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
+		<div class="result type_##ride_type##{{transit_info? transit_info}}{{extra_info? extra_info}}{{bike? bike}}{{dlink? confirm_link}}{{tff? tff_click}}{{ulink? confirm_link}}" data-ride_type="##ride_type##" data-transit_info_id="##transit_info##" data-price="##price_min##" data-time="##time_sec##"{{ulink? data-ulink="##ulink##"}}{{spri? data-spri="##spri##"}}{{dlink? data-dlink="##dlink##"}}{{app?  app="##app##"}}>
 			<div class="icon">##icon##</div>
 			<div class="name">##name##</div>
 			<div class="price">##price##{{show_surge:<img src="images/icons3/CUSTOM%20SURGE%20ICON.W+RO.v3.svg">}}</div>
@@ -193,7 +193,7 @@
 					<div class="prediction_holder"></div>
 				</div>
 			</div>
-			<div style="position: relative; width: 100%;">
+			<div style="position: relative; width: 100%; top: -7px;">
 				<img id="search_animation" class="do_lookup" src="images/MOOKY_11-SECONDS.gif" style="position: absolute; width: 70px; right: 0; z-index: 2; left: 0; margin: auto; display: none;">
 			</div>
 			<div class="my_location" style="position: absolute; z-index: 2; top: 145px; left: 5px;">
@@ -348,6 +348,9 @@
 						</div>
 						<div class="option" data-key="BICYCLING">
 							<img class="settings_icon" src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg" > Bike Route
+						</div>
+						<div class="option" data-key="BOTH">
+							<img class="settings_icon" src="images/icons3/CUSTOM%20BICYCLE%20ICON.RO.v4.svg" > Both Routes
 						</div>
 					</div>
 				</div>
