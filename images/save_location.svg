@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   width="3000"
+   height="3000"
+   viewBox="0 0 3000 3000"
+   sodipodi:docname="CUSTOM HEART_ON ICON.W+RO.v1.svg"
+   inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM VERSION ICON.W+RO.v2.png"
+   inkscape:export-xdpi="1.5"
+   inkscape:export-ydpi="1.5">
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <pattern
+       y="0"
+       x="0"
+       height="6"
+       width="6"
+       patternUnits="userSpaceOnUse"
+       id="EMFhbasepattern" />
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     id="namedview4"
+     showgrid="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.13985185"
+     inkscape:cx="494.21269"
+     inkscape:cy="936.99584"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid4160"
+       originx="140.73122"
+       originy="-100.99352" />
+    <sodipodi:guide
+       position="1500.7313,1499.0064"
+       orientation="1,0"
+       id="guide4170" />
+  </sodipodi:namedview>
+  <g
+     id="info"
+     transform="matrix(73.499988,0,0,73.499988,-2248.2686,-1374.5063)" />
+  <circle
+     r="1435.8459"
+     cy="-1500"
+     cx="-1500"
+     id="path4163"
+     style="fill:#ffffff;fill-opacity:1;stroke:#e8390e;stroke-width:128.30799866;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="scale(-1,-1)"
+     inkscape:export-filename="D:\ASUS WEBSTORAGE\R+D\CABS\DEV TEAM\WIREFRAME + PROTOTYPE\CUSTOM ICONS\FINAL CUSTOM LOGOS.v5\FINAL CUSTOM LOGOS.v5.PNG\CUSTOM TERMS ICON.W+RO.v1.png"
+     inkscape:export-xdpi="1.5"
+     inkscape:export-ydpi="1.5" />
+  <g
+     id="g4149"
+     transform="matrix(72.992116,0,0,72.992116,625.01842,782.29515)"
+     style="fill:#e8390e;fill-opacity:1">
+    <g
+       id="info-3"
+       style="fill:#e8390e;fill-opacity:1" />
+    <g
+       id="icons"
+       transform="translate(3.8360307e-7,-2.1920176)"
+       style="fill:#e8390e;fill-opacity:1">
+      <path
+         id="like"
+         d="m 22.2,4.1 c 2.7,2.7 2.4,6.9 -0.4,9.5 l -8.4,7.9 c -0.8,0.7 -2.1,0.7 -2.9,0 L 2.1,13.6 C -0.6,11 -0.9,6.8 1.7,4.1 4.6,1.4 9.2,1.3 12,4 14.8,1.3 19.4,1.4 22.2,4.1 Z"
+         inkscape:connector-curvature="0"
+         style="fill:#e8390e;fill-opacity:1" />
+    </g>
+  </g>
+</svg>

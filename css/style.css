@@ -589,6 +589,19 @@ input[type="checkbox"]:checked + label span{
 	transform: rotate(90deg);
 }
 
+.settings_toggle:not(.open) #switcher{
+	animation-duration: 8s;
+	animation-name: setting_rotate;
+	animation-iteration-count: infinite;
+	transform: rotate(0deg);
+	transition: 2s;
+}
+
+@keyframes setting_rotate {
+	0% {transform: rotate(0deg);}
+	25% {transform: rotate(360deg);}
+}
+
 .selection_container{
 
 }

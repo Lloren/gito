@@ -33,8 +33,16 @@ var extra_routs_holder = [];
 var results_call = 0;
 var results_to_return = 4;
 
-var recent_locations = JSON.parse(window.localStorage.getItem("recent_locations") || "[]");
-var saved_locations = JSON.parse(window.localStorage.getItem("saved_locations") || "{}");
+try{
+	var recent_locations = JSON.parse(window.localStorage.getItem("recent_locations") || "[]");
+} catch(err){
+	recent_locations = [];
+}
+try{
+	var saved_locations = JSON.parse(window.localStorage.getItem("saved_locations") || "{}");
+} catch(err){
+	recent_locations = {};
+}
 var my_locations = ["My Location", "Current Location", "Here", "Me"];
 
 //"https://play.google.com/store/apps/details?id=me.lyft.android";
@@ -341,7 +349,7 @@ function additional_google_rout(call_num, start, stop, mode, icon){
 			var obj = {
 				icon:icon,
 				name:mode.toLowerCase().ucfirst(),
-				price:" ---",
+				price:0,
 				time:"N/A",
 				spri:1,
 				extra_info: true
@@ -584,6 +592,10 @@ function format_results(results){
 	for (var i=0;i<results.length;i++){
 		var result = results[i];
 		if (settings.get("time_display") == "at"){//TODO: make a display setting
+			if (result.time_sec && !result.arr_time){
+				result.arr_time = new Date();
+				result.arr_time.setSeconds(result.arr_time.getTime() + result.time_sec);
+			}
 			if (result.arr_time){
 				var hour = result.arr_time.getHours();
 				var period = "am";
