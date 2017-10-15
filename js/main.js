@@ -35,13 +35,17 @@ var results_to_return = 4;
 
 try{
 	var recent_locations = JSON.parse(window.localStorage.getItem("recent_locations") || "[]");
+	if (!Array.isArray(recent_locations))
+		recent_locations = [];
 } catch(err){
 	recent_locations = [];
 }
 try{
 	var saved_locations = JSON.parse(window.localStorage.getItem("saved_locations") || "{}");
+	if (typeof saved_locations != "object")
+		saved_locations = {};
 } catch(err){
-	recent_locations = {};
+	saved_locations = {};
 }
 var my_locations = ["My Location", "Current Location", "Here", "Me"];
 
@@ -345,23 +349,24 @@ function additional_google_rout(call_num, start, stop, mode, icon){
 		console.log("google "+mode+" results", status, response);
 		var bounds = new google.maps.LatLngBounds();
 		var results = [];
+		var obj = {
+			icon:icon,
+			name:mode.toLowerCase().ucfirst(),
+			price:0,
+			time:"N/A",
+			spri:1,
+			extra_info: true
+		};
+		if (obj.name == "Bicycling"){
+			obj.spri = 2;
+			obj.bike = true;
+		}
 		if (status == "OK"){
-			var obj = {
-				icon:icon,
-				name:mode.toLowerCase().ucfirst(),
-				price:0,
-				time:"N/A",
-				spri:1,
-				extra_info: true
-			};
-			if (obj.name == "Bicycling"){
-				obj.spri = 2;
-				obj.bike = true;
-			}
 			for (var i=0;i<response.routes.length;i++){
 				var route = response.routes[0];
 				extra_routs_holder[obj.bike?"bike":"walk"] = route.legs[0];
 				obj.time_sec = route.legs[0].duration.value;
+				obj.price = route.legs[0].distance.text;
 				console.log("added_roupt time", obj.time_sec);
 				var path = new google.maps.Polyline({
 					path:route.overview_path,
@@ -603,6 +608,8 @@ function format_results(results){
 					hour -= 12;
 					period = "pm";
 				}
+				if (hour == 0)
+					hour = 12;
 				var min = result.arr_time.getMinutes();
 				if (min < 10)
 					min = "0"+min;
@@ -626,7 +633,8 @@ function format_results(results){
 			}
 		} else {
 			result.price_min = result.price;
-			result.price = "$"+result.price;
+			if (!result.price.indexOf || result.price.indexOf("mi") == -1)
+				result.price = "$"+result.price;
 		}
 		if (result.trasit_info){
 
@@ -1285,6 +1293,7 @@ function startup(){
 			if (btn == "Ok"){
 				saved_locations[$("#save_name").val()] = {lat: obj.data("lat"), lng: obj.data("lng")};
 				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
+				save_settings();
 			}
 		}});
 	}, true, true);
@@ -1790,11 +1799,12 @@ function startup(){
 	click_event(".delete_saved_location", function (e){
 		var name = $(e.currentTarget).prev().html();
 
-		open_modal({title: "Remove Location", content:"Are you sure you wnat to remove the location \""+name+"\" from your saved locations?", button2: true, callback: function (btn){
+		open_modal({title: "Remove Location", content:"Are you sure you want to remove the location \""+name+"\" from your saved locations?", button2: true, callback: function (btn){
 			if (btn == "Ok"){
 				delete(saved_locations[name]);
 				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
 				$("#menu_saved_locations").trigger("click_event");
+				save_settings();
 			}
 		}});
 	}, true);
@@ -2033,10 +2043,25 @@ function startup(){
 		$("#mask_overlay").toggle();
 	});
 
+	click_event("#account_reset", function (){
+		open_modal({title: "Reset Account", content:"You are about to reset your account, you will have to though the signup process again. Are you sure you want to do that?", button1: "Yes, Reset", button2: "No", callback: function (button){
+			if (button == "Yes, Reset"){
+				$.getJSON(base_url+"/ajax/settings.php", {action:"reset", uuid: settings.get("uuid"), user_id: settings.get("pre_user_id")}, function (data){
+					if (data.success){
+						$(".page").hide();
+						$("#signup").show();
+					}
+				});
+			}
+		}});
+	});
+
 	if (settings.get("user_id") > 0){
 		$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
 			if (data.data && data.data != ""){
 				saved_locations = data.data.saved_locations;
+				if (typeof saved_locations != "object")
+					saved_locations = {};
 				window.localStorage.setItem("saved_locations", JSON.stringify(saved_locations));
 				delete data.data.saved_locations;
 				settings.data = data.data;
@@ -2200,7 +2225,7 @@ function Rolidex(){
 		if (this.pos < 0)
 			this.pos = 0;
 		var curr_pos = -this.pos;
-		var z = 0;
+		var z = 10;
 		var a = 1;
 		var scope = this;
 		$.each(items, function (){
@@ -2209,7 +2234,7 @@ function Rolidex(){
 			if (parent.hasClass("sub_results"))
 				mod_top = parent.parent().css("top").slice(0, -2);
 			var npos = curr_pos;
-			if (npos < scope.range && z != 0){
+			if (npos < scope.range && z != 10){
 				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
 			}
 			if (npos < 0)
@@ -2292,7 +2317,7 @@ function Rolidex2(){
 		if (this.pos < 0)
 			this.pos = 0;
 		var curr_pos = -this.pos;
-		var z = 0;
+		var z = 10;
 		var a = 1;
 		var scope = this;
 		$.each(items, function (){
@@ -2301,7 +2326,7 @@ function Rolidex2(){
 			if (parent.hasClass("options"))
 				mod_top = parent.parent().css("top").slice(0, -2);
 			var npos = curr_pos;
-			if (npos < scope.range && z != 0){
+			if (npos < scope.range && z != 10){
 				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
 			}
 			if (npos < 0)
