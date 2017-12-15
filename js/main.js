@@ -22,6 +22,8 @@ var no_blur = false;
 
 var run_handel = false;
 
+var credentials = {};
+
 var rolidex;
 var rolidex2;
 
@@ -427,7 +429,7 @@ function service_uber(call_num, start, stop){
 				obj.price_min = 999999;
 				obj.price = price.estimate;
 			}
-			obj.dlink = "uber://?client_id=YOUR_CLIENT_ID&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&pickup[nickname]="+encodeURI($("#from_loc").val())+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&dropoff[nickname]="+encodeURI($("#to_loc").val())+"&product_id="+price.product_id+"&link_text=Transportation-Helper&partner_deeplink=Mooky";
+			obj.dlink = "uber://?client_id="+credentials["uber_client_id"]+"&action=setPickup&pickup[latitude]="+start.lat+"&pickup[longitude]="+start.lng+"&pickup[nickname]="+encodeURI($("#from_loc").val())+"&dropoff[latitude]="+stop.lat+"&dropoff[longitude]="+stop.lng+"&dropoff[nickname]="+encodeURI($("#to_loc").val())+"&product_id="+price.product_id+"&link_text=Transportation-Helper&partner_deeplink=Mooky";
 			results.push(obj);
 		}
 		returned_results(results, "Uber");
@@ -455,14 +457,14 @@ function tff_numbers(loc, callback){
 		dataType: "jsonp",
 		cache: true,
 		url: "https://api.taxifarefinder.com/entity?callback=?",
-		data: {key: "bREfab7g3fEp", location: loc.lat+","+loc.lng},
+		data: {key: credentials["ttf"], location: loc.lat+","+loc.lng},
 		success: function (data){
 			if (data.handle){
 				$.ajax({
 					dataType: "jsonp",
 					cache: true,
 					url: "https://api.taxifarefinder.com/businesses?callback=?",
-					data: {key: "bREfab7g3fEp", entity_handle: data.handle},
+					data: {key: credentials["ttf"], entity_handle: data.handle},
 					success: function (data){
 						if (data.status == "OK"){
 							callback(data.businesses);
@@ -557,7 +559,7 @@ function service_lyft(call_num, start, stop){
 			headers: {"Content-Type": "application/json"},
 			data: '{"grant_type": "client_credentials", "scope": "public"}',
 			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "Basic " + btoa("e0oOEZLBvuIY:kjxPaadYnuw3XnyGLZ8ceDfPfuLm2YEg"));
+				xhr.setRequestHeader ("Authorization", "Basic " + btoa(credentials["lyft"]));
 			}, success: function (data){
 				lyft_token = data.access_token;
 				service_lyft(call_num, start, stop);
@@ -879,6 +881,8 @@ function full_rout(){//turned off, remove if determined to not use
 }
 
 function load_map(){
+	if (!google && !google.maps)
+		return;
 	console.log("load_map");
 
 	var options = {
@@ -1093,7 +1097,9 @@ function get_geo_location(do_load){
 	}, function (error){
 		clearTimeout(no_resp_timeout);
 		console.log("geo error", error);
-		get_geo_location_geo(do_load);
+		setTimeout(function (){
+			get_geo_location_geo(do_load);
+		}, 2000);
 	});
 }
 
@@ -1150,14 +1156,21 @@ function login_responce(data){
 	} else if (data.user_id){
 		settings.delete("pre_user_id");
 		settings.set("user_id", data.user_id);
+		$.getJSON(base_url+"/ajax/settings.php", {action:"credentials", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
+			if (data.credentials){
+				credentials = data.credentials;
+				$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
+				load_map();
+				google.maps.event.trigger(map, "resize");
+				if (my_loc)
+					map.setCenter(my_loc);
+			}
+		});
 		$(".logged_in").show();
 		$(".logged_out").hide();
 		$(".page").hide();
 		$("#map").show();
 		rolidex2.set_spacing();
-		google.maps.event.trigger(map, "resize");
-		if (my_loc)
-			map.setCenter(my_loc);
 	}
 }
 
@@ -2057,6 +2070,12 @@ function startup(){
 	});
 
 	if (settings.get("user_id") > 0){
+		$.getJSON(base_url+"/ajax/settings.php", {action:"credentials", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
+			if (data.credentials){
+				credentials = data.credentials;
+				$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
+			}
+		});
 		$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
 			if (data.data && data.data != ""){
 				saved_locations = data.data.saved_locations;
