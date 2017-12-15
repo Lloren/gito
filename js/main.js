@@ -1162,11 +1162,19 @@ function login_responce(data){
 			if (data.credentials){
 				credentials = data.credentials;
 				$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
-				get_geo_location(true);
-				load_map();
-				google.maps.event.trigger(map, "resize");
-				if (my_loc)
-					map.setCenter(my_loc);
+				while(!google){
+
+				}
+				var int = setInterval(function (){
+					if (typeof google != "undefined"){
+						clearInterval(int);
+						get_geo_location(true);
+					}
+				}, 100);
+				//load_map();
+				//google.maps.event.trigger(map, "resize");
+				//if (my_loc)
+				//	map.setCenter(my_loc);
 			}
 		});
 		$(".logged_in").show();
@@ -2075,7 +2083,12 @@ function startup(){
 			if (data.credentials){
 				credentials = data.credentials;
 				$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
-				get_geo_location(true);
+				var int = setInterval(function (){
+					if (typeof google != "undefined"){
+						clearInterval(int);
+						get_geo_location(true);
+					}
+				}, 100);
 			}
 		});
 		$.getJSON(base_url+"/ajax/settings.php", {action:"load", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
