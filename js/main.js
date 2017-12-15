@@ -881,8 +881,10 @@ function full_rout(){//turned off, remove if determined to not use
 }
 
 function load_map(){
-	if (!google && !google.maps)
+	if (typeof google == "undefined" || !google.maps){
+		console.log("failed load_map");
 		return;
+	}
 	console.log("load_map");
 
 	var options = {
