@@ -57,9 +57,12 @@
 				<string>mailto</string>
 			</array>
 		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<!--<gap:config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>Your location will be used to accurately determine travel times and pickup location.</string>
 		</gap:config-file>
+		<gap:config-file target="*-Info.plist" parent="NSLocationUsageDescription">
+			<string>Your location will be used to accurately determine travel times and pickup location.</string>
+		</gap:config-file>-->
 	</gap:platform>
 
 	<preference name="fullscreen" value="false" />
