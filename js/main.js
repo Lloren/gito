@@ -647,7 +647,6 @@ function format_results(results){
 }
 
 function sort_results(){
-	console.log("sorting");
 	var sorter = settings.get("sort");
 
 	$(".sub_results").each(function (){
@@ -2239,6 +2238,7 @@ function Rolidex(){
 	});
 	
 	this.set_spacing = function(){
+		console.log("set_spacing relidex");
 		var items = $(this.sub_div+":visible");
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
@@ -2298,6 +2298,7 @@ function Rolidex(){
 			}
 			curr_pos += scope.height;
 		});
+		console.log("complete_spacing relidex");
 	}
 }
 
@@ -2331,6 +2332,7 @@ function Rolidex2(){
 	});
 
 	this.set_spacing = function(){
+		console.log("set_spacing relidex2");
 		var items = $(this.sub_div);
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
@@ -2393,5 +2395,6 @@ function Rolidex2(){
 			}
 			curr_pos += scope.height;
 		});
+		console.log("complete_spacing relidex2");
 	}
 }
