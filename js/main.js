@@ -2102,6 +2102,10 @@ function startup(){
 				settings.save(true);
 			}
 		});
+	} else {
+		$(".page").hide();
+		$("#login").show();
+		start_splash_remove();
 	}
 
 	rolidex = new Rolidex();
