@@ -91,7 +91,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<gap:plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
+	<!--<gap:plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" />current broken permission in 3.0.0 11/24/17-->
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
@@ -108,13 +108,13 @@
 	<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<gap:plugin name="cordova-plugin-sim" source="npm" />
 
-	<gap:plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
+	<!--<gap:plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
 		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
 	</gap:plugin>
 	<gap:plugin name="cordova-plugin-googleplus" source="npm">
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
-	</gap:plugin>
+	</gap:plugin>-->
 
 	<feature name="http://api.phonegap.com/1.0/network" />
 
