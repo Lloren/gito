@@ -91,7 +91,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<!--<gap:plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" />current broken permission in 3.0.0 11/24/17
+	<gap:plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
 	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
 	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
 	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
@@ -100,12 +100,12 @@
 	<gap:plugin name="cordova-plugin-device" source="npm" />
 	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
 	<gap:plugin name="cordova-plugin-network-information" source="npm" />
-	<gap:plugin name="cordova-plugin-appversion" source="npm" />-->
+	<gap:plugin name="cordova-plugin-appversion" source="npm" />
 	<!--<gap:plugin name="cordova-plugin-webintent2" source="npm" />-->
 	<!--<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
-	<!--<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
-	<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
-	<!--<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
+	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
+	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
+	<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<gap:plugin name="cordova-plugin-sim" source="npm" />
 
 	<gap:plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
@@ -114,7 +114,7 @@
 	</gap:plugin>
 	<gap:plugin name="cordova-plugin-googleplus" source="npm">
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
-	</gap:plugin>-->
+	</gap:plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
 
