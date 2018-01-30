@@ -2218,16 +2218,18 @@ function Rolidex(){
 	this.range = 30;
 	this.range_size = 3 * this.height;
 	this.touch_start = false;
+	this.touch_start_y = 0;
 	
 	this.main_div = $("#results");
 	this.sub_div = ".result";
 	
 	this.main_div.on("touchstart", function (e){
 		scope.touch_start = e.originalEvent.touches[0];
+		scope.touch_start_y = scope.touch_start.clientY;
 	});
 	this.main_div.on("touchmove", function (e){
 		if (scope.touch_start){
-			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
+			var delt = e.originalEvent.touches[0].clientY - scope.touch_start_y;
 			scope.pos = scope.last_pos - delt;
 			scope.set_spacing();
 		}
@@ -2324,7 +2326,7 @@ function Rolidex2(){
 	});
 	this.main_div.on("touchmove", function (e){
 		if (scope.touch_start){
-			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
+			var delt = e.originalEvent.touches[0].clientY - scope.touch_start_y;
 			console.log("move relidex2", delt, scope.touch_start_y, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
 			scope.pos = scope.last_pos - delt;
 			scope.set_spacing();
