@@ -2312,18 +2312,20 @@ function Rolidex2(){
 	this.range = 30;
 	this.range_size = 2 * this.height;
 	this.touch_start = false;
+	this.touch_start_y = 0;
 
 	this.main_div = $("#map_settings");
 	this.sub_div = ".toggler:visible, .options>.option:visible, .options>.option_toggle:visible";
 
 	this.main_div.on("touchstart", function (e){
 		scope.touch_start = e.originalEvent.touches[0];
+		scope.touch_start_y = scope.touch_start.clientY;
 		console.log("start relidex2", scope.touch_start);
 	});
 	this.main_div.on("touchmove", function (e){
 		if (scope.touch_start){
 			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
-			console.log("move relidex2", delt, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
+			console.log("move relidex2", delt, scope.touch_start_y, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
 			scope.pos = scope.last_pos - delt;
 			scope.set_spacing();
 		}
