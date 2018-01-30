@@ -2317,6 +2317,7 @@ function Rolidex2(){
 	this.sub_div = ".toggler:visible, .options>.option:visible, .options>.option_toggle:visible";
 
 	this.main_div.on("touchstart", function (e){
+		console.log("start relidex2");
 		scope.touch_start = e.originalEvent.touches[0];
 	});
 	this.main_div.on("touchmove", function (e){
@@ -2327,6 +2328,7 @@ function Rolidex2(){
 		}
 	});
 	this.main_div.on("touchend", function (e){
+		console.log("stop relidex2");
 		scope.touch_start = false;
 		scope.last_pos = scope.pos;
 	});
