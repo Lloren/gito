@@ -2343,7 +2343,7 @@ function Rolidex2(){
 
 		var prev_group_z = false;
 
-		//console.log(this.pos, cont_height, items.length, scroll_height);
+		console.log(this.pos, cont_height, items.length, scroll_height);
 
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
@@ -2379,7 +2379,7 @@ function Rolidex2(){
 			if (npos > cont_height - scope.height)
 				npos = cont_height - scope.height;
 			a++;
-			//console.log(npos, mod_top);
+			console.log(npos, z, mod_top);
 			if (mod_top == -1){
 				if (parent.hasClass("para_scroll")){
 					z -= 2;
