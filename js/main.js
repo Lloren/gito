@@ -2317,12 +2317,13 @@ function Rolidex2(){
 	this.sub_div = ".toggler:visible, .options>.option:visible, .options>.option_toggle:visible";
 
 	this.main_div.on("touchstart", function (e){
-		console.log("start relidex2");
 		scope.touch_start = e.originalEvent.touches[0];
+		console.log("start relidex2", scope.touch_start);
 	});
 	this.main_div.on("touchmove", function (e){
 		if (scope.touch_start){
 			var delt = e.originalEvent.touches[0].clientY - scope.touch_start.clientY;
+			console.log("move relidex2", delt, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
 			scope.pos = scope.last_pos - delt;
 			scope.set_spacing();
 		}
