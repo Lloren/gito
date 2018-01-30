@@ -2343,7 +2343,7 @@ function Rolidex2(){
 
 		var prev_group_z = false;
 
-		console.log(this.pos, cont_height, items.length, scroll_height);
+		console.log(this.last_pos, this.pos, cont_height, items.length, scroll_height);
 
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
