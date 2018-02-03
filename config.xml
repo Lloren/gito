@@ -35,7 +35,7 @@
 	<gap:platform name="android" />
 	<gap:platform name="winphone" />
 
-	<preference name="phonegap-version" value="cli-6.5.0" />
+	<preference name="phonegap-version" value="cli-7.1.0" />
 	<preference name="android-build-tool" value="gradle" />
 
 	<preference name="android-minSdkVersion" value="16" />
@@ -168,6 +168,7 @@
 	<icon platform="ios" src="res/icons/ios/icon-72-2x.png" width="144" height="144" />
 	<icon platform="ios" src="res/icons/ios/icon-76.png" width="76" height="76" />
 	<icon platform="ios" src="res/icons/ios/icon-76-2x.png" width="152" height="152" />
+	<icon platform="ios" src="res/icons/ios/icon-1024.png" width="1024" height="1024" />
 
 	<splash platform="ios" src="res/screens/ios/Default@2x.png" width="640" height="960" />
 	<splash platform="ios" src="res/screens/ios/Default-568h@2x.png" width="640" height="1136" />
