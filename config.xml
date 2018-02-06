@@ -43,12 +43,12 @@
 
 	<preference name="orientation" value="portrait" />
 	<gap:platform name="ios">
-		<gap:config-file parent="UISupportedInterfaceOrientations" mode="replace">
+		<gap:edit-config parent="UISupportedInterfaceOrientations" mode="replace">
 			<array>
 				<string>UIInterfaceOrientationPortrait</string>
 			</array>
-		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+		</gap:edit-config>
+		<gap:edit-config target="*-Info.plist" parent="LSApplicationQueriesSchemes">
 			<array>
 				<string>uber</string>
 				<string>lyft</string>
@@ -56,16 +56,16 @@
 				<string>tel</string>
 				<string>mailto</string>
 			</array>
-		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" overwrite="true">
+		</gap:edit-config>
+		<gap:edit-config target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationUsageDescription" overwrite="true">
+		</gap:edit-config>
+		<gap:edit-config target="*-Info.plist" parent="NSLocationUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" overwrite="true">
+		</gap:edit-config>
+		<gap:edit-config target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:config-file>
+		</gap:edit-config>
 	</gap:platform>
 
 	<preference name="fullscreen" value="false" />
@@ -132,12 +132,12 @@
 	</feature>-->
 
 	<!-- Keyboard setting for Android -->
-	<gap:config-file platform="android" parent="/manifest/application">
+	<gap:edit-config platform="android" parent="/manifest/application">
 		<activity android:windowSoftInputMode="adjustPan" />
-	</gap:config-file>
-	<gap:config-file target="AndroidManifest.xml" parent="/*">
+	</gap:edit-config>
+	<gap:edit-config target="AndroidManifest.xml" parent="/*">
 		<uses-permission android:name="android.permission.CALL_PHONE" />
-	</gap:config-file>
+	</gap:edit-config>
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
