@@ -129,13 +129,13 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<edit-config file="*-Info.plist" target="NSLocationUsageDescription" mode="merge">
+		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
 	</platform>
