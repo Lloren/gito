@@ -33,7 +33,7 @@
 
 	<gap:platform name="ios" />
 	<gap:platform name="android" />
-	<gap:platform name="winphone" />
+	<!--<gap:platform name="winphone" />-->
 
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<preference name="android-build-tool" value="gradle" />
@@ -57,13 +57,13 @@
 				<string>mailto</string>
 			</array>
 		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<gap:config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationUsageDescription">
+		<gap:config-file target="*-Info.plist" parent="NSLocationUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</gap:config-file>
-		<gap:config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+		<gap:config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" overwrite="true">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</gap:config-file>
 	</gap:platform>
