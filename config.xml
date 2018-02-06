@@ -23,17 +23,17 @@
 	<allow-intent href="sms:*" launch-external="true" />
 	<allow-intent href="mailto:*" launch-external="true" />
 	<allow-intent href="geo:*" launch-external="true" />
-	<gap:platform name="android">
+	<platform name="android">
 		<allow-intent href="market:*" launch-external="true" />
-	</gap:platform>
-	<gap:platform name="ios">
+	</platform>
+	<platform name="ios">
 		<allow-intent href="itms:*" launch-external="true" />
 		<allow-intent href="itms-apps:*" launch-external="true" />
-	</gap:platform>
+	</platform>
 
-	<gap:platform name="ios" />
-	<gap:platform name="android" />
-	<!--<gap:platform name="winphone" />-->
+	<platform name="ios" />
+	<platform name="android" />
+	<!--<platform name="winphone" />-->
 
 	<preference name="phonegap-version" value="cli-7.1.0" />
 	<preference name="android-build-tool" value="gradle" />
@@ -42,13 +42,13 @@
 	<preference name="deployment-target" value="8.0" />
 
 	<preference name="orientation" value="portrait" />
-	<gap:platform name="ios">
-		<gap:edit-config parent="UISupportedInterfaceOrientations" mode="replace">
+	<platform name="ios">
+		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
 			<array>
 				<string>UIInterfaceOrientationPortrait</string>
 			</array>
-		</gap:edit-config>
-		<gap:edit-config target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+		</edit-config>
+		<edit-config target="*-Info.plist" parent="LSApplicationQueriesSchemes">
 			<array>
 				<string>uber</string>
 				<string>lyft</string>
@@ -56,17 +56,17 @@
 				<string>tel</string>
 				<string>mailto</string>
 			</array>
-		</gap:edit-config>
-		<gap:edit-config target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" overwrite="true">
+		</edit-config>
+		<edit-config target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:edit-config>
-		<gap:edit-config target="*-Info.plist" parent="NSLocationUsageDescription" overwrite="true">
+		</edit-config>
+		<edit-config target="*-Info.plist" parent="NSLocationUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:edit-config>
-		<gap:edit-config target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" overwrite="true">
+		</edit-config>
+		<edit-config target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</gap:edit-config>
-	</gap:platform>
+		</edit-config>
+	</platform>
 
 	<preference name="fullscreen" value="false" />
 
@@ -85,12 +85,12 @@
 
 	<preference name="StatusBarOverlaysWebView" value="true" />
 	<preference name="StatusBarBackgroundColor" value="#e8390e" />
-	<gap:platform name="ios">
+	<platform name="ios">
 		<preference name="StatusBarStyle" value="default" />
-	</gap:platform>
-	<gap:platform name="android">
+	</platform>
+	<platform name="android">
 		<preference name="StatusBarStyle" value="blacktranslucent" />
-	</gap:platform>
+	</platform>
 	<feature name="StatusBar">
 		<param name="ios-package" value="CDVStatusBar" onload="true" />
 	</feature>
@@ -100,30 +100,30 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<gap:plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
-	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
-	<gap:plugin name="ionic-plugin-keyboard" source="npm" />
-	<gap:plugin name="cordova-plugin-splashscreen" source="npm" />
-	<gap:plugin name="cordova-plugin-ga" source="npm" />
-	<gap:plugin name="cordova-plugin-statusbar" source="npm" />
-	<gap:plugin name="cordova-plugin-device" source="npm" />
-	<gap:plugin name="cordova-plugin-inappbrowser" source="npm" />
-	<gap:plugin name="cordova-plugin-network-information" source="npm" />
-	<gap:plugin name="cordova-plugin-appversion" source="npm" />
-	<!--<gap:plugin name="cordova-plugin-webintent2" source="npm" />-->
-	<!--<gap:plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
-	<gap:plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
-	<!--<gap:plugin name="cordova-plugin-apprate" source="npm" />-->
-	<gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
-	<gap:plugin name="cordova-plugin-sim" source="npm" />
+	<plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
+	<plugin name="cordova-plugin-whitelist" source="npm" />
+	<plugin name="ionic-plugin-keyboard" source="npm" />
+	<plugin name="cordova-plugin-splashscreen" source="npm" />
+	<plugin name="cordova-plugin-ga" source="npm" />
+	<plugin name="cordova-plugin-statusbar" source="npm" />
+	<plugin name="cordova-plugin-device" source="npm" />
+	<plugin name="cordova-plugin-inappbrowser" source="npm" />
+	<plugin name="cordova-plugin-network-information" source="npm" />
+	<plugin name="cordova-plugin-appversion" source="npm" />
+	<!--<plugin name="cordova-plugin-webintent2" source="npm" />-->
+	<!--<plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
+	<plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
+	<!--<plugin name="cordova-plugin-apprate" source="npm" />-->
+	<plugin name="cordova-plugin-x-socialsharing" source="npm" />
+	<plugin name="cordova-plugin-sim" source="npm" />
 
-	<gap:plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
+	<plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
 		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
-	</gap:plugin>
-	<gap:plugin name="cordova-plugin-googleplus" source="npm">
+	</plugin>
+	<plugin name="cordova-plugin-googleplus" source="npm">
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
-	</gap:plugin>
+	</plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
 
@@ -132,16 +132,16 @@
 	</feature>-->
 
 	<!-- Keyboard setting for Android -->
-	<gap:edit-config platform="android" parent="/manifest/application">
+	<edit-config platform="android" parent="/manifest/application">
 		<activity android:windowSoftInputMode="adjustPan" />
-	</gap:edit-config>
-	<gap:edit-config target="AndroidManifest.xml" parent="/*">
+	</edit-config>
+	<edit-config target="AndroidManifest.xml" parent="/*">
 		<uses-permission android:name="android.permission.CALL_PHONE" />
-	</gap:edit-config>
+	</edit-config>
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
-	<gap:splash src="res/splash.png" /> <!-- ??? *Breaks iOS build/preferences sometimes ??? -->
+	<splash src="res/splash.png" /> <!-- ??? *Breaks iOS build/preferences sometimes ??? -->
 
 	<icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png" />
 	<icon platform="android" qualifier="mdpi" src="res/icons/android/icon-48-mdpi.png" />
