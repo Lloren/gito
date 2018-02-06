@@ -42,31 +42,6 @@
 	<preference name="deployment-target" value="8.0" />
 
 	<preference name="orientation" value="portrait" />
-	<platform name="ios">
-		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
-			<array>
-				<string>UIInterfaceOrientationPortrait</string>
-			</array>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
-			<array>
-				<string>uber</string>
-				<string>lyft</string>
-				<string>itms-apps</string>
-				<string>tel</string>
-				<string>mailto</string>
-			</array>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="overwrite">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription" mode="overwrite">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationAlwaysUsageDescription" mode="overwrite">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
-	</platform>
 
 	<preference name="fullscreen" value="false" />
 
@@ -100,7 +75,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
+	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
@@ -138,6 +113,32 @@
 	<edit-config target="AndroidManifest.xml" parent="/*">
 		<uses-permission android:name="android.permission.CALL_PHONE" />
 	</edit-config>
+
+	<platform name="ios">
+		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
+			<array>
+				<string>UIInterfaceOrientationPortrait</string>
+			</array>
+		</edit-config>
+		<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
+			<array>
+				<string>uber</string>
+				<string>lyft</string>
+				<string>itms-apps</string>
+				<string>tel</string>
+				<string>mailto</string>
+			</array>
+		</edit-config>
+		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="overwrite">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>
+		<!--<edit-config target="*-Info.plist" parent="NSLocationUsageDescription" mode="overwrite">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>
+		<edit-config target="*-Info.plist" parent="NSLocationAlwaysUsageDescription" mode="overwrite">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>-->
+	</platform>
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
