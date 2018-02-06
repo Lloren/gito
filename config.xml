@@ -75,7 +75,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<plugin name="cordova-plugin-geolocation" source="npm" spec="4.0.0" /><!--current broken permission in 3.0.0 11/24/17-->
+	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
@@ -130,16 +130,16 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>
 	</platform>
+	<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<string>Your location will be used to accurately determine pickup location and travel times.</string>
+	</edit-config>
+	<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+		<string>Your location will be used to accurately determine pickup location and travel times.</string>
+	</edit-config>
+	<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<string>Your location will be used to accurately determine pickup location and travel times.</string>
+	</edit-config>
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
