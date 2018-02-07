@@ -58,10 +58,10 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
+		<!--<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<!--<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
 		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
