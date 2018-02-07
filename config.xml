@@ -70,6 +70,33 @@
 		<param name="ios-package" value="CDVStatusBar" onload="true" />
 	</feature>
 
+	<!--<preference name="GEOLOCATION_USAGE_DESCRIPTION" default="Your location will be used to accurately determine pickup location and travel times." />-->
+	<platform name="ios">
+		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
+			<array>
+				<string>UIInterfaceOrientationPortrait</string>
+			</array>
+		</edit-config>
+		<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
+			<array>
+				<string>uber</string>
+				<string>lyft</string>
+				<string>itms-apps</string>
+				<string>tel</string>
+				<string>mailto</string>
+			</array>
+		</edit-config>
+		<!--<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>
+		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>-->
+	</platform>
+
 	<preference name="SplashScreen" value="splash" />
 	<preference name="SplashScreenDelay" value="5000" />
 	<preference name="SplashMaintainAspectRatio" value="true" />
@@ -112,33 +139,6 @@
 	</edit-config>
 	<edit-config target="AndroidManifest.xml" parent="/*">
 		<uses-permission android:name="android.permission.CALL_PHONE" />
-	</edit-config>
-
-	<preference name="GEOLOCATION_USAGE_DESCRIPTION" default="Your location will be used to accurately determine pickup location and travel times." />
-	<platform name="ios">
-		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
-			<array>
-				<string>UIInterfaceOrientationPortrait</string>
-			</array>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
-			<array>
-				<string>uber</string>
-				<string>lyft</string>
-				<string>itms-apps</string>
-				<string>tel</string>
-				<string>mailto</string>
-			</array>
-		</edit-config>
-	</platform>
-	<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-		<string>Your location will be used to accurately determine pickup location and travel times.</string>
-	</edit-config>
-	<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
-		<string>Your location will be used to accurately determine pickup location and travel times.</string>
-	</edit-config>
-	<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-		<string>Your location will be used to accurately determine pickup location and travel times.</string>
 	</edit-config>
 
 	<!-- Default Icon/Splash -->
