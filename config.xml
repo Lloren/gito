@@ -42,7 +42,6 @@
 	<preference name="deployment-target" value="8.0" />
 
 	<preference name="orientation" value="portrait" />
-	<!--<preference name="GEOLOCATION_USAGE_DESCRIPTION" default="Your location will be used to accurately determine pickup location and travel times." />-->
 	<platform name="ios">
 		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
 			<array>
@@ -58,10 +57,10 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<!--<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+		<!--<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
 		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
@@ -102,8 +101,8 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
-	<!--<plugin name="cordova-plugin-whitelist" source="npm" />
+	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17-->
+	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
 	<plugin name="cordova-plugin-ga" source="npm" />
@@ -122,7 +121,7 @@
 	</plugin>
 	<plugin name="cordova-plugin-googleplus" source="npm">
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
-	</plugin>-->
+	</plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
 
