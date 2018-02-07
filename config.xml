@@ -58,10 +58,10 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<!--<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+		<!--<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
 		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
@@ -103,7 +103,7 @@
 	<preference name="AutoHideSplashScreen" value="false" />
 
 	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17-->
-	<plugin name="cordova-plugin-whitelist" source="npm" />
+	<!--<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
 	<plugin name="cordova-plugin-ga" source="npm" />
@@ -112,10 +112,7 @@
 	<plugin name="cordova-plugin-inappbrowser" source="npm" />
 	<plugin name="cordova-plugin-network-information" source="npm" />
 	<plugin name="cordova-plugin-appversion" source="npm" />
-	<!--<plugin name="cordova-plugin-webintent2" source="npm" />-->
-	<!--<plugin spec="https://github.com/philmerrell/CanOpen.git" source="git" />-->
 	<plugin spec="https://github.com/lampaa/com.lampa.startapp.git" source="git" />
-	<!--<plugin name="cordova-plugin-apprate" source="npm" />-->
 	<plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<plugin name="cordova-plugin-sim" source="npm" />
 
@@ -125,10 +122,11 @@
 	</plugin>
 	<plugin name="cordova-plugin-googleplus" source="npm">
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
-	</plugin>
+	</plugin>-->
 
 	<feature name="http://api.phonegap.com/1.0/network" />
 
+	<!--<plugin name="cordova-plugin-apprate" source="npm" />-->
 	<!--<feature name="Keyboard">
 		<param name="ios-package" value="IonicKeyboard" onload="true" />
 	</feature>-->
