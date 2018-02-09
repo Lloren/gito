@@ -90,7 +90,7 @@
 	<plugin name="cordova-plugin-x-socialsharing" source="npm" />
 	<plugin name="cordova-plugin-sim" source="npm" />
 
-	<plugin name="cordova-plugin-facebook4" source="npm" spec="1.7.4">
+	<plugin name="cordova-plugin-facebook4" source="npm">
 		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
 	</plugin>
