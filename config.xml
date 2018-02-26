@@ -130,12 +130,15 @@
 		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<!--<edit-config file="*-Info.plist" parent="NSLocationUsageDescription">
+		<edit-config file="*-Info.plist" parent="NSLocationAlwaysUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
 		</edit-config>
-		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<edit-config file="*-Info.plist" parent="NSLocationUsageDescription" mode="merge">
 			<string>Your location will be used to accurately determine pickup location and travel times.</string>
-		</edit-config>-->
+		</edit-config>
+		<edit-config file="*-Info.plist" parent="NSLocationWhenInUseUsageDescription" mode="merge">
+			<string>Your location will be used to accurately determine pickup location and travel times.</string>
+		</edit-config>
 	</platform>
 
 	<!-- Default Icon/Splash -->
