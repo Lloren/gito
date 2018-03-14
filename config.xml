@@ -128,14 +128,14 @@
 				<string>mailto</string>
 			</array>
 		</edit-config>
-		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="override">
-			<string>this is a test.</string>
-		</edit-config>
-		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-			<string>this ios a test 2.</string>
-		</config-file>
-		<preference name="GEOLOCATION_USAGE_DESCRIPTION" value="this is a test 3" />
 	</platform>
+	<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
+		<string>this is a test.</string>
+	</edit-config>
+	<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+		<string>this ios a test 2.</string>
+	</config-file>
+	<preference name="GEOLOCATION_USAGE_DESCRIPTION" value="this is a test 3" />
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
