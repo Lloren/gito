@@ -77,7 +77,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17-->
+	<plugin name="cordova-plugin-geolocation" source="npm" spec="2.4.3" /><!--current broken permission in 3.0.0 11/24/17-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
@@ -134,6 +134,7 @@
 		<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 			<string>this ios a test 2.</string>
 		</config-file>
+		<preference name="GEOLOCATION_USAGE_DESCRIPTION" value="this is a test 3" />
 	</platform>
 
 	<!-- Default Icon/Splash -->
