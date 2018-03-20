@@ -79,7 +79,7 @@
 
 	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17   spec="2.4.3"-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
-	<!--<plugin name="ionic-plugin-keyboard" source="npm" />
+	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
 	<plugin name="cordova-plugin-ga" source="npm" />
 	<plugin name="cordova-plugin-statusbar" source="npm" />
@@ -99,7 +99,7 @@
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
 	</plugin>
 
-	<feature name="http://api.phonegap.com/1.0/network" />-->
+	<feature name="http://api.phonegap.com/1.0/network" />
 
 	<!--<plugin name="cordova-plugin-apprate" source="npm" />-->
 	<!--<feature name="Keyboard">
