@@ -37,7 +37,7 @@
 
 	<preference name="phonegap-version" value="cli-8.0.0" />
 	<!--<preference name="pgb-builder-version" value="1" />
-	<preference name="android-build-tool" value="gradle" />-->
+	<preference name="android-build-tool" value="gradle" />
 
 	<preference name="android-minSdkVersion" value="16" />
 	<preference name="deployment-target" value="8.0" />
@@ -75,11 +75,11 @@
 	<preference name="SplashScreen" value="splash" />
 	<preference name="SplashScreenDelay" value="5000" />
 	<preference name="SplashMaintainAspectRatio" value="true" />
-	<preference name="AutoHideSplashScreen" value="false" />
+	<preference name="AutoHideSplashScreen" value="false" />-->
 
 	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17   spec="2.4.3"-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
-	<plugin name="ionic-plugin-keyboard" source="npm" />
+	<!--<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
 	<plugin name="cordova-plugin-ga" source="npm" />
 	<plugin name="cordova-plugin-statusbar" source="npm" />
@@ -99,7 +99,7 @@
 		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
 	</plugin>
 
-	<feature name="http://api.phonegap.com/1.0/network" />
+	<feature name="http://api.phonegap.com/1.0/network" />-->
 
 	<!--<plugin name="cordova-plugin-apprate" source="npm" />-->
 	<!--<feature name="Keyboard">
@@ -113,25 +113,23 @@
 	<edit-config target="AndroidManifest.xml" parent="/*">
 		<uses-permission android:name="android.permission.CALL_PHONE" />
 	</edit-config>
-	<platform name="ios">
-		<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
-			<array>
-				<string>UIInterfaceOrientationPortrait</string>
-			</array>
-		</edit-config>
-		<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
-			<array>
-				<string>uber</string>
-				<string>lyft</string>
-				<string>itms-apps</string>
-				<string>tel</string>
-				<string>mailto</string>
-			</array>
-		</edit-config>
-		<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
-			<string>this is a test.</string>
-		</edit-config>
-	</platform>
+	<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
+		<string>this is a test.</string>
+	</edit-config>
+	<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
+		<array>
+			<string>UIInterfaceOrientationPortrait</string>
+		</array>
+	</edit-config>
+	<edit-config file="*-Info.plist" parent="LSApplicationQueriesSchemes">
+		<array>
+			<string>uber</string>
+			<string>lyft</string>
+			<string>itms-apps</string>
+			<string>tel</string>
+			<string>mailto</string>
+		</array>
+	</edit-config>
 	<!--<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
 		<string>this ios a test 2.</string>
 	</config-file>
