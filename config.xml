@@ -40,7 +40,7 @@
 	<preference name="android-build-tool" value="gradle" />
 
 	<preference name="android-minSdkVersion" value="16" />
-	<preference name="deployment-target" value="8.0" />
+	<preference name="deployment-target" value="8.0" />-->
 
 	<preference name="orientation" value="portrait" />
 
@@ -75,7 +75,7 @@
 	<preference name="SplashScreen" value="splash" />
 	<preference name="SplashScreenDelay" value="5000" />
 	<preference name="SplashMaintainAspectRatio" value="true" />
-	<preference name="AutoHideSplashScreen" value="false" />-->
+	<preference name="AutoHideSplashScreen" value="false" />
 
 	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17   spec="2.4.3"-->
 	<plugin name="cordova-plugin-whitelist" source="npm" />
@@ -114,7 +114,7 @@
 		<uses-permission android:name="android.permission.CALL_PHONE" />
 	</edit-config>
 	<edit-config file="*-Info.plist" target="NSLocationWhenInUseUsageDescription" mode="merge">
-		<string>this is a test.</string>
+		<string>Your location will be used to accurately determine travel times and pickup location.</string>
 	</edit-config>
 	<edit-config parent="UISupportedInterfaceOrientations" mode="replace">
 		<array>
@@ -130,10 +130,6 @@
 			<string>mailto</string>
 		</array>
 	</edit-config>
-	<!--<config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
-		<string>this ios a test 2.</string>
-	</config-file>
-	<preference name="GEOLOCATION_USAGE_DESCRIPTION" value="this is a test 3" />-->
 
 	<!-- Default Icon/Splash -->
 	<icon src="res/icon.png" />
