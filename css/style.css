@@ -41,6 +41,7 @@ h3 {text-align: center;}
 
 .gmnoprint {
 	opacity: 1 !important;
+	pointer-events: none;
 }
 
 .clear {clear:both;}

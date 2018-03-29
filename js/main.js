@@ -457,7 +457,7 @@ function tff_numbers(loc, callback){
 		dataType: "jsonp",
 		cache: true,
 		url: "https://api.taxifarefinder.com/entity?callback=?",
-		data: {key: credentials["ttf"], location: loc.lat+","+loc.lng},
+		data: {key: credentials["ttf"], location: loc.lat.toFixed(6)+","+loc.lng.toFixed(6)},
 		success: function (data){
 			if (data.handle){
 				$.ajax({
