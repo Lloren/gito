@@ -35,7 +35,7 @@
 	<platform name="android" />
 	<!--<platform name="winphone" />-->
 
-	<preference name="phonegap-version" value="cli-8.0.0" />
+	<preference name="phonegap-version" value="cli-7.1.0" />
 
 	<preference name="android-minSdkVersion" value="16" />
 	<preference name="deployment-target" value="8.0" />
@@ -75,7 +75,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
-	<plugin name="cordova-plugin-geolocation" source="npm" /><!--current broken permission in 3.0.0 11/24/17   spec="2.4.3"-->
+	<plugin name="cordova-plugin-geolocation" source="npm" />
 	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
 	<plugin name="cordova-plugin-splashscreen" source="npm" />
