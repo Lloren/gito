@@ -2,7 +2,7 @@
 			xmlns:gap		= "http://phonegap.com/ns/1.0"
 			xmlns:android	= "http://schemas.android.com/apk/res/android"
 			android-versionCode="10000"
-			id				= "com.mooky.dev"
+			id				= "com.mooky"
 			version			= "1.0.0">
 	<name>Mooky Dev</name>
 	<description>
