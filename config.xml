@@ -1,10 +1,10 @@
 <widget	xmlns				= "http://www.w3.org/ns/widgets"
-		   xmlns:gap		= "http://phonegap.com/ns/1.0"
-		   xmlns:android	= "http://schemas.android.com/apk/res/android"
-		   android-versionCode="10004"
-		   id				= "com.mooky"
-		   version			= "1.2.7">
-	<name>Mooky</name>
+			xmlns:gap		= "http://phonegap.com/ns/1.0"
+			xmlns:android	= "http://schemas.android.com/apk/res/android"
+			android-versionCode="10000"
+			id				= "com.mooky.dev"
+			version			= "1.0.0">
+	<name>Mooky Dev</name>
 	<description>
 		Search, discover, and explore your rides.
 	</description>
@@ -90,11 +90,11 @@
 	<plugin name="cordova-plugin-sim" source="npm" />
 
 	<plugin name="cordova-plugin-facebook4" source="npm">
-		<param name="APP_ID" value="266665110442328" />
+		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
 	</plugin>
 	<plugin name="cordova-plugin-googleplus" source="npm">
-		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.609429263818-33lkb5j7dng77jlo6eb2a9shlof8c7hu" />
+		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
 	</plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
