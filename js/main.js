@@ -712,7 +712,7 @@ function coded_location(pos, start, trigger){
 				position: start_location,
 				map: map,
 				draggable: true,
-				zIndex: 10,
+				zIndex: 100,
 				icon: {
 					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
 					size: new google.maps.Size(10, 10),
@@ -748,7 +748,7 @@ function coded_location(pos, start, trigger){
 				position:stop_location,
 				map:map,
 				draggable:true,
-				zIndex: 20,
+				zIndex: 120,
 				icon: {
 					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
 					size: new google.maps.Size(10, 10),
@@ -888,7 +888,7 @@ function load_map(){
 
 	var options = {
 		zoom: 13,
-		disableDefaultUI: true
+		disableDefaultUI: true,
 	};
 	if (my_loc){
 		options.center = my_loc;
@@ -1160,7 +1160,9 @@ function login_responce(data){
 		$.getJSON(base_url+"/ajax/settings.php", {action:"credentials", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
 			if (data.credentials){
 				credentials = data.credentials;
-				$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
+				console.log(credentials);
+				if (typeof google == "undefined")
+					$("head").append('<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry,places&v=3.exp&key='+credentials.google_maps+'"></script>');
 				var int = setInterval(function (){
 					if (typeof google != "undefined"){
 						clearInterval(int);
@@ -1963,6 +1965,18 @@ function startup(){
 		$(".logged_in").hide();
 		$(".logged_out").show();
 		$('input[type="text"], input[type="email"], input[type="password"]').val("");
+		if (markers.start)
+			markers.start.setMap(null);
+		markers.start = false;
+		if (markers.stop)
+			markers.stop.setMap(null);
+		markers.stop = false;
+		if (markers.google_routs){
+			for (var i=0;i<markers.google_routs.length;i++){
+				markers.google_routs[i].setMap(null);
+			}
+		}
+		markers.google_routs = [];
 		settings.delete("user_id");
 		settings.delete("pre_user_id");
 		settings.delete("get_phone_user_id");

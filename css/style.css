@@ -41,7 +41,7 @@ h3 {text-align: center;}
 
 .gmnoprint {
 	opacity: 1 !important;
-	pointer-events: none;
+	/*pointer-events: none; removed because markers could not be moved*/
 }
 
 .clear {clear:both;}
