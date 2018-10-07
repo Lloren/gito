@@ -1108,7 +1108,7 @@ function get_geo_location_geo(do_load){
 	if (!dev)
 		$(".my_location").hide();
 	if (!markers.my_loc){
-		$.getJSON("http://freegeoip.net/json/", function (data){
+		$.getJSON("http://api.ipstack.com/check?access_key="+credentials["ipstack"], function (data){
 			console.log("ippos", data);
 			my_loc = new google.maps.LatLng(data.latitude, data.longitude);
 			if (do_load){
@@ -2070,9 +2070,14 @@ function startup(){
 		$("#menu-overlay").trigger("click_event");
 		open_share();
 	});
-
+	
 	click_event("#pop_overlay", function (e){
 		$("#mask_overlay").toggle();
+	});
+	
+	click_event("#show_vid", function (e){
+		$("#test_vid_cont").toggle();
+		document.getElementById("test_vid").play();
 	});
 
 	click_event("#account_reset", function (){

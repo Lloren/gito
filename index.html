@@ -132,12 +132,19 @@
 		</ul>
 		<ul class="dev">
 			<li style="background: black;">Dev</li>
+			<li id="show_vid">Show vid</li>
 			<li id="pop_overlay">Show overlay</li>
 			<li id="clear_cache">Clear cache</li>
 		</ul>
 	</div>
 
 	<div id="mask_overlay" style="pointer-events: none; width: 100%; background: #222; opacity:0.9; height: 100%; position: fixed; z-index: 100; display:none;"></div>
+
+	<div id="test_vid_cont" style="display: none;">
+		<video id="test_vid" autoplay="autoplay" src="vids/3D_COIN_FF_v2.webm" style="    position: absolute;
+    width: 500px;
+    z-index: 100;"></video>
+	</div>
 
 	<div id="header">
 		<div id="menubutton" style="color: black;">
