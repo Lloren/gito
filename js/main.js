@@ -1587,6 +1587,7 @@ function startup(){
 
 	function confirm_link(result, value_message){
 		$("#value_screen").fadeOut();
+		$('#monkey_gif').attr('src', '');
 		if (settings.get("show_external_conf")){
 			var name = result.find(".name").html();
 			var add = "";
@@ -1609,7 +1610,10 @@ function startup(){
 
 	var confirm_handle, confirm_result, value_message;
 	click_event(".confirm_link", function (e){
+		$('.value_dyn').html('');
+		$('#value_prop').html('');
 		confirm_result = $(e.currentTarget);
+		$('#monkey_car').show();
 
 		value_message = "";
 		var value_item = "", similar = $(".type_"+confirm_result.data("ride_type"));
@@ -1647,18 +1651,24 @@ function startup(){
 			}
 		}
 
-		if (value_item){
-			$(".value_dyn").show();
-			$("#value_prop").html(value_item);
-		} else {
-			$(".value_dyn").hide();
-			$("#value_prop").html("Helping you compare");
-		}
+		
 		$("#value_screen").show();
+		setTimeout(function (){
+			if (value_item){
+				$(".value_dyn").show();
+				$("#value_prop").html(value_item);
+			} else {
+				$(".value_dyn").hide();
+				$("#value_prop").html("Thank you<br />for<br />using Mooky");
+			}
+			$('#monkey_gif').attr('src', 'images/mooky_drift.gif');
+			$('#monkey_car').hide();
+			$('#monkey_gif').show();
+		}, 3500);
 
 		confirm_handle = setTimeout(function (){
 			confirm_link(confirm_result, value_message);
-		}, 3500);
+		}, 16000);
 	}, true);
 
 	click_event("#value_screen_close", function (e){
@@ -2265,6 +2275,8 @@ function Rolidex(){
 		this.main_div.css("height", total_height);
 		var cont_height = this.main_div.height();
 		var scroll_height = total_height - cont_height - 5;
+		var max_height = cont_height - this.height + 5;
+		var c_r_h = cont_height - this.range - this.height;
 
 		var full_height = scroll_height < 0;
 
@@ -2286,13 +2298,18 @@ function Rolidex(){
 			if (parent.hasClass("sub_results"))
 				mod_top = parent.parent().css("top").slice(0, -2);
 			var npos = curr_pos;
+			var mod = 0;
 			if (npos < scope.range && z != 10){
+				mod = Math.tanh(-(npos - scope.range)/scope.range_size/0.7);
 				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
 			}
-			if (npos < 0)
+			if (npos < 0){
+				mod = 1;
 				npos = 0;
-			if (npos > cont_height - scope.range - scope.height && a != items.length){
-				npos = cont_height - (scope.range - Math.tanh((npos - (cont_height - scope.range - scope.height))/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
+			}
+			if (npos > c_r_h && a != items.length){
+				mod = Math.tanh((npos - c_r_h)/scope.range_size/0.7);
+				npos = cont_height - (scope.range - Math.tanh((npos - c_r_h)/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
 				if (prev_group_z != false){
 					z = prev_group_z;
 					prev_group_z = false;
@@ -2301,25 +2318,29 @@ function Rolidex(){
 			} else {
 				z++;
 			}
-			if (npos > cont_height - scope.height)
-				npos = cont_height - scope.height;
+			if (npos > max_height){
+				console.log("max", npos, max_height);
+				mod = 1;
+				npos = max_height;
+			}
 			a++;
-			//console.log(npos, mod_top);
+			mod = 1-mod/20;
+			console.log(npos, mod_top, mod);
 			if (mod_top == -1){
 				if (parent.hasClass("para_scroll")){
 					z -= 2;
-					$(this).css({top: npos, "z-index":z});
+					$(this).css({top: npos, "z-index":z, transform: "scale("+mod+")"});
 				} else {
 					prev_group_z = z;
 					parent.css({top: npos, "z-index":z});
-					parent.children(".result").css({"z-index":z});
+					parent.children(".result").css({"z-index":z}).first().css({transform: "scale("+mod+")"});
 				}
 			} else {
-				$(this).css({top: npos - mod_top, "z-index":z});
+				$(this).css({top: npos - mod_top, "z-index":z, transform: "scale("+mod+")"});
 			}
 			curr_pos += scope.height;
 		});
-		console.log("complete_spacing relidex");
+		//console.log("complete_spacing relidex");
 	}
 }
 
@@ -2341,35 +2362,36 @@ function Rolidex2(){
 	this.main_div.on("touchstart", function (e){
 		scope.touch_start = e.originalEvent.touches[0];
 		scope.touch_start_y = scope.touch_start.clientY;
-		console.log("start relidex2", scope.touch_start);
+		//console.log("start relidex2", scope.touch_start);
 	});
 	this.main_div.on("touchmove", function (e){
 		if (scope.touch_start){
 			var delt = e.originalEvent.touches[0].clientY - scope.touch_start_y;
-			console.log("move relidex2", delt, scope.touch_start_y, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
+			//console.log("move relidex2", delt, scope.touch_start_y, e.originalEvent.touches[0].clientY, scope.touch_start.clientY);
 			scope.pos = scope.last_pos - delt;
 			scope.set_spacing();
 		}
 	});
 	this.main_div.on("touchend", function (e){
-		console.log("stop relidex2");
+		//console.log("stop relidex2");
 		scope.touch_start = false;
 		scope.last_pos = scope.pos;
 	});
 
 	this.set_spacing = function(){
-		console.log("set_spacing relidex2");
+		//console.log("set_spacing relidex2");
 		var items = $(this.sub_div);
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
 		var cont_height = this.main_div.height();
 		var scroll_height = total_height - cont_height;
+		var max_height = cont_height - this.height;
 
 		var full_height = scroll_height < 0;
 
 		var prev_group_z = false;
 
-		console.log(this.last_pos, this.pos, cont_height, items.length, scroll_height);
+		//console.log(this.last_pos, this.pos, cont_height, items.length, scroll_height);
 
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
@@ -2402,10 +2424,10 @@ function Rolidex2(){
 			} else {
 				z--;
 			}
-			if (npos > cont_height - scope.height)
-				npos = cont_height - scope.height;
+			if (npos > max_height)
+				npos = max_height;
 			a++;
-			console.log(npos, z, mod_top);
+			//console.log(npos, z, mod_top);
 			if (mod_top == -1){
 				if (parent.hasClass("para_scroll")){
 					z -= 2;
@@ -2421,6 +2443,6 @@ function Rolidex2(){
 			}
 			curr_pos += scope.height;
 		});
-		console.log("complete_spacing relidex2");
+		//console.log("complete_spacing relidex2");
 	}
 }
