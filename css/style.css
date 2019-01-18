@@ -297,7 +297,7 @@ input[type="checkbox"]:checked + label span{
 
 #settings_tab .toggler, #settings_tab .options>div, #settings_tab .option_toggle>div{
 	position: absolute;
-	height: 25px;
+	height: 30px;
 	overflow: hidden;
 	margin-bottom: 5px;
 	width: 100%;
@@ -306,7 +306,7 @@ input[type="checkbox"]:checked + label span{
 	border-bottom-left-radius: 20px;
 	border-top-left-radius: 20px;
 	background: #fff;
-	font-size: 1em;
+	font-size: 20px;
 }
 #settings_tab .options{
 	padding-left: 20px;
@@ -315,7 +315,7 @@ input[type="checkbox"]:checked + label span{
 	padding-left:5px;
 }
 #settings_tab .option{
-	font-size: 1em;
+	font-size: 20px;
 }
 #settings_tab .option.selected{
 	color:black;
@@ -324,15 +324,15 @@ input[type="checkbox"]:checked + label span{
 	width: 25px;
 	transition: 200ms;
 	transform: rotate(-90deg);
-	margin-top: -1px;
+	margin-top: 1px;
 }
 #settings_tab .toggler.open .toggle_image {
 	transform: rotate(0deg);
 }
 #settings_tab img.settings_icon {
-	width: 21px;
+	width: 24px;
 	transform: rotate(0deg);
-	margin-top:1px;
+	margin-top:2px;
 	float: left;
 	margin-right: 5px;
 }
@@ -342,7 +342,7 @@ input[type="checkbox"]:checked + label span{
 }
 
 #map_settings{
-	max-height: 200px;
+	max-height: 250px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -364,6 +364,7 @@ input[type="checkbox"]:checked + label span{
 	position: absolute;
 	bottom: 0;
 	width: 100%;
+	font-size: 20px;
 }
 #results_tab.hidden{
 	transform: translate3d(calc(100% - 60px), 0, 0);
@@ -395,7 +396,7 @@ input[type="checkbox"]:checked + label span{
 }
 
 #results{
-	max-height: 300px;
+	max-height: 340px;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
@@ -415,7 +416,7 @@ input[type="checkbox"]:checked + label span{
 
 .result{
 	position: relative;
-	height: 25px;
+	height: 30px;
 	overflow: hidden;
 	margin-bottom: 5px;
 	padding-left: 25px;
@@ -438,7 +439,7 @@ input[type="checkbox"]:checked + label span{
 }
 .result > div{
 	display: inline-block;
-	width: calc((100% - 102px) / 2 - 8px);
+	width: calc((100% - 122px) / 2 - 8px);
 	overflow: hidden;
 	padding: 0 2px;
 	vertical-align: top;
@@ -463,11 +464,11 @@ input[type="checkbox"]:checked + label span{
 }
 
 .result .time{
-	width: 75px;
+	width: 90px;
 }
 
 .result .icon img{
-	width: 18px;
+	width: 23px;
 	vertical-align: middle;
 }
 
@@ -475,7 +476,7 @@ input[type="checkbox"]:checked + label span{
 	width: 25px;
 	position: absolute;
 	left: -1px;
-	top: -1px;
+	top: 1px;
 	transition: 200ms;
 }
 

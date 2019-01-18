@@ -714,10 +714,11 @@ function coded_location(pos, start, trigger){
 				draggable: true,
 				zIndex: 100,
 				icon: {
-					url:"images/icons3/CUSTOM%20DESTINATION%20ICON.WB.v21.svg",
-					size: new google.maps.Size(10, 10),
+					url:"images/destination.png",
+					size: new google.maps.Size(30, 30),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(5, 5)
+					anchor: new google.maps.Point(15, 15),
+					scaledSize: new google.maps.Size(30, 30)
 				}
 			});
 			markers.start.addListener("dragend", function (event){
@@ -750,10 +751,11 @@ function coded_location(pos, start, trigger){
 				draggable:true,
 				zIndex: 120,
 				icon: {
-					url: "images/icons3/CUSTOM%20ORIGIN%20ICON.BW.v9.svg",
-					size: new google.maps.Size(10, 10),
+					url: "images/origin.png",
+					size: new google.maps.Size(30, 30),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(5, 5)
+					anchor: new google.maps.Point(15, 15),
+					scaledSize: new google.maps.Size(30, 30)
 				}
 			});
 			markers.stop.addListener("dragend", function(event){
@@ -1083,11 +1085,11 @@ function get_geo_location(do_load){
 				map: map,
 				zIndex: 30,
 				icon: {
-					url: "images/location.svg",
-					size: new google.maps.Size(3000, 3000),
+					url: "images/location.png",
+					size: new google.maps.Size(30, 30),
 					origin: new google.maps.Point(0, 0),
-					anchor: new google.maps.Point(25, 25),
-					scaledSize: new google.maps.Size(50, 50)
+					anchor: new google.maps.Point(15, 15),
+					scaledSize: new google.maps.Size(30, 30)
 				}
 			});
 			markers.my_loc = marker;
@@ -1122,11 +1124,11 @@ function get_geo_location_geo(do_load){
 						map: map,
 						zIndex: 30,
 						icon: {
-							url: "images/location.svg",
-							size: new google.maps.Size(3000, 3000),
+							url: "images/location.png",
+							size: new google.maps.Size(30, 30),
 							origin: new google.maps.Point(0, 0),
-							anchor: new google.maps.Point(25, 25),
-							scaledSize: new google.maps.Size(50, 50)
+							anchor: new google.maps.Point(15, 15),
+							scaledSize: new google.maps.Size(30, 30)
 						}
 					});
 					markers.my_loc = marker;
@@ -2242,8 +2244,8 @@ function Rolidex(){
 	this.pre_pos = 0;
 	this.pos = 0;
 	this.last_pos = 0;
-	this.height = 30;
-	this.height_div = 25;
+	this.height = 35;
+	this.height_div = 30;
 	this.range = 30;
 	this.range_size = 3 * this.height;
 	this.touch_start = false;
@@ -2269,7 +2271,7 @@ function Rolidex(){
 	});
 	
 	this.set_spacing = function(){
-		console.log("set_spacing relidex");
+		//console.log("set_spacing relidex");
 		var items = $(this.sub_div+":visible");
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
@@ -2319,13 +2321,12 @@ function Rolidex(){
 				z++;
 			}
 			if (npos > max_height){
-				console.log("max", npos, max_height);
 				mod = 1;
 				npos = max_height;
 			}
 			a++;
 			mod = 1-mod/20;
-			console.log(npos, mod_top, mod);
+			//console.log(npos, mod_top, mod);
 			if (mod_top == -1){
 				if (parent.hasClass("para_scroll")){
 					z -= 2;
@@ -2349,8 +2350,8 @@ function Rolidex2(){
 	this.pre_pos = 0;
 	this.pos = 0;
 	this.last_pos = 0;
-	this.height = 30;
-	this.height_div = 25;
+	this.height = 35;
+	this.height_div = 30;
 	this.range = 30;
 	this.range_size = 2 * this.height;
 	this.touch_start = false;
@@ -2384,14 +2385,15 @@ function Rolidex2(){
 		var total_height = items.length * this.height;
 		this.main_div.css("height", total_height);
 		var cont_height = this.main_div.height();
-		var scroll_height = total_height - cont_height;
-		var max_height = cont_height - this.height;
+		var scroll_height = total_height - cont_height - 5;
+		var max_height = cont_height - this.height + 5;
+		var c_r_h = cont_height - this.range - this.height;
 
 		var full_height = scroll_height < 0;
 
 		var prev_group_z = false;
 
-		//console.log(this.last_pos, this.pos, cont_height, items.length, scroll_height);
+		//console.log(this.pos, cont_height, items.length, scroll_height);
 
 		if (this.pos > scroll_height)
 			this.pos = scroll_height;
@@ -2407,39 +2409,45 @@ function Rolidex2(){
 			if (parent.hasClass("options"))
 				mod_top = parent.parent().css("top").slice(0, -2);
 			var npos = curr_pos;
+			var mod = 0;
 			if (npos < scope.range && z != 10){
+				mod = Math.tanh(-(npos - scope.range)/scope.range_size/0.7);
 				npos = (1-Math.tanh(-(npos - scope.range)/scope.range_size/0.7)* 1.1) * scope.range;
 			}
-			if (npos < 0)
+			if (npos < 0){
+				mod = 1;
 				npos = 0;
-			if (npos > cont_height - scope.range - scope.height && a != items.length){
-				npos = cont_height - (scope.range - Math.tanh((npos - (cont_height - scope.range - scope.height))/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
+			}
+			if (npos > c_r_h && a != items.length){
+				mod = Math.tanh((npos - c_r_h)/scope.range_size/0.7);
+				npos = cont_height - (scope.range - Math.tanh((npos - c_r_h)/scope.range_size/0.7)* 1.1 * scope.range) - scope.height;
 				if (prev_group_z != false){
 					z = prev_group_z;
 					prev_group_z = false;
 				}
 				z--;
-			} else if (a != items.length){
-				z++;
 			} else {
-				z--;
+				z++;
 			}
-			if (npos > max_height)
+			if (npos > max_height){
+				z-=2;
+				mod = 1;
 				npos = max_height;
+			}
 			a++;
-			//console.log(npos, z, mod_top);
+			mod = 1-mod/20;
+			//console.log(npos, mod_top, mod);
 			if (mod_top == -1){
-				if (parent.hasClass("para_scroll")){
-					z -= 2;
-					$(this).css({top: npos, "z-index":z});
+				if (parent.hasClass("settings_container")){
+					//z -= 4;
+					$(this).css({top: npos, "z-index":z, transform: "scale("+mod+")"});
 				} else {
 					prev_group_z = z;
-					$(this).css({"z-index":z});
 					parent.css({top: npos, "z-index":z});
-					parent.children(".option").css({"z-index":z});
+					parent.children(".option").css({"z-index":z}).first().css({transform: "scale("+mod+")"});
 				}
 			} else {
-				$(this).css({top: npos - mod_top, "z-index":z});
+				$(this).css({top: npos - mod_top, "z-index":z, transform: "scale("+mod+")"});
 			}
 			curr_pos += scope.height;
 		});
