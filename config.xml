@@ -1,9 +1,8 @@
-<widget	xmlns				= "http://www.w3.org/ns/widgets"
-			xmlns:gap		= "http://phonegap.com/ns/1.0"
-			xmlns:android	= "http://schemas.android.com/apk/res/android"
-			android-versionCode="10000"
-			id				= "com.mooky.dev"
-			version			= "1.0.0">
+<widget xmlns="http://www.w3.org/ns/widgets"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android-versionCode="10000"
+		id="com.mooky.dev"
+		version="1.0.0">
 	<name>Mooky Dev</name>
 	<description>
 		Search, discover, and explore your rides.
@@ -37,7 +36,7 @@
 
 	<preference name="phonegap-version" value="cli-7.1.0" />
 
-	<preference name="android-minSdkVersion" value="16" />
+	<preference name="android-minSdkVersion" value="19" />
 	<preference name="deployment-target" value="8.0" />
 
 	<preference name="orientation" value="portrait" />

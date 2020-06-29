@@ -443,6 +443,7 @@ input[type="checkbox"]:checked + label span{
 	overflow: hidden;
 	padding: 0 2px;
 	vertical-align: top;
+	font-size: 20px;
 }
 .sub_results{
 	width: 100%;
@@ -470,6 +471,7 @@ input[type="checkbox"]:checked + label span{
 .result .icon img{
 	width: 23px;
 	vertical-align: middle;
+	margin-top: -1px;
 }
 
 .result img.img_toggle{

@@ -476,33 +476,27 @@ function tff_numbers(loc, callback){
 	});
 }
 
-var lyft_token = false;
-var lyft_eta_data = false;
-var lyft_cost_data = false;
-
-function process_lyft(call_data){
-	if (lyft_eta_data && lyft_cost_data){
-		var etas = {};
-		for (var i=0;i<lyft_eta_data.eta_estimates.length;i++){
-			var eta = lyft_eta_data.eta_estimates[i];
-			etas[eta.ride_type] = eta.eta_seconds;
-		}
+function service_lyft(call_num, start, stop){
+	var call_data = {start_lat: start.lat, start_lng: start.lng, end_lat: stop.lat, end_lng: stop.lng, lat: start.lat, lng: start.lng};
+	$.getJSON(base_url+"/ajax/lyft.php", call_data, function (data){
+		if (results_call > call_num)
+			return;
 		var results = [];
+
 		var options = get_ride_filters();
-		for (var i=0;i<lyft_cost_data.cost_estimates.length;i++){
-			var est = lyft_cost_data.cost_estimates[i];
+		for (var i=0;i<data.length;i++){
+			var est = data[i];
 
 			if (options !== true && options.indexOf(est.ride_type) == -1){
 				continue;
 			}
+			console.log(est);
 
 			var surge_multi = est.primetime_percentage.substr(0, est.primetime_percentage.length-1)/100 + 1;
-			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(/ /g, "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: etas[est.ride_type]?etas[est.ride_type]:"N/A", price_multiply: surge_multi, ride_type:get_ride_type(est.ride_type)};
-			if (etas[est.ride_type]){
-				var arrival = new Date();
-				arrival.setSeconds(arrival.getSeconds()+etas[est.ride_type]+est.estimated_duration_seconds);
-				obj.arr_time = arrival;
-			}
+			var obj = {app: "lyft", icon: '<img src="images/lyft_'+est.display_name.toLowerCase().replace(/ /g, "_")+'.svg" onError="this.onerror=null;this.src='+"'images/lyft_logo.svg'"+';">', name: est.display_name, time_sec: est.eta_seconds?est.eta_seconds:"N/A", price_multiply: surge_multi, ride_type:get_ride_type(est.ride_type)};
+			var arrival = new Date();
+			arrival.setSeconds(arrival.getSeconds()+est.eta_seconds+est.estimated_duration_seconds);
+			obj.arr_time = arrival;
 			if (surge_multi > 1)
 				obj.show_surge = true;
 			if (est.estimated_cost_cents_max > 0){
@@ -519,53 +513,11 @@ function process_lyft(call_data){
 			obj.dlink = "lyft://ridetype?id="+est.ride_type+"&pickup[latitude]="+call_data.start_lat+"&pickup[longitude]="+call_data.start_lng+"&destination[latitude]="+call_data.end_lat+"&destination[longitude]="+call_data.end_lng;
 			results.push(obj);
 		}
+		console.log(results);
 		returned_results(results, "Lyft");
-	}
-}
-
-function service_lyft(call_num, start, stop){
-	if (lyft_token){
-		lyft_cost_data = false;
-		lyft_eta_data = false;
-		var  call_data = {start_lat: start.lat, start_lng: start.lng, end_lat: stop.lat, end_lng: stop.lng};
-		$.ajax({
-			url: "https://api.lyft.com/v1/cost",
-			data: call_data,
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "bearer "+lyft_token);
-			}, success: function (data){
-				if (results_call > call_num)
-					return;
-				lyft_cost_data = data;
-				process_lyft(call_data);
-			}
-		});
-		$.ajax({
-			url: "https://api.lyft.com/v1/eta",
-			data: {lat: start.lat, lng: start.lng},
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "bearer "+lyft_token);
-			}, success: function (data){
-				if (results_call > call_num)
-					return;
-				lyft_eta_data = data;
-				process_lyft(call_data);
-			}
-		});
-	} else {
-		$.ajax({
-			url: "https://api.lyft.com/oauth/token",
-			method: "POST",
-			headers: {"Content-Type": "application/json"},
-			data: '{"grant_type": "client_credentials", "scope": "public"}',
-			beforeSend: function (xhr) {
-				xhr.setRequestHeader ("Authorization", "Basic " + btoa(credentials["lyft"]));
-			}, success: function (data){
-				lyft_token = data.access_token;
-				service_lyft(call_num, start, stop);
-			}
-		});
-	}
+	});
+	
+	return;
 }
 
 function returned_results(results, over_name){
@@ -1663,14 +1615,14 @@ function startup(){
 				$(".value_dyn").hide();
 				$("#value_prop").html("Thank you<br />for<br />using Mooky");
 			}
-			$('#monkey_gif').attr('src', 'images/mooky_drift.gif');
+			$('#monkey_gif').attr('src', 'images/mooky_drift_2x.gif');
 			$('#monkey_car').hide();
 			$('#monkey_gif').show();
 		}, 3500);
 
 		confirm_handle = setTimeout(function (){
 			confirm_link(confirm_result, value_message);
-		}, 16000);
+		}, 9300);
 	}, true);
 
 	click_event("#value_screen_close", function (e){
