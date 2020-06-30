@@ -94,6 +94,15 @@
 		<variable name="APP_ID" value="268789876896518" />
 		<variable name="APP_NAME" value="Mooky" />
 	</plugin>
+	<podspec>
+		<config>
+			<source url="https://cdn.cocoapods.org/"/>
+		</config>
+		<pods use-frameworks="true">
+			<pod name="GoogleSignIn" spec="~> 5.0.2"/>
+			<pod name="GoogleUtilities" spec="~> 6.6"/>
+		</pods>
+	</podspec>
 	<plugin name="cordova-plugin-googleplus" source="npm">
 		<variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
 		<variable name="WEB_APPLICATION_CLIENT_ID" value="mywebapplicationclientid" />
