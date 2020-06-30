@@ -2061,6 +2061,7 @@ function startup(){
 	rolidex2 = new Rolidex2();
 
 	if (settings.get("user_id") > 0){
+		start_splash_remove();
 		$.getJSON(base_url+"/ajax/settings.php", {action:"credentials", uuid: settings.get("uuid"), user_id: settings.get("user_id")}, function (data){
 			if (data.credentials){
 				credentials = data.credentials;
