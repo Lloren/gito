@@ -74,6 +74,7 @@
 	<preference name="SplashMaintainAspectRatio" value="true" />
 	<preference name="AutoHideSplashScreen" value="false" />
 
+	<plugin name="cordova-plugin-cocoapods-support" source="npm" />
 	<plugin name="cordova-plugin-geolocation" source="npm" />
 	<plugin name="cordova-plugin-whitelist" source="npm" />
 	<plugin name="ionic-plugin-keyboard" source="npm" />
@@ -89,12 +90,13 @@
 	<plugin name="cordova-plugin-sim" source="npm" />
 
 	<plugin name="ee-cordova-plugin-facebook4" source="npm">
-		<param name="APP_URL_SUFFIX" value="mooky://" />
-		<param name="APP_ID" value="268789876896518" />
-		<param name="APP_NAME" value="Mooky" />
+		<variable name="APP_URL_SUFFIX" value="mooky://" />
+		<variable name="APP_ID" value="268789876896518" />
+		<variable name="APP_NAME" value="Mooky" />
 	</plugin>
 	<plugin name="cordova-plugin-googleplus" source="npm">
-		<param name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
+		<variable name="REVERSED_CLIENT_ID" value="com.googleusercontent.apps.593153139133-j789g4qcdlcq6auvmgg8skfol1c4avps" />
+		<variable name="WEB_APPLICATION_CLIENT_ID" value="mywebapplicationclientid" />
 	</plugin>
 
 	<feature name="http://api.phonegap.com/1.0/network" />
