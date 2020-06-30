@@ -874,7 +874,7 @@ function load_map(){
 	});
 
 	$(".page").hide();
-	console.log(window.localStorage.getItem("seen_full_settings"));
+	console.log(window.localStorage.getItem("seen_full_settings") || false);
 	/*if (!window.localStorage.getItem("seen_full_settings")){
 		setTimeout(function (){
 			$(".settings_toggle").trigger("click_event");
