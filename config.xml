@@ -89,6 +89,7 @@
 	<plugin name="cordova-plugin-sim" source="npm" />
 
 	<plugin name="ee-cordova-plugin-facebook4" source="npm">
+		<param name="APP_URL_SUFFIX" value="mooky://" />
 		<param name="APP_ID" value="268789876896518" />
 		<param name="APP_NAME" value="Mooky" />
 	</plugin>
